@@ -1,73 +1,72 @@
-# Vocal Coaching Website Backup Tools
+# Vocal Coaching Website Backup
 
-This folder contains tools for backing up and restoring the Vocal Coaching Website project.
+This is a backup of the Vocal Coaching website project created on March 17, 2025.
 
-## Available Scripts
+## Project Overview
 
-### PowerShell Scripts (Windows)
+This is a Next.js project for a vocal coaching website with the following features:
+- Booking system for various services (Vocal Coaching, Live Jazz Performance, Jazz Workshop)
+- Google Calendar integration
+- Multi-language support (German and English)
+- Responsive design
 
-- `create-full-backup.ps1`: Creates a comprehensive backup of the project
-- `restore-backup.ps1`: Restores a backup
-- `verify-backup.ps1`: Verifies a backup contains all essential files
+## Key Components
 
-### Bash Scripts (macOS/Linux)
+1. **Booking System**:
+   - Service selection
+   - Service-specific forms
+   - Confirmation step
+   - Email notifications
 
-- `create-backup.sh`: Creates a comprehensive backup of the project
-- `restore-backup.sh`: Restores a backup
+2. **Pages**:
+   - Home page
+   - Booking page
+   - Calendar page
+   - Success page
+   - Legal pages (AGB, Datenschutz, Impressum)
 
-## Quick Backup Guide
+3. **Technologies Used**:
+   - Next.js 14.2.16
+   - React 18
+   - Tailwind CSS
+   - Framer Motion
+   - i18next for translations
+   - EmailJS for email notifications
 
-### Creating a Backup
+## How to Restore
 
-#### On Windows:
+1. **Install Dependencies**:
+   ```
+   npm install
+   ```
 
-```powershell
-.\create-full-backup.ps1
-```
+2. **Development Server**:
+   ```
+   npm run dev
+   ```
 
-The backup will be created in the `backups` directory with a timestamp in the filename.
+3. **Build for Production**:
+   ```
+   npm run build
+   ```
 
-#### On macOS/Linux:
+4. **Deploy to GitHub Pages**:
+   ```
+   npm run deploy
+   ```
 
-```bash
-./create-backup.sh
-```
+## Recent Fixes
 
-### Verifying a Backup
+- Fixed issues with @headlessui/react by downgrading to version 1.7.17
+- Updated FormData interface to include all required fields
+- Fixed prop name mismatch in ServiceSelection component
+- Updated ProgressBar component to accept both string and number types for currentStep
 
-#### On Windows:
+## Notes for Future Development
 
-```powershell
-.\verify-backup.ps1 -BackupPath .\backups\your-backup-file.zip
-```
+- The booking system is fully functional with Google Calendar integration
+- All forms are set up for jazz-focused services
+- The GitHub Pages deployment is configured in the workflow file
+- The project uses a custom domain configuration in next.config.js
 
-### Restoring a Backup
-
-#### On Windows:
-
-```powershell
-.\restore-backup.ps1 -BackupPath .\backups\your-backup-file.zip -DestinationPath C:\path\to\destination
-```
-
-#### On macOS/Linux:
-
-```bash
-./restore-backup.sh ./backups/your-backup-file.zip /path/to/destination
-```
-
-## What's in the Backup?
-
-The backup includes:
-
-- All application code and components
-- Configuration files
-- Assets and resources
-- Documentation
-
-The backup does not include:
-- `node_modules` directory
-- Build artifacts
-
-## For More Information
-
-See the detailed [BACKUP_GUIDE.md](./BACKUP_GUIDE.md) for comprehensive information on backup and restoration procedures. 
+This backup was created to preserve the working state of the project after fixing build errors and ensuring successful deployment to GitHub Pages. 
