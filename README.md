@@ -2,6 +2,10 @@
 
 A modern, responsive website for a vocal coaching business. Built with Next.js and hosted on GitHub Pages.
 
+## 🌐 Live Site
+
+**The site is now live at: [https://amir3629.github.io/melvocal-coaching/](https://amir3629.github.io/melvocal-coaching/)**
+
 ## Features
 
 - Modern, responsive design
@@ -11,7 +15,7 @@ A modern, responsive website for a vocal coaching business. Built with Next.js a
 
 ## Deployment
 
-This website is deployed on GitHub Pages. The deployment is handled automatically by GitHub Actions when changes are pushed to the main branch.
+This website is deployed on GitHub Pages. The deployment is handled by building the site locally and pushing to the gh-pages branch.
 
 ### Local Development
 
@@ -30,12 +34,17 @@ Visit `http://localhost:3001` in your browser to see the development version.
 
 ### GitHub Pages Deployment
 
-The site is automatically deployed to GitHub Pages using GitHub Actions. The deployment workflow:
+The site is deployed to GitHub Pages using a custom deployment script:
 
-1. Builds the Next.js project
-2. Exports static files
-3. Pushes the exported files to the gh-pages branch
-4. GitHub Pages then serves the site from the gh-pages branch
+1. Run `npm run build` to build the Next.js project
+2. Run `.\deploy.ps1` to deploy to GitHub Pages
+
+The script will:
+1. Build the Next.js project
+2. Copy the exported static files to a temporary directory
+3. Initialize a Git repository in that directory
+4. Push the files to the gh-pages branch
+5. Clean up temporary files
 
 The site is accessible at: https://amir3629.github.io/melvocal-coaching/
 
@@ -64,7 +73,7 @@ The site is accessible at: https://amir3629.github.io/melvocal-coaching/
    - Start the development server
 
 4. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
+   Navigate to [http://localhost:3001](http://localhost:3001)
 
 ## 🔧 Development Environment
 
@@ -91,7 +100,7 @@ If you see placeholder images in development:
 
 - `npm run dev` - Start the development server
 - `npm run build` - Build the production version
-- `npm run deploy` - Deploy to GitHub Pages
+- `.\deploy.ps1` - Deploy to GitHub Pages
 - `npm run fix-local` - Fix development environment issues
 - `npm run setup` - Complete setup and start dev server
 
@@ -149,7 +158,7 @@ If components are not rendering properly:
 
 1. Make changes locally and test
 2. Commit changes to Git
-3. Run `npm run deploy` to deploy to GitHub Pages
+3. Run `npm run build` followed by `.\deploy.ps1` to deploy to GitHub Pages
 4. Verify the changes on the live site
 
 ## 📞 Contact
