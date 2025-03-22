@@ -34,9 +34,11 @@ export default function BookingForm() {
   
   // Handle service selection from URL parameter
   useEffect(() => {
-    const serviceParam = searchParams.get('service')
-    if (serviceParam && ['gesangsunterricht', 'vocal-coaching', 'professioneller-gesang'].includes(serviceParam)) {
-      setSelectedService(serviceParam as ServiceType)
+    if (searchParams) {
+      const serviceParam = searchParams.get('service')
+      if (serviceParam && ['gesangsunterricht', 'vocal-coaching', 'professioneller-gesang'].includes(serviceParam)) {
+        setSelectedService(serviceParam as ServiceType)
+      }
     }
   }, [searchParams])
   

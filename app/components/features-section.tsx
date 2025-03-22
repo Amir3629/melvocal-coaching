@@ -2,8 +2,8 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useTranslation } from '../i18n/client';
-import { Mic, Music, Star, Flask } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { Mic, Music, Star, FlaskConical } from 'lucide-react';
 
 export default function FeaturesSection() {
   const { t } = useTranslation();
@@ -25,7 +25,7 @@ export default function FeaturesSection() {
       description: "Deine Stimme ist klüger als gedacht"
     },
     {
-      icon: <Flask className="w-10 h-10 text-[#C8A97E]" />,
+      icon: <FlaskConical className="w-10 h-10 text-[#C8A97E]" />,
       title: "Stimmliche Alchemie",
       description: "Die 4-Uhr-Wahrheiten des stimmlichen Erfolgs"
     }

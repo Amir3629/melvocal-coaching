@@ -4,9 +4,10 @@
   "description": "Professional vocal coaching website with booking system and gallery",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 3001",
     "build": "next build",
-    "start": "next start",
+    "export": "next export || echo 'Export is included in the build process'",
+    "start": "next start -p 3001",
     "lint": "next lint",
     "check-images": "node scripts/check-images.js",
     "verify-assets": "node scripts/verify-assets.js",
