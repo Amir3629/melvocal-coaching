@@ -1,6 +1,43 @@
 # Vocal Coaching Website
 
-This is a Next.js project for a professional vocal coaching website, featuring a booking system, gallery, and services information.
+A modern, responsive website for a vocal coaching business. Built with Next.js and hosted on GitHub Pages.
+
+## Features
+
+- Modern, responsive design
+- Multilingual support
+- Booking system for different types of vocal coaching services
+- Music samples and testimonials
+
+## Deployment
+
+This website is deployed on GitHub Pages. The deployment is handled automatically by GitHub Actions when changes are pushed to the main branch.
+
+### Local Development
+
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+```
+
+Visit `http://localhost:3001` in your browser to see the development version.
+
+### GitHub Pages Deployment
+
+The site is automatically deployed to GitHub Pages using GitHub Actions. The deployment workflow:
+
+1. Builds the Next.js project
+2. Exports static files
+3. Pushes the exported files to the gh-pages branch
+4. GitHub Pages then serves the site from the gh-pages branch
+
+The site is accessible at: https://amir3629.github.io/melvocal-coaching/
 
 ## 🚀 Quick Start
 
