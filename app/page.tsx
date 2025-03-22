@@ -25,6 +25,7 @@ import SimpleMusicPlayer from "@/app/components/simple-music-player"
 import FlipCards from './components/flip-cards'
 import AboutSectionFixed from "@/app/components/about-section-fixed"
 import { AppImage, RegularImg } from '@/app/components/ui/image'
+import MusicSection from '@/app/components/music-section'
 
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false)
@@ -89,9 +90,9 @@ export default function Home() {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id)
     if (element) {
-      window.scrollTo({
-        top: element.offsetTop - 80,
-        behavior: "smooth"
+      element.scrollIntoView({ 
+        behavior: "smooth",
+        block: "start" 
       })
     }
   }
@@ -114,6 +115,13 @@ export default function Home() {
       }
     })
   }, [isLoaded])
+
+  useEffect(() => {
+    // Prevent automatic scrolling back to top
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+  }, []);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#0A0A0A]">
@@ -160,7 +168,7 @@ export default function Home() {
           >
             <Button 
               size="lg" 
-              className="bg-[#C8A97E] hover:bg-[#B89A6F] text-black border-2 border-[#C8A97E] hover:border-[#B89A6F] rounded-full px-8 transition-all duration-300"
+              className="bg-[#C8A97E] hover:bg-[#B89A6F] text-black border-2 border-[#C8A97E] hover:border-[#B89A6F] rounded-full w-[180px] sm:w-auto transition-all duration-300"
               onClick={() => {
                 const element = document.getElementById("services")
                 if (element) {
@@ -175,10 +183,10 @@ export default function Home() {
       </section>
 
       {/* Music Player Section */}
-      <section className="py-20 px-4 bg-[#040202]">
+      <section className="py-10 px-4 bg-[#040202]">
         <div className="max-w-7xl mx-auto">
           <motion.div 
-            className="text-center mb-16"
+            className="text-center mb-6"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -190,24 +198,24 @@ export default function Home() {
       </section>
 
       {/* Video Preview Section */}
-      <section className="py-20 px-4 bg-[#040202]">
+      <section className="pt-4 pb-16 px-4 bg-[#040202]">
         <div className="max-w-7xl mx-auto">
           <motion.div 
-            className="text-center mb-16"
+            className="text-center mb-12"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.7 }}
           >
-            <h2 className="section-heading mb-4">Video Preview</h2>
-            <div className="w-24 h-0.5 bg-[#C8A97E] mx-auto opacity-80"></div>
+            <h2 className="section-heading mb-4 text-white">Video Preview</h2>
+            <div className="w-24 h-0.5 bg-[#C8A97E] mx-auto opacity-80 mt-2"></div>
           </motion.div>
           <VideoPreview />
         </div>
       </section>
 
       {/* Services Section */}
-      <section id="services" className="relative w-full py-20 bg-[#040202]">
+      <section id="services" className="relative w-full py-16 bg-[#040202]">
         <div className="absolute inset-0 w-full h-full overflow-hidden">
           <AppImage
             src="/images/backgrounds/services-bg.jpg"
@@ -227,8 +235,16 @@ export default function Home() {
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="section-heading mb-4">Vocal Excellence</h2>
-            <div className="w-24 h-0.5 bg-[#C8A97E] mx-auto opacity-80"></div>
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7 }}
+              className="text-center mb-12"
+            >
+              <h2 className="section-heading mb-4 text-white">Vocal Excellence</h2>
+              <div className="w-24 h-0.5 bg-[#C8A97E] mx-auto opacity-80 mt-2"></div>
+            </motion.div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-7xl mx-auto">
@@ -237,7 +253,7 @@ export default function Home() {
               subtitle="Event Performances"
               description="Bereichern Sie Ihre Veranstaltung mit professionellem Gesang - von intimen Zusammenkünften bis hin zu großen Feiern. Verfügbar als Solo-Künstlerin oder mit vollständiger Band-Begleitung."
               icon={<Music className="w-6 h-6" />}
-              image="/images/services/singing.jpg"
+              image={process.env.NODE_ENV === 'production' ? "/vocal-coaching/images/services/singing.jpg" : "/images/services/singing.jpg"}
               features={[
                 "Preisgekrönte Sängerin mit über 1000 Auftritten",
                 "Beherrschung verschiedener Genres (Jazz, Pop, Soul, Klassik)",
@@ -266,9 +282,9 @@ export default function Home() {
             <ServiceCard
               title="Vocal Coaching"
               subtitle="CVT Mastery"
-              description="Entdecken Sie Ihre authentische Stimme durch die revolutionäre Complete Vocal Technique® - die wissenschaftlich fundierte Methode, der Grammy-Gewinner und Broadway-Stars vertrauen. Als eine von nur 3 zertifizierten CVT-Lehrerinnen in Berlin biete ich exklusives Training."
+              description="Entdecken Sie Ihre authentische Stimme durch die revolutionäre Complete Vocal Technique® - die wissenschaftlich fundierte Methode, der Grammy-Gewinner und Broadway-Stars vertrauen."
               icon={<Mic className="w-6 h-6" />}
-              image="/images/services/coaching.jpg"
+              image={process.env.NODE_ENV === 'production' ? "/vocal-coaching/images/services/coaching.jpg" : "/images/services/coaching.jpg"}
               features={[
                 "Zertifizierte Complete Vocal Technique® Lehrerin",
                 "Stimmumfang • Ausdauer • Stilvielfalt",
@@ -299,7 +315,7 @@ export default function Home() {
               subtitle="Group Mastery"
               description="Transformieren Sie Gruppendynamiken durch wissenschaftlich fundiertes Stimmtraining - von Universitäts-Masterclasses bis hin zu Teambuilding-Maßnahmen. Als Berlins autorisierte Complete Vocal Technique® Spezialistin erstelle ich maßgeschneiderte Workshops."
               icon={<Theater className="w-6 h-6" />}
-              image="/images/services/workshop.jpg"
+              image={process.env.NODE_ENV === 'production' ? "/vocal-coaching/images/services/workshop.jpg" : "/images/services/workshop.jpg"}
               features={[
                 "Nur 3. CVT-zertifizierte Lehrerin in Berlin",
                 "Akkreditierte Lehrmethoden auf Universitätsniveau",
@@ -331,7 +347,7 @@ export default function Home() {
               subtitle="Gemeinsam Singen"
               description="Entdecken Sie die Freude am gemeinsamen Singen in unserem dynamischen Nachbarschaftschor - für alle Levels offen."
               icon={<Users2 className="w-6 h-6" />}
-              image="/images/services/chor.jpg"
+              image={process.env.NODE_ENV === 'production' ? "/vocal-coaching/images/services/chor.jpg" : "/images/services/chor.jpg"}
               features={[
                 "Mehrstimmigkeit",
                 "Harmonie",
@@ -366,7 +382,7 @@ export default function Home() {
           >
             <Button 
               size="lg"
-              className="bg-[#C8A97E] hover:bg-[#B89A6F] text-black rounded-full px-8"
+              className="bg-[#C8A97E] hover:bg-[#B89A6F] text-black rounded-full w-[180px] sm:w-auto"
               onClick={() => setIsBookingModalOpen(true)}
             >
               Jetzt Buchen
@@ -380,29 +396,40 @@ export default function Home() {
         <AboutSectionFixed />
       </section>
 
+      {/* Stats cards without borders */}
+      <style jsx global>{`
+        .bg-black\/30.rounded-lg {
+          border: none !important;
+          box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+        }
+      `}</style>
+
       {/* References Section */}
-      <section className="py-20 bg-[#040202]">
+      <section className="py-8 bg-[#040202]">
         <GallerySection />
         <Collaborations />
       </section>
 
-      {/* Expertise Cards Section - Moved after gallery */}
-      <section className="bg-black py-16">
+      {/* Expertise Cards Section */}
+      <section className="bg-black py-6">
         <div className="container mx-auto px-4">
-          <h2 className="section-heading text-center mb-12">Faszinierend & Musikalisch</h2>
+          <div className="text-center mb-6">
+            <h2 className="section-heading mb-4 text-white">Faszinierend <span className="amp">&</span> Musikalisch</h2>
+            <div className="w-24 h-0.5 bg-[#C8A97E] mx-auto opacity-80 mt-2"></div>
+          </div>
           <FlipCards />
         </div>
       </section>
 
       {/* Testimonials Section */}
-      <section id="testimonials" className="relative w-full bg-[#040202] py-16">
+      <section id="testimonials" className="relative w-full bg-[#040202] py-0 mt-0">
         <div className="container mx-auto px-4">
           <TestimonialSlider />
         </div>
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="relative py-20 bg-[#040202]">
+      <section id="contact" className="relative py-16 bg-[#040202]">
         <ContactForm />
       </section>
 

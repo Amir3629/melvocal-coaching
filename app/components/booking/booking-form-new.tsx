@@ -11,6 +11,7 @@ import ConfirmationStep from './confirmation-step'
 import SubmitButton from './submit-button'
 import { useRouter } from 'next/navigation'
 import { ServiceType, BookingFormData } from '@/app/types/booking'
+import { motion, AnimatePresence } from 'framer-motion'
 
 // Form data interface
 interface FormData {
@@ -50,6 +51,7 @@ export default function BookingForm() {
   const [currentStep, setCurrentStep] = useState(0)
   const [selectedService, setSelectedService] = useState<ServiceType>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isVisible, setIsVisible] = useState(true)
   
   // Initialize form data with empty values
   const [formData, setFormData] = useState<BookingFormData>({
@@ -251,63 +253,89 @@ export default function BookingForm() {
     }
   }
   
+  // Handle smooth close function
+  const handleSmoothClose = (callback?: () => void) => {
+    setIsVisible(false)
+    setTimeout(() => {
+      if (callback) callback()
+    }, 500) // Match transition duration
+  }
+  
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="mb-8">
-        <ProgressBar 
-          currentStep={currentStep} 
-          totalSteps={4} 
-          labels={[
-            t('booking.service', 'Dienst'),
-            t('booking.personal', 'Persönlich'),
-            t('booking.details', 'Details'),
-            t('booking.confirm', 'Bestätigen')
-          ]}
-        />
-      </div>
-      
-      <div className="mb-6">
-        <h2 className="text-2xl font-bold text-white">
-          {getStepTitle()}
-        </h2>
-        <p className="text-gray-400 mt-2">
-          {currentStep === 0 && t('booking.selectServiceDesc', 'Wählen Sie den gewünschten Dienst aus.')}
-          {currentStep === 1 && t('booking.personalInfoDesc', 'Geben Sie Ihre Kontaktdaten ein.')}
-          {currentStep === 2 && t('booking.serviceDetailsDesc', 'Geben Sie weitere Details zu Ihrer Anfrage an.')}
-          {currentStep === 3 && t('booking.confirmationDesc', 'Überprüfen Sie Ihre Angaben und senden Sie die Anfrage ab.')}
-        </p>
-      </div>
-      
-      <div className="bg-[#121212] border border-gray-800 rounded-xl p-6 mb-6">
-        {renderStep()}
-      </div>
-      
-      <div className="mt-8 flex justify-between">
-        {currentStep > 0 && (
-          <button
-            type="button"
-            onClick={handlePrevStep}
-            className="px-6 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors"
-          >
-            {t('booking.back', 'Zurück')}
-          </button>
-        )}
-        
-        <div className={currentStep > 0 ? 'ml-auto' : 'w-full'}>
-          {currentStep < 3 ? (
-            <SubmitButton 
-              onClick={handleNextStep} 
-              disabled={!isStepValid()}
+    <AnimatePresence mode="wait">
+      {isVisible && (
+        <motion.div 
+          className="max-w-4xl mx-auto"
+          initial={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="mb-8">
+            <ProgressBar 
+              currentStep={currentStep} 
+              totalSteps={4} 
+              labels={[
+                t('booking.service', 'Dienst'),
+                t('booking.personal', 'Persönlich'),
+                t('booking.details', 'Details'),
+                t('booking.confirm', 'Bestätigen')
+              ]}
             />
-          ) : (
-            <SubmitButton 
-              isLastStep
-              onClick={handleSubmit}
-              isSubmitting={isSubmitting}
-            />
-          )}
-        </div>
-      </div>
-    </div>
+          </div>
+          
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-white">
+              {getStepTitle()}
+            </h2>
+            <p className="text-gray-400 mt-2">
+              {currentStep === 0 && t('booking.selectServiceDesc', 'Wählen Sie den gewünschten Dienst aus.')}
+              {currentStep === 1 && t('booking.personalInfoDesc', 'Geben Sie Ihre Kontaktdaten ein.')}
+              {currentStep === 2 && t('booking.serviceDetailsDesc', 'Geben Sie weitere Details zu Ihrer Anfrage an.')}
+              {currentStep === 3 && t('booking.confirmationDesc', 'Überprüfen Sie Ihre Angaben und senden Sie die Anfrage ab.')}
+            </p>
+          </div>
+          
+          <div className="bg-[#121212] border border-gray-800 rounded-xl p-6 mb-6">
+            {currentStep === 3 ? (
+              <ConfirmationStep
+                formData={formData}
+                serviceType={selectedService}
+                onChange={handleFormChange}
+                onClose={() => handleSmoothClose()}
+              />
+            ) : (
+              renderStep()
+            )}
+          </div>
+          
+          <div className="mt-8 flex justify-between">
+            {currentStep > 0 && (
+              <button
+                type="button"
+                onClick={handlePrevStep}
+                className="px-6 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors"
+              >
+                {t('booking.back', 'Zurück')}
+              </button>
+            )}
+            
+            <div className={currentStep > 0 ? 'ml-auto' : 'w-full'}>
+              {currentStep < 3 ? (
+                <SubmitButton 
+                  onClick={handleNextStep} 
+                  disabled={!isStepValid()}
+                />
+              ) : (
+                <SubmitButton 
+                  isLastStep
+                  onClick={handleSubmit}
+                  isSubmitting={isSubmitting}
+                />
+              )}
+            </div>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   )
 } 

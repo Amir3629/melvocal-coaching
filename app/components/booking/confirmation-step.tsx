@@ -354,16 +354,6 @@ export default function ConfirmationStep({ formData, serviceType, onChange, onCl
           setTimeout(() => {
             // Call onClose to close the booking form
             onClose();
-            
-            // After modal is closed, scroll smoothly to top
-            setTimeout(() => {
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }, 500);
-          }, 500);
-        } else {
-          // If no onClose function, just scroll to top after notification is gone
-          setTimeout(() => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
           }, 500);
         }
       }, 3000);

@@ -1,7 +1,7 @@
 "use client"
 
 import { createElement } from "react"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import Link from "next/link"
 import LegalDocumentModal from "./legal-document-modal"
@@ -35,19 +35,27 @@ export default function Footer() {
   const [selectedDoc, setSelectedDoc] = useState<string | null>(null);
   const [isClosing, setIsClosing] = useState(false);
 
+  useEffect(() => {
+    return () => {
+      // Cleanup function to ensure body scroll is restored if component unmounts
+      document.body.style.overflow = '';
+    };
+  }, []);
+
   const handleOpenModal = (docTitle: string) => {
     setSelectedDoc(docTitle);
-    document.body.style.overflow = 'hidden';
+    // Use a class instead of inline style for better cleanup
+    document.documentElement.classList.add('modal-open');
   };
 
   const handleCloseModal = () => {
     setIsClosing(true);
-    // Delay the actual closing to allow for animation
+    document.documentElement.classList.remove('modal-open');
+    
     setTimeout(() => {
       setSelectedDoc(null);
       setIsClosing(false);
-      document.body.style.overflow = 'unset';
-    }, 300); // Match this with the animation duration
+    }, 300);
   };
 
   const legalDocs = [
@@ -65,7 +73,7 @@ export default function Footer() {
           whileHover={{ scale: 1.2, rotate: 5 }}
           transition={{ type: "spring", stiffness: 400, damping: 10 }}
           className="w-8 h-8" 
-          fill="currentColor" 
+          fill="#C8A97E" 
           viewBox="0 0 24 24" 
           aria-hidden="true"
         >
@@ -81,7 +89,7 @@ export default function Footer() {
           whileHover={{ scale: 1.2, rotate: -5 }}
           transition={{ type: "spring", stiffness: 400, damping: 10 }}
           className="w-8 h-8" 
-          fill="currentColor" 
+          fill="#C8A97E" 
           viewBox="0 0 24 24" 
           aria-hidden="true"
         >
@@ -97,7 +105,7 @@ export default function Footer() {
           whileHover={{ scale: 1.2, rotate: 5 }}
           transition={{ type: "spring", stiffness: 400, damping: 10 }}
           className="w-8 h-8" 
-          fill="currentColor" 
+          fill="#C8A97E" 
           viewBox="0 0 24 24" 
           aria-hidden="true"
         >
@@ -113,7 +121,7 @@ export default function Footer() {
           whileHover={{ scale: 1.2, rotate: -5 }}
           transition={{ type: "spring", stiffness: 400, damping: 10 }}
           className="w-8 h-8"
-          fill="currentColor"
+          fill="#C8A97E"
           viewBox="0 0 24 24"
           aria-hidden="true"
         >
@@ -124,14 +132,14 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-black border-t border-white/10">
-      <div className="container mx-auto px-4 py-8">
+    <footer className="bg-black border-t border-white/10 text-sm md:text-base">
+      <div className="container mx-auto px-4 py-6 md:py-8">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Left Column - Brand & Social Links */}
-            <div className="flex flex-col space-y-4">
-              <h3 className="text-xl text-white">Mel jazz</h3>
-              <div className="flex gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-8">
+            {/* Left Column - Brand & Social Links - centered on mobile */}
+            <div className="flex flex-col items-center md:items-start space-y-3 md:space-y-4">
+              <h3 className="text-lg md:text-xl text-white mb-1 md:mb-2">Mel jazz</h3>
+              <div className="flex gap-5 md:gap-6 social-links justify-center md:justify-start">
                 {socialLinks.map((item) => (
                   <Link
                     key={item.name}
@@ -154,34 +162,34 @@ export default function Footer() {
             </div>
 
             {/* Middle Column - Subtitle and Copyright */}
-            <div className="flex flex-col items-center justify-start space-y-4">
-              <p className="text-gray-400">Vocal Coaching in Berlin</p>
-              <div className="text-sm text-gray-400 text-center">
+            <div className="flex flex-col items-center justify-start space-y-2 md:space-y-4 my-4 md:my-0">
+              <p className="text-gray-400 text-sm md:text-base">Vocal Coaching in Berlin</p>
+              <div className="text-xs md:text-sm text-gray-400 text-center">
                 © 2025 Mel jazz.<br />
                 Alle Rechte vorbehalten.
               </div>
             </div>
 
-            {/* Right Column - Legal Links & Image */}
-            <div className="flex flex-col justify-start items-end w-full">
-              <div className="flex items-center justify-end gap-6 mb-4 w-full">
+            {/* Right Column - Legal Links & Image - centered on mobile */}
+            <div className="flex flex-col justify-start items-center md:items-end w-full">
+              <div className="flex items-center justify-center md:justify-end gap-3 md:gap-6 mb-2 md:mb-4 w-full legal-links flex-wrap">
                 {legalDocs.map((doc) => (
                   <button
                     key={doc.title}
                     onClick={() => handleOpenModal(doc.title)}
-                    className="text-gray-400 hover:text-[#C8A97E] transition-colors text-sm"
+                    className="text-gray-400 hover:text-[#C8A97E] transition-colors text-xs md:text-sm px-2 py-1 md:p-0"
                   >
                     {doc.title}
                   </button>
                 ))}
               </div>
-              <div className="w-48 h-24 relative flex justify-end">
+              <div className="w-32 md:w-48 h-16 md:h-24 relative flex justify-center md:justify-end mt-1 md:mt-0">
                 <Image
                   src={process.env.NODE_ENV === 'production' ? '/vocal-coaching/images/footer/footer.png' : '/images/footer/footer.png'}
                   alt="Footer decoration"
                   width={192}
                   height={96}
-                  className="object-contain filter brightness-0 invert transform -translate-x-4 translate-y-2"
+                  className="object-contain filter brightness-0 invert transform md:-translate-x-4 md:translate-y-2"
                   priority
                 />
               </div>
@@ -189,40 +197,56 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Legal Document Modal with Animations */}
+        {/* Legal Document Modal */}
         {selectedDoc && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center">
+          <motion.div 
+            className="fixed inset-0 z-[100] flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={handleCloseModal}
+          >
+            {/* Backdrop */}
             <motion.div 
-              className="fixed inset-0 bg-black/80 backdrop-blur-sm" 
-              onClick={handleCloseModal}
+              className="absolute inset-0 bg-black/60 backdrop-blur-[2px]"
               initial={{ opacity: 0 }}
-              animate={{ opacity: isClosing ? 0 : 1 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
             />
-            <motion.div 
-              className="relative bg-[#0A0A0A] rounded-xl border-2 border-[#C8A97E]/20 shadow-2xl w-[90%] max-w-2xl max-h-[85vh] overflow-hidden z-[101]"
-              initial={{ opacity: 0, y: 20, scale: 0.95 }}
-              animate={{ 
-                opacity: isClosing ? 0 : 1, 
-                y: isClosing ? 20 : 0, 
-                scale: isClosing ? 0.95 : 1 
-              }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-            >
-              <div className="flex items-center justify-end p-4 border-b border-[#C8A97E]/20">
-                <button
-                  onClick={handleCloseModal}
-                  className="p-1.5 hover:bg-white/10 rounded-lg transition-colors"
-                >
-                  <X className="w-5 h-5 text-white/70 hover:text-white transition-colors" />
-                </button>
-              </div>
-              <div className="p-6 overflow-y-auto max-h-[calc(85vh-80px)] custom-scrollbar">
-                {selectedDoc && legalDocs.find(doc => doc.title === selectedDoc)?.component && 
-                  createElement(legalDocs.find(doc => doc.title === selectedDoc)?.component!)}
-              </div>
-            </motion.div>
-          </div>
+            
+            {/* Modal Container */}
+            <div className="relative w-full h-full flex items-center justify-center p-4">
+              <motion.div 
+                className="relative w-full max-w-2xl bg-[#0A0A0A] rounded-xl border border-[#C8A97E]/20 shadow-2xl"
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                animate={{ 
+                  opacity: isClosing ? 0 : 1, 
+                  y: isClosing ? 20 : 0, 
+                  scale: isClosing ? 0.95 : 1 
+                }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Modal Header */}
+                <div className="flex items-center justify-between px-6 pt-2.5 pb-0.5 border-b border-[#C8A97E]/20">
+                  <h2 className="text-2xl font-semibold text-white pt-1.5 mt-0.5">{selectedDoc}</h2>
+                  <button
+                    onClick={handleCloseModal}
+                    className="absolute right-5 top-2 p-1.5 hover:bg-white/10 rounded-lg transition-colors"
+                  >
+                    <X className="w-5 h-5 text-white/70 hover:text-white transition-colors" />
+                  </button>
+                </div>
+                
+                {/* Modal Content */}
+                <div className="px-5 pt-3 pb-6 overflow-y-auto max-h-[calc(85vh-80px)] custom-scrollbar">
+                  {legalDocs.find(doc => doc.title === selectedDoc)?.component && 
+                    createElement(legalDocs.find(doc => doc.title === selectedDoc)?.component!)
+                  }
+                </div>
+              </motion.div>
+            </div>
+          </motion.div>
         )}
       </div>
     </footer>

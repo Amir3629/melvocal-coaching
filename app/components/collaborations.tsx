@@ -68,17 +68,17 @@ export default function Collaborations() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="section-heading mb-4"
+            className="section-heading mb-4 text-white"
           >
-            {t('references.title')}
+            Referenzen <span className="amp">&</span> Kooperationen
           </motion.h2>
-          <div className="w-24 h-0.5 bg-[#C8A97E] mx-auto opacity-80"></div>
+          <div className="w-24 h-0.5 bg-[#C8A97E] mx-auto opacity-80 mt-2"></div>
         </div>
 
         <div className="max-w-5xl mx-auto">
           <div className="flex flex-col space-y-16">
             {/* First Row */}
-            <div className="flex justify-center items-center gap-8">
+            <div className="flex justify-center items-center gap-4 md:gap-8 flex-wrap">
               {firstRow.map((collab, index) => (
             <motion.a
               key={collab.name}
@@ -91,7 +91,7 @@ export default function Collaborations() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
-                  className="flex items-center justify-center w-[17.5%]"
+                  className="flex items-center justify-center w-[42%] sm:w-[30%] md:w-[22%] lg:w-[20%]"
                 >
                   <div className="relative w-full aspect-[3/1]">
                     <Image
@@ -108,7 +108,7 @@ export default function Collaborations() {
             </div>
 
             {/* Second Row */}
-            <div className="flex justify-center items-center gap-8">
+            <div className="flex justify-center items-center gap-4 md:gap-8 flex-wrap">
               {secondRow.map((collab, index) => (
                 <motion.a
                   key={collab.name}
@@ -121,7 +121,7 @@ export default function Collaborations() {
                   transition={{ duration: 0.6, delay: (index + 4) * 0.1 }}
                   onMouseEnter={() => setHoveredIndex(index + 4)}
                   onMouseLeave={() => setHoveredIndex(null)}
-                  className="flex items-center justify-center w-[17.5%]"
+                  className="flex items-center justify-center w-[42%] sm:w-[30%] md:w-[22%] lg:w-[20%]"
                 >
                   <div className="relative w-full aspect-[3/1]">
                 <Image

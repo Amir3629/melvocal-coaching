@@ -1,0 +1,60 @@
+:root {
+  /* Typography Color Theme */
+  --text-heading: #2A2A2A;
+  --text-body: #4A4A4A;
+  --text-subtle: #666666;
+  --text-legal: #777777;
+  --text-link: #8B5E3C;
+  --accent-brown: #8B5E3C;
+  
+  /* Button Colors */
+  --button-bg: #6B4E3B;
+  --button-hover: #5A4230;
+  --button-text: #FFFFFF;
+  
+  /* Form Field Colors */
+  --field-border: #E0E0E0;
+  --field-bg: #FFFFFF;
+  --field-text: #4A4A4A;
+  --field-placeholder: #999999;
+  
+  /* Layout Colors */
+  --background-light: #FFFFFF;
+  --background-subtle: #F9F9F9;
+  
+  /* Special Elements */
+  --genre-tag-bg: #FFF5EB;
+  --genre-tag-text: #8B5E3C;
+  
+  /* Quote Colors */
+  --quote-border: #8B5E3C;
+  --quote-text: #5A5A5A;
+}
+
+/* Dark mode (if needed) */
+.dark-theme {
+  --text-heading: #EFEFEF;
+  --text-body: #CCCCCC;
+  --text-subtle: #AAAAAA;
+  --text-legal: #999999;
+  --text-link: #C8A97E;
+  --accent-brown: #C8A97E;
+  
+  --button-bg: #8B5E3C;
+  --button-hover: #9D6F4D;
+  --button-text: #FFFFFF;
+  
+  --field-border: #555555;
+  --field-bg: #333333;
+  --field-text: #EFEFEF;
+  --field-placeholder: #888888;
+  
+  --background-light: #222222;
+  --background-subtle: #2A2A2A;
+  
+  --genre-tag-bg: #3A3022;
+  --genre-tag-text: #C8A97E;
+  
+  --quote-border: #C8A97E;
+  --quote-text: #BBBBBB;
+} 

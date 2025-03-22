@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Dialog } from "@/app/components/ui/dialog"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import { AppImage } from "@/app/components/ui/image"
+import { createPortal } from "react-dom"
 
 interface GalleryImage {
   src: string
@@ -92,15 +93,31 @@ const images: GalleryImage[] = [
 
 export default function GallerySection() {
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null)
-  const [isTransitioning, setIsTransitioning] = useState(false)
-  const [nextImage, setNextImage] = useState<GalleryImage | null>(null)
+  const [mounted, setMounted] = useState(false)
+  const [isImageLoaded, setIsImageLoaded] = useState(false)
+
+  useEffect(() => {
+    setMounted(true)
+    return () => setMounted(false)
+  }, [])
 
   const handleImageClick = (image: GalleryImage) => {
-    setSelectedImage(image)
+    // Preload the image before showing modal
+    const img = new Image()
+    img.src = image.src
+    img.onload = () => {
+      setIsImageLoaded(true)
+      document.documentElement.style.overflow = 'hidden'
+      setSelectedImage(image)
+    }
   }
 
   const handleClose = () => {
     setSelectedImage(null)
+    setIsImageLoaded(false)
+    setTimeout(() => {
+      document.documentElement.style.overflow = ''
+    }, 300)
   }
 
   const handlePrev = () => {
@@ -126,14 +143,116 @@ export default function GallerySection() {
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+      document.body.classList.remove('overflow-hidden')
+    }
   }, [selectedImage])
 
+  const renderModal = () => {
+    if (!selectedImage) return null
+
+    return (
+      <>
+        <motion.div
+          className="fixed inset-0 bg-black/90 z-[998]"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={handleClose}
+        />
+
+        <motion.div
+          className="fixed inset-0 z-[999] flex items-center justify-center p-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={handleClose}
+        >
+          <div className="relative w-full max-w-4xl mx-auto">
+            <motion.div
+              className="relative w-full"
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+              <button 
+                className="absolute -left-12 top-1/2 transform -translate-y-1/2 text-white/70 hover:text-white p-1.5 rounded-full transition-colors duration-300 z-[1000] hover:bg-black/30"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handlePrev();
+                }}
+                aria-label="Previous image"
+              >
+                <ChevronLeft size={24} />
+              </button>
+
+              <div className="relative w-full flex items-center justify-center overflow-hidden">
+                <div 
+                  className="w-full flex items-center justify-center"
+                  style={{ 
+                    perspective: '1000px',
+                    WebkitPerspective: '1000px'
+                  }}
+                >
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={selectedImage.src}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                    >
+                      <picture>
+                        <source srcSet={selectedImage.src} type="image/jpeg" />
+                        <img
+                          src={selectedImage.src}
+                          alt={selectedImage.alt}
+                          className="max-w-full max-h-[75vh] h-auto rounded-lg select-none"
+                          style={{
+                            objectFit: 'contain',
+                            backfaceVisibility: 'hidden',
+                            WebkitBackfaceVisibility: 'hidden',
+                            transform: 'translate3d(0, 0, 0)',
+                            WebkitTransform: 'translate3d(0, 0, 0)',
+                            imageRendering: 'crisp-edges',
+                            filter: 'none',
+                            WebkitFilter: 'none'
+                          }}
+                          draggable={false}
+                          loading="eager"
+                          decoding="sync"
+                          onLoad={() => setIsImageLoaded(true)}
+                        />
+                      </picture>
+                    </motion.div>
+                  </AnimatePresence>
+                </div>
+              </div>
+
+              <button 
+                className="absolute -right-12 top-1/2 transform -translate-y-1/2 text-white/70 hover:text-white p-1.5 rounded-full transition-colors duration-300 z-[1000] hover:bg-black/30"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleNext();
+                }}
+                aria-label="Next image"
+              >
+                <ChevronRight size={24} />
+              </button>
+            </motion.div>
+          </div>
+        </motion.div>
+      </>
+    )
+  }
+
   return (
-    <section id="gallery" className="relative py-20 bg-[#000000]">
-      <div className="container mx-auto px-4">
+    <section id="gallery" className="relative py-14 md:py-16 bg-[#000000]">
+      <div className="container mx-auto px-4 max-w-5xl">
         <motion.div 
-          className="text-center mb-12"
+          className="text-center mb-6 md:mb-8"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -143,98 +262,57 @@ export default function GallerySection() {
           <div className="w-12 h-0.5 bg-[#C8A97E] mx-auto"></div>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* Compact gallery layout with no horizontal gaps */}
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-y-1.5 sm:gap-y-2 md:gap-y-2.5 gap-x-0 max-w-[96%] mx-auto">
           {images.map((image, index) => (
             <motion.div
               key={image.src}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: index * 0.2 }}
-              className="relative aspect-square rounded-lg overflow-hidden cursor-pointer group"
+              transition={{ duration: 0.8, delay: index * 0.05 }}
+              className={`relative overflow-hidden cursor-pointer group ${
+                index % 5 === 0 ? 'col-span-2 md:col-span-2' : 
+                index % 3 === 1 && index > 1 ? 'col-span-1 md:col-span-1' : ''
+              }`}
+              style={{ 
+                aspectRatio: index % 5 === 0 ? '16/9' : '1/1',
+                maxHeight: index % 5 === 0 ? '180px' : '140px',
+                borderRadius: '8px',
+                margin: '0 0.25rem',
+                width: 'calc(100% - 0.5rem)'
+              }}
               onClick={() => handleImageClick(image)}
             >
               <AppImage
                 src={image.src}
                 alt={image.alt}
                 fill
-                className="object-cover transition-transform duration-300 group-hover:scale-105"
-                sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 30vw"
+                className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                sizes="(max-width: 480px) 40vw, (max-width: 768px) 30vw, (max-width: 1024px) 25vw, 220px"
+                style={{ 
+                  objectPosition: 'center',
+                  borderRadius: '8px',
+                }}
               />
-              <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/50 to-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="absolute inset-x-0 bottom-0 p-4 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                  <h3 className="text-white text-base font-medium mb-1 line-clamp-1">{image.alt}</h3>
-                  <p className="text-gray-300 text-sm line-clamp-2">{image.description}</p>
+              <div 
+                className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{ borderRadius: '8px' }}
+              >
+                <div className="absolute inset-x-0 bottom-0 p-2 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                  <h3 className="text-white text-xs sm:text-sm font-medium line-clamp-1">{image.alt}</h3>
                 </div>
               </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Image Modal */}
-        <AnimatePresence>
-          {selectedImage && (
-            <motion.div
-              className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5, ease: "easeInOut" }}
-              onClick={handleClose}
-            >
-              <motion.div
-                className="relative max-w-4xl max-h-[90vh] w-full"
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.9, opacity: 0 }}
-                transition={{ duration: 0.5, ease: "easeInOut" }}
-              >
-                <button 
-                  className="absolute left-[-70px] top-1/2 transform -translate-y-1/2 text-white p-3 rounded-full transition-all duration-300 z-30"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handlePrev();
-                  }}
-                  aria-label="Previous image"
-                >
-                  <ChevronLeft size={30} />
-                </button>
-                
-                <div 
-                  className="relative w-full h-full flex items-center justify-center"
-                >
-                  <motion.div
-                    key={selectedImage.src}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.5 }}
-                    className="w-full h-full flex items-center justify-center"
-                  >
-                    <AppImage
-                      src={selectedImage.src}
-                      alt={selectedImage.alt}
-                      width={1200}
-                      height={800}
-                      className="object-contain max-h-[80vh] rounded-lg shadow-2xl transition-all duration-500"
-                    />
-                  </motion.div>
-                </div>
-                
-                <button 
-                  className="absolute right-[-70px] top-1/2 transform -translate-y-1/2 text-white p-3 rounded-full transition-all duration-300 z-30"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleNext();
-                  }}
-                  aria-label="Next image"
-                >
-                  <ChevronRight size={30} />
-                </button>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {mounted && createPortal(
+          <AnimatePresence mode="wait">
+            {selectedImage && isImageLoaded && renderModal()}
+          </AnimatePresence>,
+          document.body
+        )}
       </div>
     </section>
   )

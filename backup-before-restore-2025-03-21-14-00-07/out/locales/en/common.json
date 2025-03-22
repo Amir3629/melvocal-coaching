@@ -1,0 +1,93 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Lessons",
+    "about": "About",
+    "references": "References & Collaborations",
+    "testimonials": "Testimonials",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Discover Your Voice",
+    "subtitle": "Professional Vocal Coaching in Berlin",
+    "cta": "Book Now"
+  },
+  "music": {
+    "title": "My Music"
+  },
+  "video": {
+    "title": "Insights"
+  },
+  "services": {
+    "title": "Services",
+    "singing": {
+      "title": "Singing Lessons",
+      "description": "Individual lessons for all levels",
+      "features": [
+        "Voice Training",
+        "Breathing Technique",
+        "Interpretation",
+        "Stage Presence"
+      ],
+      "details": {
+        "includes": [
+          "Voice Analysis",
+          "Individual Training Plan",
+          "Recordings",
+          "Practice Material"
+        ],
+        "suitable": [
+          "Beginners",
+          "Advanced",
+          "Professionals",
+          "All Genres"
+        ],
+        "duration": "60-90 min",
+        "location": "Online & Studio Berlin"
+      }
+    }
+  },
+  "about": {
+    "title": "About Me",
+    "intro": "Professional Singer & Vocal Coach",
+    "expanded": "With years of experience in vocal training...",
+    "projects": {
+      "title": "Current Projects",
+      "description": "Discover my current musical projects"
+    },
+    "more": "Learn More",
+    "less": "Show Less"
+  },
+  "references": {
+    "title": "References & Collaborations"
+  },
+  "testimonials": {
+    "title": "Testimonials"
+  },
+  "contact": {
+    "title": "Contact",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "message": "Message",
+      "send": "Send"
+    }
+  },
+  "booking": {
+    "title": "Book a Session",
+    "service": "Select Service",
+    "date": "Select Date",
+    "time": "Select Time",
+    "contact": "Your Contact Information",
+    "name": "Full Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "message": "Additional Message",
+    "submit": "Submit Booking",
+    "success": "Booking submitted successfully!",
+    "error": "There was an error submitting your booking. Please try again."
+  },
+  "language": {
+    "switchTo": "Zu Deutsch wechseln"
+  }
+} 

@@ -1,0 +1,232 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap');
+
+/* Typography Variables */
+:root {
+  --text-heading: #2A2A2A;
+  --text-body: #4A4A4A;
+  --text-subtle: #666666;
+  --text-legal: #777777;
+  --text-link: #8B5E3C;
+  --accent-brown: #8B5E3C;
+  --text-white: #FFFFFF;
+}
+
+/* Base Typography */
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  font-weight: 300;
+  color: var(--text-body);
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6, .hero-title, .section-title {
+  font-family: 'Playfair Display', serif;
+  color: var(--text-heading);
+  margin-bottom: 1rem;
+}
+
+h1, .h1, .hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+
+h2, .h2, .section-title {
+  font-size: 2.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 1.5rem;
+}
+
+h3, .h3 {
+  font-size: 1.75rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+h4, .h4 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+h5, .h5 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+/* Text Elements */
+p, .body-text {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--text-body);
+  font-weight: 300;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text-body);
+}
+
+.caption {
+  font-size: 0.95rem;
+  color: var(--text-subtle);
+}
+
+.legal-text {
+  font-size: 0.85rem;
+  color: var(--text-legal);
+  line-height: 1.5;
+}
+
+/* Brand and Navigation */
+.brand-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--text-heading);
+}
+
+.nav-text {
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-body);
+}
+
+/* Buttons and Call to Action */
+.button-text {
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  color: var(--text-white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Section Headings */
+.section-heading {
+  font-size: 2.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: white !important;
+  position: relative;
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.section-heading::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 70px;
+  height: 2px;
+  background-color: var(--accent-brown);
+  margin-bottom: 0.5rem;
+}
+
+/* Ampersand styling */
+.section-heading .amp, 
+h2 .amp {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 400;
+  color: white;
+  margin: 0 0.1em;
+}
+
+/* Quote Style */
+blockquote, .quote {
+  font-size: 1.1rem;
+  color: var(--text-subtle);
+  border-left: 3px solid var(--accent-brown);
+  padding-left: 1.5rem;
+  margin: 2rem 0;
+  font-style: italic;
+}
+
+/* Links */
+a:not(.button) {
+  color: var(--text-link);
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+  
+a:not(.button):hover {
+  text-decoration: underline;
+}
+
+/* Music Genre Tag */
+.genre-tag {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.9rem;
+  color: var(--accent-brown);
+  background: #FFF5EB;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  display: inline-block;
+}
+
+/* Booking Process */
+.booking-step-title {
+  font-size: 1.5rem;
+  color: var(--text-heading);
+  border-left: 4px solid var(--accent-brown);
+  padding-left: 1rem;
+  margin-bottom: 1rem;
+  font-family: 'Playfair Display', serif;
+}
+
+/* Form Fields */
+.form-label {
+  font-size: 1rem;
+  color: var(--text-subtle);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.form-placeholder {
+  color: #999999;
+  font-style: italic;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  h1, .h1, .hero-title {
+    font-size: 2rem;
+  }
+  
+  h2, .h2, .section-title {
+    font-size: 1.75rem;
+  }
+  
+  h3, .h3 {
+    font-size: 1.5rem;
+  }
+  
+  body, p, .body-text {
+    font-size: 1rem;
+  }
+}
+
+/* Special styling for dark background sections */
+.bg-black h1, .bg-black h2, .bg-black h3,
+.bg-\[#040202\] h1, .bg-\[#040202\] h2, .bg-\[#040202\] h3,
+.dark-bg h1, .dark-bg h2, .dark-bg h3,
+.section-title h2 {
+  color: var(--text-white);
+} 

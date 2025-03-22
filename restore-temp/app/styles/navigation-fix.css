@@ -1,0 +1,66 @@
+/* Navigation color fix */
+header a, 
+header a:hover, 
+header a:focus, 
+header a:visited,
+a[href="/#services"],
+a[href="/#about"],
+a[href="/#references"],
+a[href="/#testimonials"],
+a[href="/#contact"] {
+  color: white !important;
+} 
+
+/* Navigation specific styles */
+
+/* Make the navigation links transition smoothly to gold on hover */
+header a,
+header a:visited,
+header a:focus,
+header a[href="/#services"],
+header a[href="/#about"],
+header a[href="/#references"],
+header a[href="/#testimonials"],
+header a[href="/#contact"],
+header button,
+header .nav-link {
+  color: white !important;
+  text-decoration: none !important;
+  position: relative;
+  transition: color 0.3s ease !important;
+}
+
+/* Navigation hover state - gold color instead of underline */
+header a:hover,
+header a[href]:hover,
+header button:hover,
+header .nav-link:hover {
+  color: var(--primary) !important;
+  text-decoration: none !important;
+}
+
+/* Remove any underline effects */
+header a::after,
+header a:hover::after,
+header a[href]::after,
+header a[href]:hover::after,
+header .nav-link::after,
+header .nav-link:hover::after {
+  display: none !important;
+}
+
+/* Active navigation item */
+header a.active,
+header a[href].active,
+header .nav-link.active {
+  color: var(--primary) !important;
+}
+
+/* Make sure no underlines appear */
+a:not(.button) {
+  text-decoration: none !important;
+}
+
+a:not(.button):hover {
+  text-decoration: none !important;
+} 

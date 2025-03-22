@@ -1,0 +1,140 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "about": "About",
+    "references": "References",
+    "testimonials": "Testimonials",
+    "contact": "Contact"
+  },
+  "hero": {
+    "title": "Mel Jazz",
+    "subtitle": "Professional Vocal Coaching in Berlin",
+    "cta": "Discover Services"
+  },
+  "services": {
+    "title": "Services",
+    "singing": {
+      "title": "Singing",
+      "subtitle": "Vocal Training for Everyone",
+      "description": "Professional voice training for bands, musicians, and ambitious singers - tailored to your artistic development.",
+      "features": [
+        "Basic Techniques",
+        "Voice Formation",
+        "Breathing Technique",
+        "Song Interpretation"
+      ],
+      "details": {
+        "includes": [
+          "Voice Analysis",
+          "Basic Training",
+          "Song Selection",
+          "Practice Material"
+        ],
+        "suitable": [
+          "Bands",
+          "Musicians",
+          "Beginners",
+          "Advanced"
+        ],
+        "duration": "45-60 minutes",
+        "location": "Studio Berlin / Online"
+      }
+    },
+    "coaching": {
+      "title": "Vocal Coaching",
+      "subtitle": "Professional Coaching",
+      "description": "CVT-based voice training for professionals - develop your unique voice and performance at the highest level.",
+      "features": [
+        "CVT Technique",
+        "Performance",
+        "Repertoire",
+        "Style Development"
+      ],
+      "details": {
+        "includes": [
+          "CVT Voice Analysis",
+          "Technical Training",
+          "Repertoire Building",
+          "Performance Preparation"
+        ],
+        "suitable": [
+          "Professionals",
+          "Semi-Professionals",
+          "Advanced"
+        ],
+        "duration": "60-90 minutes",
+        "location": "Studio Berlin / Online"
+      }
+    },
+    "workshop": {
+      "title": "Workshop",
+      "subtitle": "Individual & Intensive",
+      "description": "Tailored intensive workshops for a profound experience in your vocal development.",
+      "features": [
+        "Ensemble Work",
+        "Harmony Theory",
+        "Improvisation",
+        "Performance Practice"
+      ],
+      "details": {
+        "includes": [
+          "Intensive Training",
+          "Theory & Practice",
+          "Individual Feedback",
+          "Performance Preparation"
+        ],
+        "suitable": [
+          "Individuals",
+          "Small Groups",
+          "Bands"
+        ],
+        "duration": "From 3 hours (€600)",
+        "location": "By Arrangement"
+      }
+    },
+    "choir": {
+      "title": "Choir Next Door",
+      "subtitle": "Singing Together",
+      "description": "Discover the joy of singing together in our dynamic neighborhood choir - open to all levels.",
+      "features": [
+        "Multi-Voice",
+        "Harmony",
+        "Rhythm",
+        "Community"
+      ],
+      "details": {
+        "includes": [
+          "Voice Training",
+          "Choral Singing",
+          "Performances",
+          "Events"
+        ],
+        "suitable": [
+          "All Levels",
+          "Neighbors",
+          "Music Enthusiasts"
+        ],
+        "duration": "90-120 minutes",
+        "location": "Studio Berlin"
+      }
+    }
+  },
+  "references": {
+    "title": "References & Collaborations"
+  },
+  "testimonials": {
+    "title": "What People Say",
+    "subtitle": "Testimonials from students and collaborators"
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "subtitle": "Book your session or ask any questions",
+    "form": {
+      "name": "Your Name",
+      "email": "Your Email",
+      "message": "Your Message",
+      "submit": "Send Message"
+    }
+  }
+} 

@@ -1,0 +1,42 @@
+/* Make all header navigation links white */
+header a, 
+header button,
+header .nav-item,
+header nav a,
+header [role="navigation"] a,
+header [class*="nav"] a,
+header .container a,
+#header a,
+[class*="header"] a {
+  color: white !important;
+  text-decoration-color: white !important; 
+}
+
+/* Override any hover states as well */
+header a:hover, 
+header button:hover,
+header .nav-item:hover,
+header nav a:hover,
+header [role="navigation"] a:hover {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Target the main navigation specifically */
+a[href="/#services"],
+a[href="/#about"],
+a[href="/#references"], 
+a[href="/#testimonials"],
+a[href="/#contact"],
+a:is([href="/#services"], [href="/#about"], [href="/#references"], [href="/#testimonials"], [href="/#contact"]) {
+  color: white !important;
+}
+
+/* Target the gold underlines */
+.bg-\[\#C8A97E\] {
+  background-color: white !important;
+}
+
+/* Override specific orange text in the header */
+header .text-\[\#C8A97E\] {
+  color: white !important;
+} 

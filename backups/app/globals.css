@@ -1,0 +1,1779 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --animation-duration: 300ms;
+    --transition-duration: 300ms;
+    --card-transition-duration: 200ms;
+    --background: #000000;
+    --foreground: #ffffff;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: #C8A97E;
+    --primary-foreground: 0 0% 98%;
+    --primary-hover: #B69A6E;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --radius: 0.75rem;
+    --font-scale-mobile: 0.875;
+    --container-padding-mobile: 1rem;
+    --text-opacity: 0.95;
+    --header-height: 4rem;
+    --header-height-mobile: 3.5rem;
+    --safe-area-inset-top: env(safe-area-inset-top, 0px);
+    --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-area-left: env(safe-area-inset-left);
+    --safe-area-right: env(safe-area-inset-right);
+    /* Text Colors */
+    --text-heading: #2A2A2A;
+    --text-body: #4A4A4A;
+    --text-subtle: #666666;
+    --text-legal: #777777;
+    --text-link: #8B5E3C;
+    /* Scrollbar Colors */
+    --scrollbar-track: #111111;
+    --scrollbar-thumb: #C8A97E;
+    --scrollbar-thumb-hover: #D4AF37;
+  }
+
+  /* Custom Scrollbar Styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+  }
+
+  /* Firefox */
+  html {
+    scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+    scrollbar-width: thin;
+  }
+
+  @media (prefers-reduced-motion) {
+    :root {
+      --animation-duration: 0ms;
+      --transition-duration: 0ms;
+      --card-transition-duration: 0ms;
+    }
+  }
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+  }
+
+  html {
+    font-size: calc(16px * var(--font-scale-mobile));
+    -webkit-text-size-adjust: 100%;
+    background: var(--background);
+    color: var(--foreground);
+    scroll-behavior: smooth;
+    height: 100%;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-black text-white antialiased;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    background: var(--background);
+    color: var(--foreground);
+    overflow-x: hidden;
+    cursor: url('/vocal-coaching/images/music-cursor.png') 16 16, pointer;
+    padding-top: 0;
+    padding-bottom: var(--safe-area-inset-bottom);
+    font-family: var(--font-roboto);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    font-weight: 300;
+    color: #4A4A4A;
+  }
+
+  @supports (-webkit-touch-callout: none) {
+    body {
+      min-height: -webkit-fill-available;
+    }
+  }
+
+  @media (min-width: 768px) {
+    html {
+      font-size: 16px;
+    }
+    body {
+      padding-top: 0;
+    }
+  }
+
+  /* Typography base styles with responsive adjustments */
+  h1, .h1, .hero-title {
+    font-family: var(--font-playfair);
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #2A2A2A;
+    margin-bottom: 1.5rem;
+  }
+
+  h2, .h2, .section-title {
+    font-family: var(--font-playfair);
+    font-size: 2.25rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #3E3E3E;
+    margin-bottom: 1.5rem;
+  }
+
+  h3, .h3 {
+    font-family: var(--font-playfair);
+    font-size: 1.75rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #3E3E3E;
+    margin-bottom: 1rem;
+  }
+
+  h4, .h4 {
+    font-family: var(--font-playfair);
+    font-size: 1.5rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #3E3E3E;
+  }
+
+  h5, .h5 {
+    font-family: var(--font-playfair);
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #3E3E3E;
+  }
+
+  p, .body-text {
+    font-family: var(--font-roboto);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #4A4A4A;
+    font-weight: 300;
+    margin-bottom: 1rem;
+  }
+
+  .subtitle {
+    font-family: var(--font-roboto);
+    font-size: 1.1rem;
+    font-weight: 300;
+    font-style: italic;
+    color: #4A4A4A;
+  }
+
+  .caption {
+    font-family: var(--font-roboto);
+    font-size: 0.95rem;
+    color: #666666;
+  }
+
+  .legal-text {
+    font-family: var(--font-roboto);
+    font-size: 0.85rem;
+    color: #777777;
+    line-height: 1.5;
+  }
+
+  /* Brand name specific style */
+  .brand-name {
+    font-family: var(--font-playfair);
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #2A2A2A;
+  }
+
+  /* Navigation text style */
+  .nav-text {
+    font-family: var(--font-roboto);
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #4A4A4A;
+  }
+
+  /* Button text style */
+  .button-text {
+    font-family: var(--font-roboto);
+    font-size: 1.2rem;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: #FFFFFF;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Section heading style */
+  .section-heading {
+    font-family: var(--font-playfair);
+    font-size: 2.25rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #3E3E3E;
+    position: relative;
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .section-heading::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6rem;
+    height: 3px;
+    background-color: #8B5E3C;
+  }
+
+  /* Quote style */
+  blockquote, .quote {
+    font-size: 1.1rem;
+    color: #5A5A5A;
+    border-left: 3px solid #8B5E3C;
+    padding-left: 1.5rem;
+    margin: 2rem 0;
+    font-style: italic;
+  }
+
+  /* Link style */
+  a:not(.button) {
+    color: #8B5E3C;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  
+  a:not(.button):hover {
+    text-decoration: underline;
+  }
+
+  /* Music Genre Tag */
+  .genre-tag {
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.9rem;
+    color: #8B5E3C;
+    background: #FFF5EB;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    display: inline-block;
+  }
+
+  /* Booking Process Steps */
+  .booking-step-title {
+    font-size: 1.5rem;
+    color: #3E3E3E;
+    border-left: 4px solid #8B5E3C;
+    padding-left: 1rem;
+    margin-bottom: 1rem;
+    font-family: var(--font-playfair);
+  }
+
+  /* Form Field Styles */
+  .form-label {
+    font-size: 1rem;
+    color: #5A5A5A;
+    margin-bottom: 0.5rem;
+    display: block;
+    font-family: var(--font-roboto);
+  }
+
+  .form-placeholder {
+    color: #999999;
+    font-style: italic;
+  }
+
+  /* Responsive typography adjustments */
+  @media (max-width: 768px) {
+    h1, .h1, .hero-title {
+      font-size: 2rem;
+      line-height: 1.2;
+    }
+    
+    h2, .h2, .section-title {
+      font-size: 1.75rem;
+      line-height: 1.3;
+    }
+    
+    h3, .h3 {
+      font-size: 1.5rem;
+      line-height: 1.4;
+    }
+    
+    body {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+    
+    .about-section {
+      flex-direction: column;
+    }
+  }
+
+  /* Tablet optimizations */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .section-padding {
+      @apply py-16 px-6;
+    }
+
+    .container {
+      @apply px-6;
+    }
+  }
+
+  /* Desktop optimizations */
+  @media (min-width: 1024px) {
+    .section-padding {
+      @apply py-20 px-8;
+    }
+
+    .container {
+      @apply px-8;
+    }
+  }
+
+  section {
+    @apply relative overflow-hidden;
+  }
+
+  .container {
+    @apply px-4 mx-auto max-w-7xl;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    min-height: 100vh;
+    background: var(--background);
+    color: var(--foreground);
+    overflow-x: hidden;
+    cursor: url('/vocal-coaching/images/music-cursor.png') 16 16, pointer;
+  }
+}
+
+@layer components {
+  .heading-underline {
+    @apply relative pb-4;
+  }
+
+  .heading-underline::after {
+    content: "";
+    @apply absolute bottom-0 left-1/2 -translate-x-1/2 w-24 h-1 bg-[#C8A97E];
+  }
+
+  .parallax-bg {
+    @apply bg-fixed bg-center bg-no-repeat bg-cover;
+  }
+
+  .glass-effect {
+    @apply bg-black/30 backdrop-blur-md;
+  }
+
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-1;
+  }
+
+  .gold-gradient {
+    background: linear-gradient(135deg, #c8a97e 0%, #b89a6f 100%);
+  }
+
+  .dark-gradient {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.9) 100%);
+  }
+
+  .section-spacing {
+    @apply py-20 px-4 md:py-32;
+  }
+
+  .fixed-nav-button {
+    position: fixed !important;
+    transform: translateY(-50%) !important;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000;
+    -webkit-perspective: 1000;
+    will-change: transform;
+    transition: transform 0.3s ease !important;
+  }
+
+  .fixed-nav-button:hover {
+    transform: translateY(-50%) scale(1.1) !important;
+  }
+
+  .section-padding {
+    @apply py-16 md:py-20;
+  }
+
+  .heading-xl {
+    @apply text-4xl md:text-5xl lg:text-6xl font-display font-bold;
+  }
+
+  .heading-lg {
+    @apply text-3xl md:text-4xl lg:text-5xl font-display font-bold;
+  }
+
+  .heading-md {
+    @apply text-2xl md:text-3xl lg:text-4xl font-display font-bold;
+  }
+
+  .heading-sm {
+    @apply text-xl md:text-2xl lg:text-3xl font-display font-bold;
+  }
+
+  .body-lg {
+    @apply text-lg md:text-xl;
+  }
+
+  .body-base {
+    @apply text-base md:text-lg;
+  }
+
+  .body-sm {
+    @apply text-sm md:text-base;
+  }
+
+  /* Section title with single gold line */
+  .section-title {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+    display: inline-block;
+    width: 100%;
+  }
+
+  .section-title h2 {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    font-weight: 300;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+  }
+
+  @media (min-width: 768px) {
+    .section-title h2 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .section-title h2 {
+      font-size: 3rem;
+      line-height: 1;
+    }
+  }
+
+  .section-title h2::after {
+    content: '';
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 2px;
+    background-color: #C8A97E;
+    opacity: 0.8;
+  }
+
+  /* Remove all other gold line styles */
+  .heading-underline,
+  .section-heading::after,
+  .section-heading-container::after {
+    display: none;
+  }
+
+  /* Legal document modal styling */
+  .legal-document-modal {
+    @apply p-2;
+  }
+  
+  .legal-document-title {
+    @apply text-2xl font-bold mb-4 text-white;
+  }
+
+  /* Legal document content styling */
+  .legal-document-content {
+    color: white !important;
+    margin-top: -0.5rem !important;
+  }
+
+  .legal-document-content h1,
+  .legal-document-content h2,
+  .legal-document-content h3,
+  .legal-document-content h4,
+  .legal-document-content h5,
+  .legal-document-content h6,
+  .legal-document-content p,
+  .legal-document-content li,
+  .legal-document-content a,
+  .legal-document-content span,
+  .legal-document-content div {
+    color: white !important;
+  }
+
+  .legal-document-content ul, 
+  .legal-document-content ol {
+    @apply text-gray-200 mb-6 pl-6 leading-relaxed;
+  }
+
+  .legal-document-content li {
+    @apply mb-2;
+  }
+
+  .legal-document-content {
+    @apply px-4;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  .legal-document-content h1:first-child,
+  .legal-document-content h2:first-child,
+  .legal-document-content h3:first-child {
+    margin-top: 0 !important;
+  }
+
+  /* Ensure white text in prose sections */
+  .prose {
+    @apply text-white;
+  }
+
+  .prose p,
+  .prose li,
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    @apply text-white opacity-100;
+  }
+
+  /* Dark background specific styles */
+  .bg-\[\#040202\] .prose,
+  .bg-black .prose {
+    @apply text-white;
+  }
+
+  .bg-\[\#040202\] .prose p,
+  .bg-black .prose p {
+    @apply text-white opacity-100;
+  }
+}
+
+/* Custom section heading styles */
+.section-heading {
+  @apply text-4xl font-light tracking-wide text-white;
+  font-family: var(--font-playfair);
+  letter-spacing: 0.03em;
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.section-heading-container {
+  @apply text-center mb-12 relative;
+}
+
+.section-heading-container::after {
+  content: '';
+  @apply w-12 h-0.5 bg-[#C8A97E] absolute left-1/2 -translate-x-1/2 bottom-0;
+  opacity: 0.8;
+}
+
+/* Custom scrollbar styling */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: rgba(200, 169, 126, 0.4);
+  border-radius: 5px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(200, 169, 126, 0.6);
+}
+
+/* Firefox */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(200, 169, 126, 0.4) transparent;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .section-heading {
+    @apply text-3xl;
+    font-size: 2rem;
+  }
+
+  .prose {
+    font-size: 0.95rem;
+  }
+
+  input, textarea, button {
+    font-size: 16px !important; /* Prevents iOS zoom on focus */
+  }
+
+  /* Improve touch targets */
+  button, 
+  [role="button"],
+  a {
+    @apply min-h-[44px] min-w-[44px];
+    padding: 0.5rem 1rem;
+  }
+
+  .cursor-music {
+    cursor: pointer;
+  }
+}
+
+/* Responsive container padding */
+.container {
+  @apply px-4 md:px-6 lg:px-8;
+  padding-left: var(--container-padding-mobile);
+  padding-right: var(--container-padding-mobile);
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Mobile typography adjustments */
+@media (max-width: 767px) {
+  /* Typography scaling */
+  h1 {
+    font-size: 2.25rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  h2 {
+    font-size: 1.75rem !important;
+    line-height: 1.3 !important;
+  }
+  
+  p {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Button sizing */
+  .rounded-full {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+    font-size: 0.875rem !important;
+  }
+
+  /* Container padding */
+  .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Card scaling */
+  .card, [class*="card"] {
+    transform: scale(0.95) !important;
+  }
+
+  /* Spacing adjustments */
+  .space-y-8 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 1.5rem !important;
+  }
+
+  .gap-8 {
+    gap: 1rem !important;
+  }
+}
+
+/* Mobile spacing adjustments */
+@media (max-width: 767px) {
+  section {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  .gap-8 {
+    gap: 1rem !important;
+  }
+
+  .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 1rem !important;
+  }
+}
+
+/* Mobile-specific UI adjustments */
+@media (max-width: 767px) {
+  /* Card and container scaling */
+  .grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Reduce overall card sizes */
+  .card, [class*="card"], .rounded-xl {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    transform: scale(0.95) !important;
+  }
+
+  /* Adjust image and logo sizes */
+  .aspect-video, 
+  img:not(.no-mobile-scale),
+  svg:not(.no-mobile-scale) {
+    max-width: 85% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Logo specific scaling */
+  [class*="logo"], 
+  [class*="icon"],
+  [class*="badge"] {
+    transform: scale(0.85) !important;
+  }
+
+  /* Adjust padding and margins */
+  .p-6 {
+    padding: 0.75rem !important;
+  }
+
+  .p-8 {
+    padding: 1rem !important;
+  }
+
+  .m-6 {
+    margin: 0.75rem !important;
+  }
+
+  .m-8 {
+    margin: 1rem !important;
+  }
+
+  /* Container width adjustments */
+  .container,
+  .max-w-xl,
+  .max-w-2xl,
+  .max-w-3xl,
+  .max-w-4xl,
+  .max-w-5xl,
+  .max-w-6xl,
+  .max-w-7xl {
+    width: 92% !important;
+    max-width: 92% !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Adjust spacing between sections */
+  section {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .gap-8 {
+    gap: 0.75rem !important;
+  }
+
+  .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.75rem !important;
+  }
+
+  /* Adjust heights for mobile */
+  .h-[500px] {
+    height: 400px !important;
+  }
+
+  .h-[600px] {
+    height: 450px !important;
+  }
+
+  .min-h-screen {
+    min-height: 100vh !important;
+  }
+
+  /* Adjust border radius */
+  .rounded-xl {
+    border-radius: 0.5rem !important;
+  }
+
+  .rounded-lg {
+    border-radius: 0.375rem !important;
+  }
+
+  /* Improve touch targets while keeping visual size */
+  button, 
+  [role="button"],
+  a {
+    min-height: 40px !important;
+    min-width: 40px !important;
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.9375rem !important;
+  }
+}
+
+/* Reduce motion when requested */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 767px) {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .card, [class*="card"] {
+    transform: none !important;
+    transition: transform var(--card-transition-duration) ease-out !important;
+  }
+
+  .preserve-3d {
+    transition: transform var(--card-transition-duration) ease-out !important;
+  }
+
+  /* Improve touch response */
+  button, 
+  [role="button"],
+  a {
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Optimize animations */
+  .animate-in,
+  .animate-out,
+  [class*="motion-"] {
+    will-change: transform, opacity;
+  }
+
+  /* Hardware acceleration for smooth animations */
+  .transform-gpu {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000;
+  }
+
+  /* Optimize scrolling */
+  body {
+    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+    overscroll-behavior-y: none;
+  }
+
+  /* Optimize images */
+  img {
+    content-visibility: auto;
+  }
+}
+
+@layer utilities {
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+
+  /* Custom Scrollbar Styles */
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: rgba(200, 169, 126, 0.4);
+    border-radius: 5px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(200, 169, 126, 0.6);
+  }
+
+  /* Booking confirmation step styles */
+  .booking-confirmation {
+    @apply max-w-4xl mx-auto;
+  }
+  
+  .booking-confirmation-container {
+    @apply bg-[#1A1A1A] rounded-lg p-5 border border-gray-800;
+  }
+  
+  .booking-section {
+    @apply mb-4 pb-3 border-b border-gray-800;
+  }
+  
+  .booking-section-title {
+    @apply text-lg font-medium text-white mb-2;
+  }
+  
+  .booking-field-label {
+    @apply text-gray-400 text-sm;
+  }
+  
+  .booking-field-value {
+    @apply text-white;
+  }
+  
+  .booking-field-highlight {
+    @apply text-[#C8A97E];
+  }
+
+  /* Custom scrollbar */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(200, 169, 126, 0.3);
+    border-radius: 10px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(200, 169, 126, 0.5);
+  }
+  
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #C8A97E #1A1A1A;
+  }
+}
+
+/* 3D Transform Classes */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* Touch Device Support */
+@media (hover: none) {
+  .preserve-3d {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .group:active .preserve-3d {
+    transform: rotateY(180deg);
+  }
+}
+
+.cursor-music {
+  cursor: url('/vocal-coaching/images/music-cursor.png') 16 16, pointer;
+}
+
+/* 3D Flip Card Styles */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(200, 169, 126, 0.3);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(200, 169, 126, 0.5);
+}
+
+/* Custom date picker styling */
+input[type="date"],
+input[type="time"] {
+  background-color: #1A1A1A;
+  border: 1px solid #333;
+  color: white;
+  border-radius: 0.375rem;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  outline: none;
+  transition: border-color 0.2s;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator:hover,
+input[type="time"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 0.9;
+}
+
+input[type="date"]:focus,
+input[type="time"]:focus {
+  border-color: #C8A97E;
+  box-shadow: 0 0 0 1px rgba(200, 169, 126, 0.3);
+}
+
+/* Style the date picker dropdown (webkit browsers) */
+::-webkit-datetime-edit { 
+  padding: 0.25rem;
+  color: #ccc;
+}
+::-webkit-datetime-edit-fields-wrapper { 
+  color: #fff;
+}
+::-webkit-datetime-edit-text { 
+  color: #666;
+}
+::-webkit-datetime-edit-month-field { 
+  color: #fff;
+}
+::-webkit-datetime-edit-day-field { 
+  color: #fff;
+}
+::-webkit-datetime-edit-year-field { 
+  color: #fff;
+}
+
+/* Style for browsers that show a dropdown calendar */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  background-color: transparent;
+  padding: 5px;
+  border-radius: 3px;
+}
+
+/* Firefox specific styles */
+@-moz-document url-prefix() {
+  input[type="date"],
+  input[type="time"] {
+    border: 1px solid #333;
+    background-color: #1A1A1A;
+    color: white;
+    padding: 0.5rem;
+  }
+}
+
+/* Add these calendar specific styles to the end of the file */
+
+/* Calendar Day Styles */
+.rdp-day_today:not(.rdp-day_selected) {
+  background-color: rgba(200, 169, 126, 0.1) !important;
+  color: #C8A97E !important;
+  font-weight: bold;
+}
+
+.rdp-day {
+  aspect-ratio: 1/1;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+.rdp-caption_label {
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  color: white;
+}
+
+.rdp-head_cell {
+  text-align: center !important;
+  width: 36px !important;
+  padding: 0 !important;
+}
+
+.rdp-month {
+  margin: 0 auto;
+}
+
+.rdp-day_selected {
+  background-color: #C8A97E !important;
+  color: black !important;
+}
+
+.rdp-day_selected:hover {
+  background-color: #D4AF37 !important;
+  color: black !important;
+}
+
+.rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
+  background-color: rgba(200, 169, 126, 0.2) !important;
+}
+
+.rdp-nav_button {
+  width: 32px !important;
+  height: 32px !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 3D Disc Carousel Styles */
+.perspective-1000 {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.disc-container {
+  transform-style: preserve-3d;
+  transition: transform 0.5s ease-out;
+}
+
+.disc {
+  backface-visibility: hidden;
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* Font Consistency */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: #FFFFFF;
+}
+
+h1 {
+  font-size: 2.5rem;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 2rem;
+  line-height: 1.3;
+}
+
+h3 {
+  font-size: 1.75rem;
+  line-height: 1.4;
+}
+
+body {
+  font-family: var(--font-roboto);
+  color: #4A4A4A;
+  line-height: 1.6;
+}
+
+/* Header Behavior */
+header {
+  position: sticky;
+  top: 0;
+  transition: background-color 0.3s ease;
+  z-index: 50;
+}
+
+header.scrolled {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+/* Section Spacing */
+section {
+  margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  h1, .h1, .hero-title {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
+  
+  h2, .h2, .section-title {
+    font-size: 1.75rem;
+    line-height: 1.3;
+  }
+  
+  h3, .h3 {
+    font-size: 1.5rem;
+    line-height: 1.4;
+  }
+  
+  body {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  
+  .about-section {
+    flex-direction: column;
+  }
+}
+
+/* Remove excess spacing between sections */
+section + section {
+  margin-top: 0;
+}
+
+/* Only add padding inside section containers */
+section > .container {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+  section > .container {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+}
+
+/* Special sections that need full bleed backgrounds */
+.hero-section,
+.music-section,
+.testimonials-section {
+  padding: 0;
+}
+
+/* Ensure smooth transitions */
+.section-transition {
+  transition: padding 0.3s ease;
+}
+
+/* Add perspective styling for 3D effect */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* Dark background text overrides */
+.bg-black h1, .bg-black h2, .bg-black h3, .bg-black h4, .bg-black h5, .bg-black h6,
+.bg-\[#040202\] h1, .bg-\[#040202\] h2, .bg-\[#040202\] h3, .bg-\[#040202\] h4, 
+.section-title h2 {
+  color: #FFFFFF !important;
+}
+
+.section-heading {
+  color: #FFFFFF !important;
+}
+
+/* Important overrides */
+.section-heading {
+  color: white !important;
+}
+
+/* Custom scrollbar styling */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 5px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: rgba(200, 169, 126, 0.4);
+  border-radius: 5px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(200, 169, 126, 0.6);
+}
+
+/* Add this at the very end of the file */
+
+/* Modal open class that prevents scrolling without changing the view position */
+body.modal-open {
+  /* Prevent scrolling */
+  overflow: hidden !important;
+  /* Prevent scroll chaining */
+  overscroll-behavior: none !important;
+  /* Prevent touch events from scrolling */
+  touch-action: none !important;
+  /* Add padding to compensate for scrollbar disappearance */
+  padding-right: 15px !important;
+}
+
+/* Navigation hover styles - smooth transition to gold */
+header nav a,
+nav a,
+header [role="link"],
+header button,
+header .nav-link {
+  transition: color 0.3s ease !important;
+  position: relative !important;
+  text-decoration: none !important;
+}
+
+header nav a:hover,
+nav a:hover,
+header [role="link"]:hover,
+header button:hover,
+header .nav-link:hover {
+  color: #C8A97E !important;
+  text-decoration: none !important;
+}
+
+/* Force no underline for navigation items */
+header a::after,
+header a::before,
+header nav a::after,
+header nav a::before,
+header .nav-link::after,
+header .nav-link::before,
+nav a::after,
+nav a::before {
+  display: none !important;
+}
+
+/* Force navigation links to be white */
+header a, 
+header a:hover, 
+header a:focus, 
+header a:visited,
+a[href="/#services"],
+a[href="/#about"],
+a[href="/#references"],
+a[href="/#testimonials"],
+a[href="/#contact"] {
+  color: white !important;
+}
+
+/* Prevent background scrolling when modals are open */
+.modal-content {
+  max-height: 80vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -ms-overflow-style: none;
+  scrollbar-width: thin;
+}
+
+.modal-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: rgba(200, 169, 126, 0.5);
+  border-radius: 4px;
+}
+
+/* Calendar/Datepicker fixes */
+.calendar-wrapper,
+.date-picker,
+[role="dialog"] .react-datepicker,
+[role="dialog"] .react-calendar {
+  overscroll-behavior: contain !important;
+  max-height: 65vh !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  -ms-overflow-style: none !important;
+  scrollbar-width: thin !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25) !important;
+}
+
+.calendar-wrapper::-webkit-scrollbar,
+.date-picker::-webkit-scrollbar,
+[role="dialog"] .react-datepicker::-webkit-scrollbar,
+[role="dialog"] .react-calendar::-webkit-scrollbar {
+  width: 4px !important;
+}
+
+.calendar-wrapper::-webkit-scrollbar-thumb,
+.date-picker::-webkit-scrollbar-thumb,
+[role="dialog"] .react-datepicker::-webkit-scrollbar-thumb,
+[role="dialog"] .react-calendar::-webkit-scrollbar-thumb {
+  background-color: rgba(200, 169, 126, 0.5) !important;
+  border-radius: 4px !important;
+}
+
+/* Utility class for preventing scroll propagation */
+.scroll-lock {
+  overscroll-behavior: contain;
+  -webkit-overscroll-behavior: contain;
+  -ms-scroll-chaining: none;
+}
+
+/* Fix calendar picker controls to prevent scroll propagation */
+.react-datepicker,
+.react-datepicker-wrapper,
+.react-datepicker__month-container,
+.react-datepicker__day,
+.react-datepicker__day-names,
+.react-datepicker__month {
+  overscroll-behavior: contain;
+  -webkit-overscroll-behavior: contain;
+  -ms-scroll-chaining: none;
+}
+
+/* Modal scrolling fixes */
+.modal-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+.modal-content {
+  max-height: 80vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -ms-overflow-style: none;
+  scrollbar-width: thin;
+}
+
+.modal-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: rgba(200, 169, 126, 0.5);
+  border-radius: 4px;
+}
+
+/* Calendar fixes */
+.react-datepicker, 
+.react-datepicker-wrapper,
+.date-picker-container {
+  overscroll-behavior: contain;
+}
+
+/* Utility class */
+.scroll-lock {
+  overscroll-behavior: contain;
+}
+
+/* Add this to your existing styles */
+.prose {
+  color: white !important;
+}
+
+.prose p,
+.prose li,
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  color: white !important;
+  opacity: 1 !important;
+}
+
+/* Ensure text is white in dark sections */
+.bg-[#040202] .prose,
+.bg-black .prose {
+  color: white !important;
+}
+
+.bg-[#040202] .prose p,
+.bg-black .prose p {
+  color: white !important;
+  opacity: 1 !important;
+}
+
+/* Add these at the very end of the file */
+
+/* Modal open styles to prevent scrolling without jumping */
+.modal-open {
+  overflow: hidden !important;
+}
+
+/* Ensure content doesn't shift when scrollbar disappears */
+body.modal-open {
+  padding-right: 15px !important;
+}
+
+/* Fix to prevent page jumping when modal is open */
+html.modal-open,
+body.modal-open {
+  height: 100%;
+  overflow: hidden !important;
+  touch-action: none !important;
+  overscroll-behavior: none !important;
+  -webkit-overflow-scrolling: touch;
+  position: relative !important;
+  width: 100% !important;
+  padding-right: 15px !important; /* Compensate for scrollbar disappearing */
+}
+
+/* Legal document modal content positioning */
+.legal-datenschutz {
+  padding-top: 0 !important;
+}
+
+.legal-agb, 
+.legal-impressum {
+  padding-top: 1rem !important;
+}
+
+/* Legal document styles */
+.legal-document-content h1,
+.legal-document-content h2 {
+  @apply text-2xl font-semibold mb-6 text-white;
+}
+
+.legal-document-content h2:first-of-type {
+  @apply mt-6;
+}
+
+.legal-document-content p {
+  @apply text-gray-300 mb-6;
+}
+
+/* Specific spacing for Datenschutz and AGB titles */
+.legal-datenschutz h2:first-of-type,
+.legal-agb h2:first-of-type {
+  margin-top: 1.75rem !important;
+}
+
+/* Add these at the very end of the file */
+
+/* Modal open styles */
+body[style*="overflow: hidden"] {
+  padding-right: var(--scrollbar-width, 15px) !important; /* Prevent layout shift */
+  touch-action: none !important; /* Prevent touch events from scrolling */
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: none !important;
+  position: relative !important;
+}
+
+/* Modal overlay styles */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 100;
+}
+
+/* Modal content styles */
+.modal-content {
+  position: relative;
+  z-index: 101;
+  max-height: 85vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -ms-overflow-style: none;
+  scrollbar-width: thin;
+}
+
+/* Prevent interaction with background content when modal is open */
+body[style*="overflow: hidden"] > *:not(.modal-overlay):not(.modal-content) {
+  pointer-events: none;
+  user-select: none;
+  filter: blur(2px);
+  transition: filter 0.3s ease;
+}
+
+/* Custom scrollbar for modal content */
+.modal-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+  background-color: rgba(200, 169, 126, 0.3);
+  border-radius: 3px;
+}
+
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(200, 169, 126, 0.5);
+}
+
+/* Ensure modal content is always on top */
+.modal-open {
+  isolation: isolate;
+}
+
+/* Prevent iOS bounce scroll effect */
+.modal-content {
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Add padding to compensate for scrollbar disappearance */
+@supports (padding: env(safe-area-inset-right)) {
+  body[style*="overflow: hidden"] {
+    padding-right: env(safe-area-inset-right, 15px) !important;
+  }
+}
+
+/* Add at the end of the file */
+
+/* Modal styles */
+:root {
+  --scrollbar-width: 0px;
+}
+
+html.modal-open {
+  overflow: hidden;
+  padding-right: var(--scrollbar-width);
+}
+
+html.modal-open body {
+  overflow: hidden;
+  touch-action: none;
+}
+
+.modal-open .backdrop {
+  --tw-backdrop-blur: blur(2px);
+  backdrop-filter: var(--tw-backdrop-blur);
+}
+
+/* Custom scrollbar for modal content */
+.overflow-y-auto::-webkit-scrollbar {
+  width: 6px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+  background-color: rgba(200, 169, 126, 0.2);
+  border-radius: 3px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(200, 169, 126, 0.4);
+}
+
+/* Add at the end of the file */
+
+/* Modal Root Styles */
+.modal-root {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  overflow: hidden;
+}
+
+.modal-root ~ * {
+  pointer-events: none;
+}
+
+/* When modal is open */
+body:has(.modal-root) {
+  overflow: hidden !important;
+  padding-right: var(--scrollbar-width, 15px);
+}
+
+/* Prevent background content interaction when modal is open */
+body:has(.modal-root) > *:not(.modal-root) {
+  filter: none;
+  pointer-events: none;
+}
+

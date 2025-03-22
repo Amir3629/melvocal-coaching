@@ -1,0 +1,9 @@
+/* Header navigation */
+header nav a {
+  color: white !important;
+}
+
+/* Ensure all navigation text is white */
+.text-[#C8A97E], a[href^="/#"] {
+  color: white !important;
+} 

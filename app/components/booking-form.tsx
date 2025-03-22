@@ -8,7 +8,7 @@ import ServiceSelection from './booking/service-selection'
 import ProgressBar from './booking/progress-bar'
 import LiveSingingForm from './booking/live-singing-form'
 import VocalCoachingForm from './booking/vocal-coaching-form'
-import WorkshopForm from './booking/workshop-form'
+import WorkshopForm from './booking/workshop-form-new'
 import ConfirmationStep from './booking/confirmation-step'
 import { X, ArrowLeft, ArrowRight, Check } from 'lucide-react'
 
@@ -49,6 +49,7 @@ interface FormData {
   // Legal
   termsAccepted: boolean;
   privacyAccepted: boolean;
+  serviceType: ServiceType | null;
 }
 
 // Props interface
@@ -75,15 +76,26 @@ export default function BookingForm({ isOpen: externalIsOpen, onClose }: Booking
     phone: '',
     message: '',
     termsAccepted: false,
-    privacyAccepted: false
+    privacyAccepted: false,
+    serviceType: null
   })
   
-  // Handle external isOpen prop
+  // Effect to handle modal open/close
   useEffect(() => {
     if (externalIsOpen !== undefined) {
-      setIsOpen(externalIsOpen);
+      setIsOpen(externalIsOpen)
+      if (externalIsOpen) {
+        document.documentElement.classList.add('modal-open')
+      } else {
+        document.documentElement.classList.remove('modal-open')
+      }
     }
-  }, [externalIsOpen]);
+    
+    // Cleanup when component unmounts
+    return () => {
+      document.documentElement.classList.remove('modal-open')
+    }
+  }, [externalIsOpen])
   
   // Handle service selection
   const handleServiceSelect = (service: ServiceType) => {
@@ -126,23 +138,28 @@ export default function BookingForm({ isOpen: externalIsOpen, onClose }: Booking
   
   // Close booking form
   const closeBookingForm = () => {
-    setIsOpen(false)
-    // Reset form state
-    setCurrentStep('service')
-    setServiceType(null)
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      message: '',
-      termsAccepted: false,
-      privacyAccepted: false
-    })
+    // Use smoother exit animation
+    setIsOpen(false);
     
-    // Call external onClose if provided
-    if (onClose) {
-      onClose();
-    }
+    // Reset form state after animation completes
+    setTimeout(() => {
+      setCurrentStep('service');
+      setServiceType(null);
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        message: '',
+        termsAccepted: false,
+        privacyAccepted: false,
+        serviceType: null
+      });
+      
+      // Call external onClose if provided
+      if (onClose) {
+        onClose();
+      }
+    }, 600); // Match the duration of the exit animation
   }
   
   // Determine if form is valid for current step
@@ -195,121 +212,119 @@ export default function BookingForm({ isOpen: externalIsOpen, onClose }: Booking
   }
   
   return (
-    <>
-      {/* Booking Form Modal */}
-      <AnimatePresence>
-        {isOpen && (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Backdrop */}
           <motion.div
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/60 backdrop-blur-[2px] z-[100]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
             onClick={closeBookingForm}
-          >
-            <motion.div
-              className="w-full max-w-3xl bg-gradient-to-b from-[#0A0A0A] to-[#151515] rounded-xl shadow-2xl overflow-hidden border border-[#222]"
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              transition={{ duration: 0.4, type: 'spring', damping: 25 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="p-8 relative">
-                {/* Close button */}
-                <button 
-                  onClick={closeBookingForm}
-                  className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
-                  aria-label="Close booking form"
-                >
-                  <X size={24} />
-                </button>
-                
-                <h2 className="text-2xl font-bold text-white mb-8 text-center">
-                  {currentStep === 'service' 
-                    ? t('booking.title', 'Buchung') 
-                    : currentStep === 'details' && serviceType === 'professioneller-gesang'
-                      ? t('booking.liveSingingTitle', 'Live Gesang buchen')
-                      : currentStep === 'details' && serviceType === 'vocal-coaching'
-                        ? t('booking.vocalCoachingTitle', 'Vocal Coaching buchen')
-                        : currentStep === 'details' && serviceType === 'gesangsunterricht'
-                          ? t('booking.workshopTitle', 'Gesangsunterricht buchen')
-                          : t('booking.confirmTitle', 'Buchung bestätigen')
-                  }
-                </h2>
-                
-                {/* Progress Bar */}
-                <div className="mb-10">
-                  <ProgressBar currentStep={currentStep} />
-                </div>
-                
-                {/* Step 1: Service Selection */}
-                {currentStep === 'service' && (
-                  <ServiceSelection 
-                    selectedService={serviceType} 
-                    onSelect={handleServiceSelect} 
-                  />
-                )}
-                
-                {/* Step 2: Service-specific Form */}
-                {currentStep === 'details' && renderServiceForm()}
-                
-                {/* Step 3: Confirmation */}
-                {currentStep === 'confirm' && (
-                  <ConfirmationStep 
-                    formData={formData} 
-                    serviceType={serviceType}
-                    onChange={handleFormChange}
-                  />
-                )}
-                
-                {/* Navigation Buttons */}
-                <div className="flex justify-between mt-8">
-                  {currentStep !== 'service' ? (
-                      <button
-                      onClick={goToPrevStep}
-                      className="px-6 py-2 border border-gray-700 text-gray-300 rounded-full hover:border-gray-500 transition-colors flex items-center"
-                      >
-                      <ArrowLeft size={16} className="mr-2" />
-                        {t('booking.back', 'Zurück')}
-                      </button>
-                  ) : (
-                    <div></div> // Empty div to maintain flex spacing
-                  )}
+          />
+
+          {/* Modal Container */}
+          <div className="fixed inset-0 overflow-y-auto z-[101]">
+            <div className="flex min-h-full items-center justify-center p-4">
+              <motion.div
+                className="relative w-full max-w-2xl bg-[#0A0A0A] rounded-xl border border-[#C8A97E]/20 shadow-2xl overflow-hidden"
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                  scale: 1
+                }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              >
+                <div className="p-5 relative overflow-auto" style={{ maxHeight: 'calc(100vh - 100px)' }}>
+                  {/* Close button */}
+                  <button 
+                    onClick={closeBookingForm}
+                    className="absolute top-3 right-3 text-gray-400 hover:text-white transition-colors z-10"
+                    aria-label="Close booking form"
+                  >
+                    <X size={24} />
+                  </button>
                   
-                  {currentStep !== 'confirm' ? (
-                    <button
-                      onClick={goToNextStep}
-                      disabled={!isCurrentStepValid()}
-                      className={`px-6 py-2 rounded-full flex items-center ${
-                        isCurrentStepValid()
-                          ? 'bg-[#C8A97E] text-black font-medium hover:bg-[#D4AF37] transition-colors'
-                          : 'bg-gray-700 text-gray-400 cursor-not-allowed'
-                      }`}
-                    >
-                      {t('booking.continue', 'Weiter')}
-                      <ArrowRight size={16} className="ml-2" />
-                    </button>
-                  ) : (
-                      <button
-                      onClick={handleSubmit}
-                      disabled={!isCurrentStepValid()}
-                      className={`px-6 py-2 rounded-full flex items-center ${
-                        isCurrentStepValid()
-                          ? 'bg-[#C8A97E] text-black font-medium hover:bg-[#D4AF37] transition-colors'
-                          : 'bg-gray-700 text-gray-400 cursor-not-allowed'
-                      }`}
-                    >
-                      {t('booking.submit', 'Absenden')}
-                      <Check size={16} className="ml-2" />
-                      </button>
-                  )}
+                  <h2 className="text-lg font-bold text-white mb-5 text-center mt-1">
+                    {currentStep === 'service' 
+                      ? t('booking.title', 'Buchung') 
+                      : currentStep === 'details' && serviceType === 'professioneller-gesang'
+                        ? t('booking.liveSingingTitle', 'Live Gesang buchen')
+                        : currentStep === 'details' && serviceType === 'vocal-coaching'
+                          ? t('booking.vocalCoachingTitle', 'Vocal Coaching buchen')
+                          : currentStep === 'details' && serviceType === 'gesangsunterricht'
+                            ? t('booking.workshopTitle', 'Gesangsunterricht buchen')
+                            : t('booking.confirmTitle', 'Buchung bestätigen')
+                    }
+                  </h2>
+                  
+                  {/* Progress Bar */}
+                  <div className="mb-6">
+                    <ProgressBar currentStep={currentStep} />
                   </div>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+                  
+                  {/* Scrollable content area */}
+                  <div className="max-h-[50vh] overflow-y-auto pr-2 mb-4 custom-scrollbar">
+
+                    {/* Step 1: Service Selection */}
+                    {currentStep === 'service' && (
+                      <ServiceSelection 
+                        selectedService={serviceType} 
+                        onSelect={handleServiceSelect} 
+                      />
+                    )}
+                    
+                    {/* Step 2: Service-specific Form */}
+                    {currentStep === 'details' && renderServiceForm()}
+                    
+                    {/* Step 3: Confirmation */}
+                    {currentStep === 'confirm' && (
+                      <ConfirmationStep 
+                        formData={formData} 
+                        serviceType={serviceType}
+                        onChange={handleFormChange}
+                        onClose={closeBookingForm}
+                      />
+                    )}
+                  </div>
+                  
+                  {/* Navigation Buttons */}
+                  <div className="flex justify-between mt-4">
+                    {currentStep !== 'service' ? (
+                        <button
+                        onClick={goToPrevStep}
+                        className="px-4 sm:px-6 py-1.5 sm:py-2 border border-gray-700 text-gray-300 rounded-full hover:border-gray-500 transition-colors flex items-center text-sm sm:text-base"
+                        >
+                        <ArrowLeft size={14} className="mr-1 sm:mr-2" />
+                          {t('booking.back', 'Zurück')}
+                        </button>
+                    ) : (
+                      <div></div> // Empty div to maintain flex spacing
+                    )}
+                    
+                    {currentStep !== 'confirm' && (
+                      <button
+                        onClick={goToNextStep}
+                        disabled={!isCurrentStepValid()}
+                        className={`px-4 sm:px-6 py-1.5 sm:py-2 rounded-full flex items-center text-sm sm:text-base ${
+                          isCurrentStepValid()
+                            ? 'bg-[#C8A97E] text-black font-medium hover:bg-[#D4AF37] transition-colors'
+                            : 'bg-gray-700 text-gray-400 cursor-not-allowed'
+                        }`}
+                      >
+                        {t('booking.continue', 'Weiter')}
+                        <ArrowRight size={14} className="ml-1 sm:ml-2" />
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </>
+      )}
+    </AnimatePresence>
   )
 }
