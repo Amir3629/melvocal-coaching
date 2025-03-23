@@ -35,17 +35,6 @@ export default function EnhancedMusicPlayer() {
     return `https://img.youtube.com/vi/${youtubeId}/maxresdefault.jpg`;
   };
 
-  // Listen for media context changes
-  useEffect(() => {
-    // If another media is playing (like video), stop this player
-    if (currentlyPlaying === 'video' && isPlaying) {
-      setIsPlaying(false);
-      if (audioRef.current) {
-        audioRef.current.pause();
-      }
-    }
-  }, [currentlyPlaying, isPlaying]);
-
   // Listen for stop events from other media players
   useEffect(() => {
     const handleMediaStop = () => {
@@ -60,6 +49,16 @@ export default function EnhancedMusicPlayer() {
     window.addEventListener(MEDIA_STOP_EVENT, handleMediaStop);
     return () => window.removeEventListener(MEDIA_STOP_EVENT, handleMediaStop);
   }, [isPlaying]);
+
+  // Update playing state when currentlyPlaying changes
+  useEffect(() => {
+    if (currentlyPlaying === 'video' && isPlaying) {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      }
+    }
+  }, [currentlyPlaying, isPlaying]);
 
   // Update audio src
   useEffect(() => {
@@ -117,13 +116,11 @@ export default function EnhancedMusicPlayer() {
         console.log("Audio paused");
       }
     } else {
-      // Stop all other media before playing
+      // First stop any other media that might be playing
       if (currentlyPlaying === 'video') {
         stopAllMedia();
       }
       
-      // Dispatch event to stop other media
-      window.dispatchEvent(new Event(MEDIA_STOP_EVENT));
       setIsPlaying(true);
       setIsLoading(true);
       setCurrentlyPlaying('music');
@@ -168,7 +165,6 @@ export default function EnhancedMusicPlayer() {
   const handleEnded = () => {
     setIsPlaying(false);
     setShowMiniPlayer(false);
-    setCurrentlyPlaying(null);
   };
 
   // Handle audio error
@@ -271,50 +267,24 @@ export default function EnhancedMusicPlayer() {
               </motion.div>
             </div>
           </motion.div>
-          
-          {/* Play button */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-40 pointer-events-none">
-            <AnimatePresence>
-              {!isPlaying && (
-                <motion.div
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0.8, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="bg-white/10 backdrop-blur-sm rounded-full p-6"
-                >
-                  <Play className="h-14 w-14 text-white" />
-                </motion.div>
-              )}
-              {isPlaying && (
-                <motion.div
-                  initial={{ scale: 0.8, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0.8, opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="bg-white/10 backdrop-blur-sm rounded-full p-6"
-                >
-                  <Pause className="h-14 w-14 text-white" />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
         </div>
         
-        {/* Track info */}
-        <div className="mt-6 text-center">
-          <h3 className="text-2xl font-bold text-white">{track.title}</h3>
-          <p className="text-lg text-gray-300">{track.artist}</p>
+        {/* Track title and artist */}
+        <div className="text-center mt-8 mb-4">
+          <h3 className="text-xl font-medium text-white mb-1">{track.title}</h3>
+          <p className="text-sm text-[#C8A97E]">{track.artist}</p>
         </div>
-        
-        {/* Hidden audio element */}
-        <audio 
-          ref={audioRef} 
-          className="hidden"
-          onEnded={handleEnded}
-          onError={handleError}
-        />
       </div>
+      
+      {/* Hidden audio element */}
+      <audio
+        ref={audioRef}
+        onEnded={handleEnded}
+        onError={handleError}
+        preload="auto"
+        className="hidden"
+        src="/audio/AUDIO-2025-03-19-16-15-29.mp3"
+      />
       
       {/* Show any error messages */}
       {error && (

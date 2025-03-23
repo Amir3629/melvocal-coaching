@@ -2,7 +2,7 @@
 
 import { useRef, useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
-import { VolumeX, Volume2, Play, Pause, Loader2 } from "lucide-react"
+import { VolumeX, Volume2, Play, Pause } from "lucide-react"
 import { useMedia } from "./media-context"
 
 // Add event system for media coordination
@@ -12,20 +12,19 @@ export default function VideoPreview() {
   const { currentlyPlaying, setCurrentlyPlaying, stopAllMedia } = useMedia()
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
-  const [isMuted, setIsMuted] = useState(false)
+  const [isMuted, setIsMuted] = useState(true)
   const [showControls, setShowControls] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
   const [hasInteracted, setHasInteracted] = useState(false)
   const [hasError, setHasError] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
 
   const posterImage = process.env.NODE_ENV === 'production'
-    ? '/vocal-coaching/images/preview-poster.svg'
+    ? '/melvocal-coaching/images/preview-poster.svg'
     : '/images/preview-poster.svg'
 
   const videoSrc = process.env.NODE_ENV === 'production'
-    ? '/vocal-coaching/videos/preview.mp4'
+    ? '/melvocal-coaching/videos/preview.mp4'
     : '/videos/preview.mp4'
 
   useEffect(() => {
@@ -49,7 +48,7 @@ export default function VideoPreview() {
     }
   }, [])
   
-  // Stop playing when another media starts
+  // Stop playing when audio starts playing
   useEffect(() => {
     if (currentlyPlaying === 'music' && isPlaying) {
       if (videoRef.current) {
@@ -58,48 +57,6 @@ export default function VideoPreview() {
       }
     }
   }, [currentlyPlaying, isPlaying])
-
-  // Listen for media context changes
-  useEffect(() => {
-    // If music is playing, stop the video
-    if (currentlyPlaying === 'music' && isPlaying) {
-      setIsPlaying(false)
-      if (videoRef.current) {
-        videoRef.current.pause()
-      }
-    }
-  }, [currentlyPlaying, isPlaying])
-
-  // Listen for stop events from other media
-  useEffect(() => {
-    const handleMediaStop = () => {
-      if (isPlaying) {
-        setIsPlaying(false)
-        if (videoRef.current) {
-          videoRef.current.pause()
-        }
-      }
-    }
-
-    window.addEventListener(MEDIA_STOP_EVENT, handleMediaStop)
-    return () => window.removeEventListener(MEDIA_STOP_EVENT, handleMediaStop)
-  }, [isPlaying])
-
-  // Handle video loading
-  useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.addEventListener('loadeddata', () => {
-        setIsLoading(false)
-        console.log("Video loaded successfully")
-      })
-
-      videoRef.current.addEventListener('error', (e) => {
-        console.error("Video loading error:", e)
-        setError("Error loading video. Please try again.")
-        setIsLoading(false)
-      })
-    }
-  }, [])
 
   const handleLoadStart = () => {
     setIsLoading(true)
@@ -122,34 +79,14 @@ export default function VideoPreview() {
       setIsPlaying(false)
       setCurrentlyPlaying(null)
     } else {
-      // Stop all other media before playing
+      // If music is currently playing, stop it first
       if (currentlyPlaying === 'music') {
         stopAllMedia()
       }
       
-      // Dispatch event to stop other media
-      window.dispatchEvent(new Event(MEDIA_STOP_EVENT))
+      videoRef.current?.play()
       setIsPlaying(true)
       setCurrentlyPlaying('video')
-      
-      if (videoRef.current) {
-        try {
-          const playPromise = videoRef.current.play()
-          if (playPromise !== undefined) {
-            playPromise.catch(error => {
-              console.error("Error playing video:", error)
-              setIsPlaying(false)
-              setCurrentlyPlaying(null)
-              setError("Failed to play video. Please try again.")
-            })
-          }
-        } catch (err) {
-          console.error("Exception playing video:", err)
-          setIsPlaying(false)
-          setCurrentlyPlaying(null)
-          setError("Failed to play video. Please try again.")
-        }
-      }
     }
   }
 
@@ -160,26 +97,23 @@ export default function VideoPreview() {
     setIsMuted(!isMuted)
   }
 
-  // Handle video ended
-  const handleEnded = () => {
-    setIsPlaying(false)
-    setCurrentlyPlaying(null)
-  }
-
   return (
     <div className="relative w-full max-w-[240px] mx-auto aspect-[3/4] bg-black rounded-[32px] overflow-hidden">
       <video
         ref={videoRef}
         className="w-full h-full object-cover"
         playsInline
-        loop={false}
+        loop
         muted={isMuted}
         onLoadStart={handleLoadStart}
         onLoadedData={handleLoadedData}
         onError={handleError}
-        onEnded={handleEnded}
-        poster={process.env.NODE_ENV === 'production' ? '/vocal-coaching/images/preview-poster.webp' : '/images/preview-poster.webp'}
-        src={process.env.NODE_ENV === 'production' ? '/vocal-coaching/videos/preview.mp4' : '/videos/preview.mp4'}
+        poster={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/images/preview-poster.webp' : '/images/preview-poster.webp'}
+        src={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/videos/preview.mp4' : '/videos/preview.mp4'}
+        onEnded={() => {
+          setIsPlaying(false)
+          setCurrentlyPlaying(null)
+        }}
       />
 
       {/* Dark overlay with play button */}

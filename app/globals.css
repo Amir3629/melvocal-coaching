@@ -1811,26 +1811,3 @@ body:has(.modal-root) > *:not(.modal-root) {
 
 /* Fix classes for social links and legal links in footer */
 
-/* Add at the top of the file */
-* {
-  box-sizing: border-box;
-}
-
-html, 
-body {
-  width: 100%;
-  max-width: 100vw;
-  overflow-x: hidden;
-  margin: 0;
-  padding: 0;
-}
-
-/* Layout */
-#__next, 
-main {
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
