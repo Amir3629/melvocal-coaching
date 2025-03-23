@@ -5,6 +5,7 @@ import "./styles/typography.css"
 import "./styles/theme.css"
 import "./styles/navigation-fix.css"
 import "./styles/scrollbar.css"
+import "./styles/viewport-fix.css"
 import type { Metadata, Viewport } from "next"
 import { Inter, Playfair_Display, Cormorant_Garamond, Montserrat, Roboto } from "next/font/google"
 import RootClient from "./components/root-client"
@@ -39,8 +40,10 @@ const montserrat = Montserrat({
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
+  maximumScale: 5,
+  minimumScale: 1,
+  viewportFit: 'cover',
+  userScalable: true,
 }
 
 export const metadata: Metadata = {
@@ -82,7 +85,6 @@ export default function RootLayout({
           href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/images/logo/ml-logo.PNG' : '/images/logo/ml-logo.PNG'} 
           sizes="180x180" 
         />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <script src="/js/dom-observer-fix.js" defer></script>
       </head>
       <body className={roboto.className}>

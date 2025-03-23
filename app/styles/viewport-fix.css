@@ -1,0 +1,42 @@
+/* Mobile viewport fix */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, 
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+  height: auto;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+}
+
+#__next, 
+main, 
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+}
+
+@media (max-width: 767px) {
+  html, 
+  body {
+    width: 100vw;
+    min-width: 100vw;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  
+  body > div {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
+} 
