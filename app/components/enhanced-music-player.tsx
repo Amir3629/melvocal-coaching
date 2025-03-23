@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Play, Pause, Music } from "lucide-react";
-import { getAudioPath } from "@/app/utils/paths";
+import { getAudioPath } from "@/app/utils/audio-path";
 
 // Add event system for media coordination
 const MEDIA_STOP_EVENT = 'stopAllMedia';
@@ -50,9 +50,10 @@ export default function EnhancedMusicPlayer() {
   // Update audio src
   useEffect(() => {
     if (audioRef.current) {
-      // Use direct path to the audio file
-      audioRef.current.src = `/audio/AUDIO-2025-03-19-16-15-29.mp3`;
-      console.log("Audio source set to:", `/audio/AUDIO-2025-03-19-16-15-29.mp3`);
+      // Use our audio path utility
+      const audioSrc = getAudioPath('/audio/AUDIO-2025-03-19-16-15-29');
+      audioRef.current.src = audioSrc;
+      console.log("Audio source set to:", audioSrc);
       
       // Set volume to make sure it's audible
       audioRef.current.volume = 1.0;

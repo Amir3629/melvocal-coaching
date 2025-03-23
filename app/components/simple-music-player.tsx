@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, Music } from "lucide-react";
-import { getAudioPath } from "@/app/utils/paths";
+import { getAudioPath } from "@/app/utils/audio-path";
 
 interface Track {
   id: number;
@@ -156,7 +156,7 @@ export default function SimpleMusicPlayer() {
   useEffect(() => {
     if (audioRef.current) {
       const audioPath = getAudioPath(currentTrack.file);
-      audioRef.current.src = `${audioPath}.mp3`;
+      audioRef.current.src = audioPath;
       
       if (isPlaying) {
         audioRef.current.play().catch(err => {
@@ -164,7 +164,7 @@ export default function SimpleMusicPlayer() {
         });
       }
     }
-  }, [currentTrackIndex, currentTrack.file]);
+  }, [currentTrackIndex, currentTrack.file, isPlaying]);
   
   return (
     <div className="bg-black/30 backdrop-blur-sm rounded-lg p-6 max-w-md mx-auto">
