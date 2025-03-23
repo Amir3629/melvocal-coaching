@@ -13,7 +13,7 @@ export function getImagePath(imagePath) {
   // For development, try both paths
   if (isDevelopment) {
     // Remove /vocal-coaching prefix if it exists
-    if (normalizedPath.startsWith('/vocal-coaching/')) {
+    if (normalizedPath.startsWith('/melvocal-coaching/')) {
       return normalizedPath.replace('/vocal-coaching', '');
     }
     
@@ -37,7 +37,7 @@ export function getImagePath(imagePath) {
   }
   
   // For production, add the /vocal-coaching prefix if needed
-  if (!isDevelopment && !normalizedPath.startsWith('/vocal-coaching/') && normalizedPath.startsWith('/')) {
+  if (!isDevelopment && !normalizedPath.startsWith('/melvocal-coaching/') && normalizedPath.startsWith('/')) {
     return `/vocal-coaching${normalizedPath}`;
   }
   

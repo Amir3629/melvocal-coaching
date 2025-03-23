@@ -7,7 +7,7 @@ const images = [
   {
     name: "Method 1: Direct path with NODE_ENV check",
     src: process.env.NODE_ENV === 'production' 
-      ? "/vocal-coaching/images/services/studio.jpg"
+      ? "/melvocal-coaching/images/services/studio.jpg"
       : "/images/services/studio.jpg"
   },
   {

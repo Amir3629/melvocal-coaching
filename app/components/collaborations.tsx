@@ -10,43 +10,43 @@ const collaborations = [
   // First Row
   {
     name: "B-Flat",
-    logo: process.env.NODE_ENV === 'production' ? "/vocal-coaching/images/collaborations/bflat.svg" : "/images/collaborations/bflat.svg",
+    logo: process.env.NODE_ENV === 'production' ? "/melvocal-coaching/images/collaborations/bflat.svg" : "/images/collaborations/bflat.svg",
     link: "https://b-flat-berlin.de"
   },
   {
     name: "Blue Note",
-    logo: process.env.NODE_ENV === 'production' ? "/vocal-coaching/images/collaborations/bluenote.svg" : "/images/collaborations/bluenote.svg",
+    logo: process.env.NODE_ENV === 'production' ? "/melvocal-coaching/images/collaborations/bluenote.svg" : "/images/collaborations/bluenote.svg",
     link: "https://www.bluenote.net"
   },
   {
     name: "CVT",
-    logo: process.env.NODE_ENV === 'production' ? "/vocal-coaching/images/collaborations/cvt-teacher.svg" : "/images/collaborations/cvt-teacher.svg",
+    logo: process.env.NODE_ENV === 'production' ? "/melvocal-coaching/images/collaborations/cvt-teacher.svg" : "/images/collaborations/cvt-teacher.svg",
     link: "https://completevocalinstitute.com/complete-vocal-technique-de/"
   },
   {
     name: "CVT Deutschland",
-    logo: process.env.NODE_ENV === 'production' ? "/vocal-coaching/images/collaborations/cvt-deutschland.svg" : "/images/collaborations/cvt-deutschland.svg",
+    logo: process.env.NODE_ENV === 'production' ? "/melvocal-coaching/images/collaborations/cvt-deutschland.svg" : "/images/collaborations/cvt-deutschland.svg",
     link: "https://cvtdeutschland.de/de"
   },
   // Second Row
   {
     name: "Jazz Institut Berlin",
-    logo: process.env.NODE_ENV === 'production' ? "/vocal-coaching/images/collaborations/jib.svg" : "/images/collaborations/jib.svg",
+    logo: process.env.NODE_ENV === 'production' ? "/melvocal-coaching/images/collaborations/jib.svg" : "/images/collaborations/jib.svg",
     link: "https://www.jazz-institut-berlin.de"
   },
   {
     name: "Berliner Silber",
-    logo: process.env.NODE_ENV === 'production' ? "/vocal-coaching/images/collaborations/berliner-silber.svg" : "/images/collaborations/berliner-silber.svg",
+    logo: process.env.NODE_ENV === 'production' ? "/melvocal-coaching/images/collaborations/berliner-silber.svg" : "/images/collaborations/berliner-silber.svg",
     link: "http://www.berlinersilber.de"
   },
   {
     name: "Planet Jazz",
-    logo: process.env.NODE_ENV === 'production' ? "/vocal-coaching/images/collaborations/planet-jazz.svg" : "/images/collaborations/planet-jazz.svg",
+    logo: process.env.NODE_ENV === 'production' ? "/melvocal-coaching/images/collaborations/planet-jazz.svg" : "/images/collaborations/planet-jazz.svg",
     link: "https://www.planet-jazz-club-dueren.de"
   },
   {
     name: "BDG",
-    logo: process.env.NODE_ENV === 'production' ? "/vocal-coaching/images/collaborations/bdg.svg" : "/images/collaborations/bdg.svg",
+    logo: process.env.NODE_ENV === 'production' ? "/melvocal-coaching/images/collaborations/bdg.svg" : "/images/collaborations/bdg.svg",
     link: "https://www.bdg-online.org"
   }
 ]

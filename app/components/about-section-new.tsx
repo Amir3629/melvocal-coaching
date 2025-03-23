@@ -8,7 +8,7 @@ export default function AboutSectionNew() {
   const { t } = useTranslation()
 
   const imagePath = process.env.NODE_ENV === 'production'
-    ? "/vocal-coaching/images/about/profile.jpg"
+    ? "/melvocal-coaching/images/about/profile.jpg"
     : "/images/about/profile.jpg"
 
   const stats = [

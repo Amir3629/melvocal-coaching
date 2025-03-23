@@ -93,7 +93,7 @@ export default function ContactForm() {
             <div className="absolute inset-0">
               <Image
                 src={process.env.NODE_ENV === 'production'
-                  ? "/vocal-coaching/images/backgrounds/contact-bg.jpg"
+                  ? "/melvocal-coaching/images/backgrounds/contact-bg.jpg"
                   : "/images/backgrounds/contact-bg.jpg"}
                 alt="Contact Background"
                 fill
