@@ -5,6 +5,7 @@ import { Play, Pause, Music } from 'lucide-react';
 import Image from 'next/image';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import { useMedia } from "./media-context"
+import { getImagePath } from '@/app/utils/image-path';
 
 interface Song {
   title: string;
@@ -20,49 +21,49 @@ const songs: Song[] = [
     artist: "Melvo Jazz",
     youtubeId: "hFdMHvB6-Jk",
     description: "Jazz piano performance",
-    coverImage: "/images/music-new/jazz-piano.svg"
+    coverImage: "./images/music-new/jazz-piano.svg"
   },
   {
     title: "Vocal Jazz Improvisation",
     artist: "Melvo Jazz",
     youtubeId: "ZvWZr6TNh9Y",
     description: "Vocal techniques demonstration",
-    coverImage: "/images/music-new/vocal-jazz.svg"
+    coverImage: "./images/music-new/vocal-jazz.svg"
   },
   {
     title: "Jazz Standards Medley",
     artist: "Melvo Jazz",
     youtubeId: "r58-5DBfMpY",
     description: "Piano and vocal improvisation",
-    coverImage: "/images/music-new/jazz-standards.svg"
+    coverImage: "./images/music-new/jazz-standards.svg"
   },
   {
     title: "Original Jazz Composition",
     artist: "Melvo Jazz",
     youtubeId: "0zARqh3xwnw",
     description: "Original jazz composition",
-    coverImage: "/images/music-new/original-jazz.svg"
+    coverImage: "./images/music-new/original-jazz.svg"
   },
   {
     title: "Jazz Ensemble Performance",
     artist: "Melvo Jazz",
     youtubeId: "AWsarzdZ1u8",
     description: "Live jazz ensemble performance",
-    coverImage: "/images/music-new/jazz-ensemble.svg"
+    coverImage: "./images/music-new/jazz-ensemble.svg"
   },
   {
     title: "Vocal Coaching Session",
     artist: "Melvo Jazz",
     youtubeId: "GidIMbCmtyk",
     description: "Vocal coaching demonstration",
-    coverImage: "/images/music-new/vocal-coaching.svg"
+    coverImage: "./images/music-new/vocal-coaching.svg"
   },
   {
     title: "Piano Solo Improvisation",
     artist: "Melvo Jazz",
     youtubeId: "QgZKO_f5FlM",
     description: "Solo piano jazz improvisation",
-    coverImage: "/images/music-new/piano-solo.svg"
+    coverImage: "./images/music-new/piano-solo.svg"
   }
 ];
 
@@ -824,7 +825,7 @@ export default function MusicPlayer() {
                     
                     {/* Cover image - zoomed in to fill the disc completely */}
                     <Image
-                      src={songs[songIndex].coverImage}
+                      src={getImagePath(songs[songIndex].coverImage)}
                       alt={songs[songIndex].title}
                       fill
                       className="object-cover z-5 scale-125"

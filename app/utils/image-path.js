@@ -7,8 +7,11 @@ export function getImagePath(imagePath) {
   const isDevelopment = typeof window !== 'undefined' && 
     (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
   
+  // Handle relative paths that start with ./ by removing the dot
+  let normalizedPath = imagePath.startsWith('./') ? imagePath.substring(1) : imagePath;
+  
   // Fix missing slash if needed
-  const normalizedPath = imagePath.startsWith('/') ? imagePath : `/${imagePath}`;
+  normalizedPath = normalizedPath.startsWith('/') ? normalizedPath : `/${normalizedPath}`;
   
   // For development, try both paths
   if (isDevelopment) {
@@ -33,6 +36,11 @@ export function getImagePath(imagePath) {
       return '/images/music-cursor.png';
     }
     
+    // Handle special case for music-new SVG files
+    if (normalizedPath.includes('/music-new/') && normalizedPath.endsWith('.svg')) {
+      return normalizedPath;
+    }
+    
     return normalizedPath;
   }
   
@@ -42,4 +50,10 @@ export function getImagePath(imagePath) {
   }
   
   return normalizedPath;
+} 
+
+export function debugImagePath(imagePath) {
+  const result = getImagePath(imagePath);
+  console.log(`Image path: ${imagePath} => ${result}`);
+  return result;
 } 
