@@ -1,0 +1,10 @@
+<svg width="500" height="500" xmlns="http://www.w3.org/2000/svg">
+  <rect width="500" height="500" fill="#222" />
+  <circle cx="250" cy="250" r="200" fill="#333" />
+  <circle cx="250" cy="250" r="50" fill="#000" />
+  <circle cx="250" cy="250" r="15" fill="#444" />
+  <text x="250" y="350" font-family="Arial" font-size="24" fill="#ccc" text-anchor="middle">Jazz Piano</text>
+  <path d="M 100 250 A 150 150 0 0 1 400 250" stroke="#555" stroke-width="2" fill="none" />
+  <path d="M 130 200 A 120 120 0 0 1 370 200" stroke="#555" stroke-width="2" fill="none" />
+  <path d="M 150 300 A 100 100 0 0 0 350 300" stroke="#555" stroke-width="2" fill="none" />
+</svg> 

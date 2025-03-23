@@ -20,49 +20,49 @@ const songs: Song[] = [
     artist: "Melvo Jazz",
     youtubeId: "hFdMHvB6-Jk",
     description: "Jazz piano performance",
-    coverImage: "/images/music/jazz-piano.jpg"
+    coverImage: "/images/music-new/jazz-piano.svg"
   },
   {
     title: "Vocal Jazz Improvisation",
     artist: "Melvo Jazz",
     youtubeId: "ZvWZr6TNh9Y",
     description: "Vocal techniques demonstration",
-    coverImage: "/images/music/vocal-jazz.jpg"
+    coverImage: "/images/music-new/vocal-jazz.svg"
   },
   {
     title: "Jazz Standards Medley",
     artist: "Melvo Jazz",
     youtubeId: "r58-5DBfMpY",
     description: "Piano and vocal improvisation",
-    coverImage: "/images/music/jazz-standards.jpg"
+    coverImage: "/images/music-new/jazz-standards.svg"
   },
   {
     title: "Original Jazz Composition",
     artist: "Melvo Jazz",
     youtubeId: "0zARqh3xwnw",
     description: "Original jazz composition",
-    coverImage: "/images/music/original-jazz.jpg"
+    coverImage: "/images/music-new/original-jazz.svg"
   },
   {
     title: "Jazz Ensemble Performance",
     artist: "Melvo Jazz",
     youtubeId: "AWsarzdZ1u8",
     description: "Live jazz ensemble performance",
-    coverImage: "/images/music/jazz-ensemble.jpg"
+    coverImage: "/images/music-new/jazz-ensemble.svg"
   },
   {
     title: "Vocal Coaching Session",
     artist: "Melvo Jazz",
     youtubeId: "GidIMbCmtyk",
     description: "Vocal coaching demonstration",
-    coverImage: "/images/music/vocal-coaching.jpg"
+    coverImage: "/images/music-new/vocal-coaching.svg"
   },
   {
     title: "Piano Solo Improvisation",
     artist: "Melvo Jazz",
     youtubeId: "QgZKO_f5FlM",
     description: "Solo piano jazz improvisation",
-    coverImage: "/images/music/piano-solo.jpg"
+    coverImage: "/images/music-new/piano-solo.svg"
   }
 ];
 
