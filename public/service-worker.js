@@ -3,9 +3,6 @@
  * Provides advanced caching strategies and offline support
  */
 const CACHE_VERSION = 'v2';
-const CACHE_NAME = `melvocal-${CACHE_VERSION}`;
-
-// Define cache categories for different resources
 const CACHES = {
   static: `${CACHE_NAME}-static`,  // Long-lived static assets
   images: `${CACHE_NAME}-images`,  // Image assets
@@ -14,26 +11,22 @@ const CACHES = {
   api: `${CACHE_NAME}-api`         // API responses
 };
 
-// Assets that should be cached immediately during installation
+// Update the precache assets list to remove any non-existent files
 const PRECACHE_ASSETS = [
   '/',
   '/index.html',
-  '/index-perf.html',
   '/offline.html',
-  '/critical-perf.js',
   '/css-optimizer.js',
-  '/tbt-optimizer.js',
-  '/lcp-optimizer.js',
-  '/js-execution-optimizer.js',
-  '/js-bundle-analyzer.js',
+  '/fix.js',
+  '/critical-perf.js', 
   '/image-optimizations.js',
+  '/tbt-optimizer.js',
   '/enhanced-image-optimizer.js',
-  '/fix.min.js',
-  '/css-purger.js',
+  '/js-bundle-analyzer.js',
   '/images/backgrounds/hero-bg.webp',
-  '/images/logo/ml-logo.webp',
-  '/images/placeholders/avatar.svg',
-  '/_next/static/css/e3294716e1c0f397.css'
+  '/images/logo/ml-logo.PNG',
+  '/images/backgrounds/services-bg.webp',
+  '/images/backgrounds/contact-bg.jpg'
 ];
 
 // Add base path for GitHub Pages if needed
@@ -57,17 +50,30 @@ const EXPIRATION = {
 // ============= Install Event - Precache Critical Resources =============
 self.addEventListener('install', event => {
   event.waitUntil(
-    Promise.all([
-      // Cache static assets
-      caches.open(CACHES.static).then(cache => {
-        console.log('Caching static assets');
-        return cache.addAll(precacheUrls);
-      }),
-      
-      // Activate immediately without waiting for tabs to close
-      self.skipWaiting()
-    ])
+    caches.open(CACHES.static).then(cache => {
+      console.log('Caching static assets');
+      // Use individual fetch operations with error handling instead of cache.addAll
+      return Promise.all(
+        PRECACHE_ASSETS.map(url => {
+          return fetch(url)
+            .then(response => {
+              if (response.ok) {
+                return cache.put(url, response);
+              }
+              console.log(`Failed to cache: ${url} - Status: ${response.status}`);
+              return Promise.resolve(); // Continue with other assets
+            })
+            .catch(error => {
+              console.error(`Error caching ${url}:`, error);
+              return Promise.resolve(); // Continue with other assets
+            });
+        })
+      );
+    })
   );
+  
+  // Force the waiting service worker to become the active service worker
+  self.skipWaiting();
 });
 
 // ============= Activate Event - Clean Up Old Caches =============
@@ -107,7 +113,7 @@ self.addEventListener('fetch', event => {
     return;
   }
   
-  // Special handling for video requests
+  // Special handling for video requests - use network only strategy
   if (isVideoRequest(request)) {
     event.respondWith(networkOnlyStrategy(request));
     return;
@@ -224,7 +230,7 @@ async function networkOnlyStrategy(request) {
   }
 }
 
-// Modified cacheFirstWithNetwork function to check response status
+// Fixed cacheFirstWithNetwork function to check response status
 async function cacheFirstWithNetwork(request, cacheName) {
   const cache = await caches.open(cacheName);
   const cachedResponse = await cache.match(request);
@@ -237,8 +243,8 @@ async function cacheFirstWithNetwork(request, cacheName) {
   try {
     const networkResponse = await fetch(request);
     
-    // Only cache successful responses with status 200
-    if (networkResponse.status === 200) {
+    // Only cache successful responses with status 200 (avoid 206 Partial Content)
+    if (networkResponse.ok && networkResponse.status === 200) {
       console.log('Service worker caching new resource:', request.url);
       // Clone the response before caching it
       cache.put(request, networkResponse.clone());
