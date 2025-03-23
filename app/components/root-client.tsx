@@ -5,6 +5,16 @@ import ClientProvider from './client-provider'
 import Footer from './footer'
 import CookieConsent from './cookie-consent'
 
+// Force full width on mobile
+const rootStyles = {
+  width: '100%',
+  minWidth: '100%',
+  maxWidth: '100%',
+  overflow: 'hidden',
+  margin: 0,
+  padding: 0,
+}
+
 export default function RootClient({
   children,
   className,
@@ -13,13 +23,15 @@ export default function RootClient({
   className: string
 }) {
   return (
-    <html className={className}>
+    <html className={className} style={rootStyles}>
       <head />
-      <body className={className}>
+      <body className={className} style={rootStyles}>
         <ClientProvider>
-          {children}
-          <Footer />
-          <CookieConsent />
+          <div style={rootStyles}>
+            {children}
+            <Footer />
+            <CookieConsent />
+          </div>
         </ClientProvider>
       </body>
     </html>

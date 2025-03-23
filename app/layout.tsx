@@ -39,9 +39,9 @@ const montserrat = Montserrat({
 
 export const viewport: Viewport = {
   width: 'device-width',
-  initialScale: 1,
+  initialScale: 1.0,
   maximumScale: 5,
-  minimumScale: 1,
+  minimumScale: 1.0,
   viewportFit: 'cover',
   userScalable: true,
 }
@@ -74,6 +74,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${cormorant.variable} ${montserrat.variable} ${roboto.variable} scroll-smooth`}>
       <head>
+        {/* Force viewport meta tag for mobile devices */}
+        <script src="/js/viewport-meta.js"></script>
         <link 
           rel="icon" 
           href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/images/logo/ml-logo.PNG' : '/images/logo/ml-logo.PNG'} 
@@ -85,7 +87,9 @@ export default function RootLayout({
           href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/images/logo/ml-logo.PNG' : '/images/logo/ml-logo.PNG'} 
           sizes="180x180" 
         />
+        <meta name="theme-color" content="#000000" />
         <script src="/js/dom-observer-fix.js" defer></script>
+        <script src="/js/viewport-fix.js" defer></script>
       </head>
       <body className={roboto.className}>
         <MediaProvider>
