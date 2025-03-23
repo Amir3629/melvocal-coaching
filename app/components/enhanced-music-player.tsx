@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { Play, Pause, Music } from "lucide-react";
 import { getAudioPath } from "@/app/utils/audio-path";
+import { getImagePath } from "@/app/utils/image-path";
 
 // Add event system for media coordination
 const MEDIA_STOP_EVENT = 'stopAllMedia';
@@ -193,7 +194,7 @@ export default function EnhancedMusicPlayer() {
                 }}
               >
                 <Image 
-                  src={track.image}
+                  src={getImagePath(track.image)}
                   alt={track.title}
                   fill
                   style={{ objectFit: 'cover', objectPosition: 'center' }}
