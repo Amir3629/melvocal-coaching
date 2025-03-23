@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const isProduction = process.env.NODE_ENV === 'production';
-const basePath = isProduction ? '/vocal-coaching' : '';
+const basePath = isProduction ? '/melvocal-coaching' : '';
 
 const nextConfig = {
   reactStrictMode: true,
@@ -33,7 +33,7 @@ const nextConfig = {
     return config
   },
   publicRuntimeConfig: {
-    basePath: process.env.NODE_ENV === 'production' ? '/vocal-coaching' : '',
+    basePath: process.env.NODE_ENV === 'production' ? '/melvocal-coaching' : '',
   },
   // Exclude backup and temporary directories
   experimental: {

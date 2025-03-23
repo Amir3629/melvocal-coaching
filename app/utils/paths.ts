@@ -4,7 +4,7 @@
 
 /**
  * Returns the correct path for an asset based on the current environment
- * In production, prepends "/vocal-coaching" to the path
+ * In production, prepends "/melvocal-coaching" to the path
  * In development, uses the path as is
  * 
  * @param path The asset path (should start with a slash)
@@ -14,9 +14,9 @@ export function getAssetPath(path: string): string {
   // Ensure path starts with a slash
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
   
-  // In production, prepend "/vocal-coaching" to the path
+  // In production, prepend "/melvocal-coaching" to the path
   const basePath = process.env.NODE_ENV === 'production' 
-    ? "/vocal-coaching" 
+    ? "/melvocal-coaching" 
     : "";
     
   return `${basePath}${normalizedPath}`;
