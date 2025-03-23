@@ -98,35 +98,34 @@ self.addEventListener('activate', event => {
 
 // ============= Fetch Event - Strategic Caching =============
 self.addEventListener('fetch', event => {
-  const url = new URL(event.request.url);
-  const requestPath = url.pathname;
+  const request = event.request;
+  const url = new URL(request.url);
   
-  // Skip cross-origin requests
-  if (url.origin !== self.location.origin && 
-      !url.hostname.endsWith('github.io')) {
+  // Don't cache cross-origin requests to avoid complications
+  if (url.origin !== self.location.origin) {
+    event.respondWith(fetch(request));
     return;
   }
   
-  // Apply different strategies based on request type
-  if (/\.(jpe?g|png|webp|gif|svg)$/i.test(requestPath)) {
-    // Image caching strategy - Cache first, network fallback
-    event.respondWith(cacheFirstStrategy(event.request, CACHES.images));
-  } 
-  else if (requestPath.endsWith('/') || requestPath.endsWith('.html')) {
-    // HTML caching strategy - Network first, cache fallback
-    event.respondWith(networkFirstStrategy(event.request, CACHES.pages));
+  // Special handling for video requests
+  if (isVideoRequest(request)) {
+    event.respondWith(networkOnlyStrategy(request));
+    return;
   }
-  else if (/\.(js|css)$/i.test(requestPath)) {
-    // Static asset strategy - Cache first, network fallback with update
-    event.respondWith(cacheFirstStrategy(event.request, CACHES.static));
-  }
-  else if (/\.(woff2?|eot|ttf|otf)$/i.test(requestPath)) {
-    // Font caching strategy - Cache first, network fallback
-    event.respondWith(cacheFirstStrategy(event.request, CACHES.fonts));
-  }
-  else {
-    // Default strategy - Network first, cache fallback
-    event.respondWith(networkFirstStrategy(event.request, CACHES.static));
+  
+  // Handle other request types with appropriate caching strategies
+  if (isImageRequest(request)) {
+    event.respondWith(cacheFirstWithNetwork(request, CACHES.images));
+  } else if (isHtmlRequest(request)) {
+    event.respondWith(networkFirstStrategy(request, CACHES.pages));
+  } else if (isStaticAsset(request)) {
+    event.respondWith(cacheFirstWithNetwork(request, CACHES.static));
+  } else if (isFontRequest(request)) {
+    event.respondWith(cacheFirstWithNetwork(request, CACHES.fonts));
+  } else if (isApiRequest(request)) {
+    event.respondWith(networkFirstStrategy(request, CACHES.api));
+  } else {
+    event.respondWith(cacheFirstWithNetwork(request, CACHES.static));
   }
 });
 
@@ -181,65 +180,76 @@ self.addEventListener('sync', event => {
 // ============= Helper Functions =============
 
 // Function to detect request types
-function isImageRequest(path) {
-  return /\.(jpe?g|png|webp|gif|bmp|svg|ico)$/i.test(path);
+function isImageRequest(request) {
+  const url = new URL(request.url);
+  return /\.(jpe?g|png|webp|gif|svg|ico)$/i.test(url.pathname);
 }
 
-function isHtmlRequest(path) {
-  return path.endsWith('/') || path.endsWith('.html') || path === BASE_PATH;
+function isHtmlRequest(request) {
+  const url = new URL(request.url);
+  return url.pathname.endsWith('/') || 
+         url.pathname.endsWith('.html') || 
+         url.pathname === '/';
 }
 
-function isStaticAsset(path) {
-  return /\.(js|css)$/i.test(path) || 
-         path.includes('static') || 
-         path.includes('_next');
+function isStaticAsset(request) {
+  const url = new URL(request.url);
+  return /\.(js|css)$/i.test(url.pathname);
 }
 
-function isFontRequest(path) {
-  return /\.(woff2?|eot|ttf|otf)$/i.test(path) ||
-         path.includes('fonts');
+function isFontRequest(request) {
+  const url = new URL(request.url);
+  return /\.(woff2?|eot|ttf|otf)$/i.test(url.pathname);
 }
 
-function isApiRequest(url) {
-  return url.pathname.includes('/api/') || 
-         url.pathname.includes('/data/');
+function isApiRequest(request) {
+  const url = new URL(request.url);
+  return url.pathname.startsWith('/api/');
 }
 
-// Cache-first strategy
-async function cacheFirstStrategy(request, cacheName) {
+// Helper function to detect if a request is for a video file
+function isVideoRequest(request) {
+  const url = new URL(request.url);
+  return url.pathname.endsWith('.mp4') || url.pathname.endsWith('.webm') || 
+         url.pathname.endsWith('.ogg') || url.pathname.endsWith('.mov');
+}
+
+// Media files (videos) strategy - Network only for video streaming
+async function networkOnlyStrategy(request) {
+  try {
+    return await fetch(request);
+  } catch (error) {
+    console.error('Network error for video request:', error);
+    return new Response('Video unavailable offline', { status: 503 });
+  }
+}
+
+// Modified cacheFirstWithNetwork function to check response status
+async function cacheFirstWithNetwork(request, cacheName) {
   const cache = await caches.open(cacheName);
   const cachedResponse = await cache.match(request);
   
   if (cachedResponse) {
-    // Return cached response
+    console.log('Service worker serving cached resource:', request.url);
     return cachedResponse;
   }
   
   try {
-    // Get from network
     const networkResponse = await fetch(request);
     
-    // Cache the response
-    if (networkResponse.ok) {
+    // Only cache successful responses with status 200
+    if (networkResponse.status === 200) {
+      console.log('Service worker caching new resource:', request.url);
+      // Clone the response before caching it
       cache.put(request, networkResponse.clone());
     }
     
     return networkResponse;
   } catch (error) {
-    console.log(`Fetch failed for ${request.url}:`, error);
-    
-    // Return fallback response for images
-    if (request.url.match(/\.(jpe?g|png|webp|gif|svg)$/i)) {
-      return new Response('', {
-        headers: { 'Content-Type': 'image/svg+xml' }
-      });
-    }
-    
-    // Return generic offline response
-    return new Response('Network error', {
-      status: 408,
-      headers: { 'Content-Type': 'text/plain' }
-    });
+    console.error('Fetch failed:', error);
+    // Return a fallback if available or an error response
+    const fallback = await caches.match('/offline.html');
+    return fallback || new Response('Network error occurred', { status: 503 });
   }
 }
 
