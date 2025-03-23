@@ -6,6 +6,7 @@ import { Dialog } from "@/app/components/ui/dialog"
 import { ChevronLeft, ChevronRight, X } from "lucide-react"
 import { AppImage } from "@/app/components/ui/image"
 import { createPortal } from "react-dom"
+import { getImagePath } from "@/app/utils/image-path"
 
 interface GalleryImage {
   src: string
@@ -104,20 +105,20 @@ export default function GallerySection() {
   const handleImageClick = (image: GalleryImage) => {
     // Preload the image before showing modal
     const img = new Image()
-    img.src = image.src
+    img.src = getImagePath(image.src)
     img.onload = () => {
       setIsImageLoaded(true)
       document.documentElement.style.overflow = 'hidden'
+      document.body.classList.add('overflow-hidden')
       setSelectedImage(image)
     }
   }
 
   const handleClose = () => {
+    document.documentElement.style.overflow = ''
+    document.body.classList.remove('overflow-hidden')
     setSelectedImage(null)
     setIsImageLoaded(false)
-    setTimeout(() => {
-      document.documentElement.style.overflow = ''
-    }, 300)
   }
 
   const handlePrev = () => {
@@ -150,9 +151,9 @@ export default function GallerySection() {
   }, [selectedImage])
 
   const renderModal = () => {
-    if (!selectedImage) return null
-
-    return (
+    if (!selectedImage || !mounted) return null
+    
+    return createPortal(
       <>
         <motion.div
           className="fixed inset-0 bg-black/90 z-[998]"
@@ -176,6 +177,7 @@ export default function GallerySection() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
+              onClick={(e) => e.stopPropagation()}
             >
               <button 
                 className="absolute -left-12 top-1/2 transform -translate-y-1/2 text-white/70 hover:text-white p-1.5 rounded-full transition-colors duration-300 z-[1000] hover:bg-black/30"
@@ -205,9 +207,9 @@ export default function GallerySection() {
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
                       <picture>
-                        <source srcSet={selectedImage.src} type="image/jpeg" />
+                        <source srcSet={getImagePath(selectedImage.src)} type="image/jpeg" />
                         <img
-                          src={selectedImage.src}
+                          src={getImagePath(selectedImage.src)}
                           alt={selectedImage.alt}
                           className="max-w-full max-h-[75vh] h-auto rounded-lg select-none"
                           style={{
@@ -241,67 +243,57 @@ export default function GallerySection() {
               >
                 <ChevronRight size={24} />
               </button>
+              
+              <button
+                className="absolute -top-12 right-0 text-white/70 hover:text-white p-1.5 rounded-full transition-colors duration-300 z-[1000] hover:bg-black/30"
+                onClick={handleClose}
+                aria-label="Close gallery"
+              >
+                <X size={24} />
+              </button>
             </motion.div>
           </div>
         </motion.div>
-      </>
+      </>,
+      document.body
     )
   }
 
   return (
-    <section id="gallery" className="relative py-14 md:py-16 bg-[#000000]">
-      <div className="container mx-auto px-4 max-w-5xl">
-        <motion.div 
-          className="text-center mb-6 md:mb-8"
+    <section id="gallery" className="bg-black py-16">
+      <div className="container mx-auto px-4">
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
+          className="text-center mb-12"
         >
-          <h2 className="section-heading mb-4">Galerie</h2>
-          <div className="w-12 h-0.5 bg-[#C8A97E] mx-auto"></div>
+          <h2 className="section-heading mb-4 text-white">Performance & Gallery</h2>
+          <div className="w-20 h-0.5 bg-[#C8A97E] mx-auto"></div>
         </motion.div>
 
-        {/* Compact gallery layout with no horizontal gaps */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-y-1.5 sm:gap-y-2 md:gap-y-2.5 gap-x-0 max-w-[96%] mx-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {images.map((image, index) => (
             <motion.div
-              key={image.src}
-              initial={{ opacity: 0, y: 10 }}
+              key={index}
+              className={`relative group cursor-pointer overflow-hidden rounded-lg ${image.span} shadow-xl`}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: index * 0.05 }}
-              className={`relative overflow-hidden cursor-pointer group ${
-                index % 5 === 0 ? 'col-span-2 md:col-span-2' : 
-                index % 3 === 1 && index > 1 ? 'col-span-1 md:col-span-1' : ''
-              }`}
-              style={{ 
-                aspectRatio: index % 5 === 0 ? '16/9' : '1/1',
-                maxHeight: index % 5 === 0 ? '180px' : '140px',
-                borderRadius: '8px',
-                margin: '0 0.25rem',
-                width: 'calc(100% - 0.5rem)'
-              }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              style={{ height: '300px' }}
               onClick={() => handleImageClick(image)}
             >
-              <AppImage
-                src={image.src}
-                alt={image.alt}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                sizes="(max-width: 480px) 40vw, (max-width: 768px) 30vw, (max-width: 1024px) 25vw, 220px"
-                style={{ 
-                  objectPosition: 'center',
-                  borderRadius: '8px',
-                }}
-              />
-              <div 
-                className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/20 to-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                style={{ borderRadius: '8px' }}
-              >
-                <div className="absolute inset-x-0 bottom-0 p-2 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                  <h3 className="text-white text-xs sm:text-sm font-medium line-clamp-1">{image.alt}</h3>
-                </div>
+              <div className="absolute inset-0 overflow-hidden rounded-lg">
+                <AppImage 
+                  src={getImagePath(image.src)}
+                  alt={image.alt}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-[1.03] group-hover:brightness-110"
+                  sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-300"></div>
               </div>
             </motion.div>
           ))}

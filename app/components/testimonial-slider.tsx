@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import Image from "next/image"
+import { getImagePath } from "@/app/utils/image-path"
 
 const testimonials = [
   {
@@ -99,7 +100,7 @@ export default function TestimonialSlider() {
         img.onerror = () => {
           handleImageError(testimonial.id);
         };
-        img.src = testimonial.image;
+        img.src = getImagePath(testimonial.image);
       } catch (error) {
         // Fallback for any errors
         handleImageError(testimonial.id);
@@ -161,7 +162,7 @@ export default function TestimonialSlider() {
                   <div className="absolute inset-0 rounded-full overflow-hidden bg-[#111]">
                     {!imageErrors[testimonials[page].id] ? (
                       <img
-                        src={testimonials[page].image}
+                        src={getImagePath(testimonials[page].image)}
                         alt={testimonials[page].name}
                         width={300}
                         height={300}
