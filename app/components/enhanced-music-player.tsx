@@ -165,6 +165,7 @@ export default function EnhancedMusicPlayer() {
   const handleEnded = () => {
     setIsPlaying(false);
     setShowMiniPlayer(false);
+    setCurrentlyPlaying(null);
   };
 
   // Handle audio error
@@ -174,6 +175,7 @@ export default function EnhancedMusicPlayer() {
     setIsPlaying(false);
     setIsLoading(false);
     setShowMiniPlayer(false);
+    setCurrentlyPlaying(null);
   };
 
   // Scroll to music section when mini player is clicked

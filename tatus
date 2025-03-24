@@ -1,0 +1,12 @@
+[1mdiff --git a/backup-before-restore-2025-03-21-14-00-07/vocal-coaching b/backup-before-restore-2025-03-21-14-00-07/vocal-coaching[m
+[1m--- a/backup-before-restore-2025-03-21-14-00-07/vocal-coaching[m
+[1m+++ b/backup-before-restore-2025-03-21-14-00-07/vocal-coaching[m
+[36m@@ -1 +1 @@[m
+[31m-Subproject commit 6051c1765b594c12b197bda4c223afbe7275de3f[m
+[32m+[m[32mSubproject commit 6051c1765b594c12b197bda4c223afbe7275de3f-dirty[m
+[1mdiff --git a/vocal-coaching b/vocal-coaching[m
+[1m--- a/vocal-coaching[m
+[1m+++ b/vocal-coaching[m
+[36m@@ -1 +1 @@[m
+[31m-Subproject commit 6051c1765b594c12b197bda4c223afbe7275de3f[m
+[32m+[m[32mSubproject commit 6051c1765b594c12b197bda4c223afbe7275de3f-dirty[m

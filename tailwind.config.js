@@ -19,11 +19,11 @@ module.exports = {
         xl: "3rem",
       },
       screens: {
-        sm: "640px",
-        md: "768px",
-        lg: "1024px",
-        xl: "1280px",
-        "2xl": "1400px",
+        sm: "100%",
+        md: "100%",
+        lg: "100%", 
+        xl: "100%",
+        "2xl": "100%",
       },
     },
     screens: {
@@ -35,6 +35,15 @@ module.exports = {
       '2xl': '1400px',
     },
     extend: {
+      width: {
+        'screen': '100vw',
+      },
+      minWidth: {
+        'screen': '100vw',
+      },
+      maxWidth: {
+        'screen': '100vw',
+      },
       fontFamily: {
         sans: ['var(--font-roboto)', 'system-ui', 'sans-serif'],
         serif: ['var(--font-cormorant)', 'Georgia', 'serif'],

@@ -53,4 +53,54 @@ if ('scrollRestoration' in history) {
   
   // Make checkForModals available globally for debugging
   window.checkForModals = checkForModals;
-})(); 
+})();
+
+// Observer fix for dynamic elements
+document.addEventListener('DOMContentLoaded', function() {
+  // Force black background for iOS
+  document.documentElement.style.backgroundColor = 'black';
+  document.body.style.backgroundColor = 'black';
+  
+  // Ensure all sections and containers are full width
+  const allSections = document.querySelectorAll('section, .container, main, #__next');
+  allSections.forEach(section => {
+    section.style.width = '100%';
+    section.style.maxWidth = '100%';
+    section.style.backgroundColor = 'black';
+  });
+  
+  // Create an observer instance
+  const observer = new MutationObserver(function(mutations) {
+    mutations.forEach(function(mutation) {
+      if (mutation.addedNodes && mutation.addedNodes.length > 0) {
+        for (let i = 0; i < mutation.addedNodes.length; i++) {
+          const node = mutation.addedNodes[i];
+          
+          // Check if the node is an element
+          if (node.nodeType === 1) {
+            // Fix section elements
+            if (node.tagName === 'SECTION') {
+              node.style.width = '100%';
+              node.style.maxWidth = '100%';
+              node.style.backgroundColor = 'black';
+            }
+            
+            // Fix any sections, containers inside the new element
+            const sections = node.querySelectorAll('section, .container, main');
+            if (sections) {
+              sections.forEach(section => {
+                section.style.width = '100%';
+                section.style.maxWidth = '100%';
+                section.style.backgroundColor = 'black';
+              });
+            }
+          }
+        }
+      }
+    });
+  });
+  
+  // Configure and start the observer
+  const config = { childList: true, subtree: true };
+  observer.observe(document.body, config);
+}); 

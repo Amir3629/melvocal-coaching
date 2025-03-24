@@ -9,21 +9,37 @@ export default function Hero() {
   const { t } = useTranslation()
 
   return (
-    <section className="relative min-h-[100svh] flex items-center justify-center text-white overflow-hidden">
+    <section 
+      id="hero" 
+      className="relative min-h-screen flex flex-col items-center justify-center w-screen overflow-hidden"
+      style={{ width: '100vw', maxWidth: '100vw', marginLeft: 0, marginRight: 0, backgroundColor: 'black' }}
+    >
+      {/* Background color layer */}
+      <div 
+        className="absolute inset-0 bg-black"
+        style={{zIndex: -10, width: '100vw', left: 0, right: 0}}
+      ></div>
+      
       {/* Background Video */}
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute inset-0 w-full h-full object-cover"
-        poster="/images/hero-poster.jpg"
+      <div 
+        className="absolute inset-0 bg-black"
+        style={{zIndex: -5, width: '100vw', left: 0, right: 0}}
       >
-        <source src="/videos/hero-bg.mp4" type="video/mp4" />
-      </video>
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover bg-black"
+          style={{width: '100vw', objectFit: 'cover'}}
+          poster="/images/hero-poster.jpg"
+        >
+          <source src="/videos/hero-bg.mp4" type="video/mp4" />
+        </video>
+      </div>
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/70" style={{width: '100vw'}} />
 
       {/* Content */}
       <div className="container mx-auto relative z-10 px-4 md:px-6">

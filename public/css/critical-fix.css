@@ -1,0 +1,64 @@
+/* Critical viewport fix - ensuring no black bars on any device */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100vw !important;
+  min-width: 100vw !important;
+  max-width: 100vw !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow-x: hidden !important;
+  background-color: black !important;
+  position: relative !important;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: black;
+  z-index: -9999;
+}
+
+#__next, 
+main, 
+.container, 
+section {
+  width: 100vw !important;
+  min-width: 100vw !important;
+  max-width: 100vw !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  overflow-x: hidden !important;
+  background-color: black !important;
+}
+
+/* Specific iOS fixes */
+@supports (-webkit-touch-callout: none) {
+  html, body {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    -webkit-text-size-adjust: 100%;
+  }
+}
+
+.ios-fix {
+  width: 100% !important;
+  max-width: 100% !important;
+  background-color: black !important;
+}
+
+section, div {
+  max-width: 100% !important;
+  background-color: black !important;
+} 

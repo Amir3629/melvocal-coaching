@@ -39,8 +39,9 @@ const montserrat = Montserrat({
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
+  maximumScale: 5,
+  userScalable: true,
+  viewportFit: 'cover'
 }
 
 export const metadata: Metadata = {
@@ -82,10 +83,94 @@ export default function RootLayout({
           href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/images/logo/ml-logo.PNG' : '/images/logo/ml-logo.PNG'} 
           sizes="180x180" 
         />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <script src="/js/dom-observer-fix.js" defer></script>
+        <link 
+          rel="stylesheet" 
+          href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/css/blackbar-fix.css' : '/css/blackbar-fix.css'} 
+        />
+        <link 
+          rel="stylesheet" 
+          href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/css/mobile-fixes.css' : '/css/mobile-fixes.css'} 
+        />
+        <link 
+          rel="stylesheet" 
+          href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/css/ios-fix.css' : '/css/ios-fix.css'} 
+        />
+        <link 
+          rel="stylesheet" 
+          href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/css/critical-fix.css' : '/css/critical-fix.css'} 
+        />
+        <link 
+          rel="stylesheet" 
+          href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/css/last-resort.css' : '/css/last-resort.css'} 
+        />
+        <link 
+          rel="stylesheet" 
+          href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/css/fix-container.css' : '/css/fix-container.css'} 
+        />
+        <link 
+          rel="stylesheet" 
+          href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/css/extend-beyond.css' : '/css/extend-beyond.css'} 
+        />
+        <link 
+          rel="stylesheet" 
+          href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/css/negative-margin-fix.css' : '/css/negative-margin-fix.css'} 
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, viewport-fit=cover" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="theme-color" content="#000000" />
+        <style>
+          {`
+            html, body {
+              width: 100vw !important;
+              max-width: 100vw !important;
+              margin: 0 !important;
+              padding: 0 !important;
+              background-color: black !important;
+              overflow-x: hidden !important;
+              position: relative !important;
+            }
+            
+            @media screen and (max-width: 926px) {
+              body {
+                width: 100% !important;
+                min-width: 100% !important;
+                max-width: 100% !important;
+              }
+            }
+          `}
+        </style>
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            (function() {
+              // Fix for mobile viewport issues
+              document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
+              
+              // Get actual viewport width - crucial for iOS
+              var viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+              document.documentElement.style.setProperty('--real-vw', viewportWidth + 'px');
+              
+              window.addEventListener('resize', function() {
+                document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
+                document.documentElement.style.setProperty('--real-vw', Math.max(document.documentElement.clientWidth, window.innerWidth || 0) + 'px');
+              });
+              
+              // Direct fix for iOS
+              if (/iPad|iPhone|iPod/.test(navigator.userAgent) || ('ontouchstart' in window && /AppleWebKit/.test(navigator.userAgent))) {
+                document.documentElement.classList.add('ios-device');
+                document.documentElement.style.width = viewportWidth + 'px';
+                document.body.style.width = viewportWidth + 'px';
+              }
+            })();
+          `
+        }} />
+        <script src={process.env.NODE_ENV === 'production' ? '/vocal-coaching/js/ios-viewport-fix.js' : '/js/ios-viewport-fix.js'}></script>
+        <script src={process.env.NODE_ENV === 'production' ? '/vocal-coaching/js/dom-observer-fix.js' : '/js/dom-observer-fix.js'} defer></script>
+        <script src={process.env.NODE_ENV === 'production' ? '/vocal-coaching/js/fix-ios-viewport.js' : '/js/fix-ios-viewport.js'}></script>
+        <script src={process.env.NODE_ENV === 'production' ? '/vocal-coaching/js/ios-fix.js' : '/js/ios-fix.js'}></script>
+        <script src={process.env.NODE_ENV === 'production' ? '/vocal-coaching/js/direct-fix.js' : '/js/direct-fix.js'}></script>
       </head>
-      <body className={roboto.className}>
+      <body className={`${roboto.className} w-full min-w-full overflow-x-hidden bg-black`}>
         <MediaProvider>
           <RootClient className={`dark-theme-black ${playfair.variable} ${cormorant.variable} ${montserrat.variable} ${roboto.variable} ${inter.className} antialiased`}>
             {children}
