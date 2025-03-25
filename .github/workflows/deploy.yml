@@ -13,27 +13,38 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: 'npm'
 
       - name: Install Dependencies
-        run: npm ci
+        run: |
+          npm ci
+          npm install sharp
 
       - name: Build
-        run: npm run build
+        run: |
+          npm run build
+          cp -r .next/static out/_next/static
         env:
           NEXT_PUBLIC_BASE_PATH: /melvocal-coaching
 
       - name: Add .nojekyll file
-        run: touch ./out/.nojekyll
+        run: |
+          touch out/.nojekyll
+          echo "melvocal-coaching.com" > out/CNAME
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: out
-          token: ${{ secrets.GITHUB_TOKEN }}
           clean: true
+          single-commit: true
+          git-config-name: github-actions[bot]
+          git-config-email: github-actions[bot]@users.noreply.github.com
