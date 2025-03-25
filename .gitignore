@@ -44,3 +44,12 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .vercel
+
+# backup directories
+/backup-before-restore-*/
+/meljazz-temp/
+/backups/
+/restore-temp/
+/current-backup-*/
+/clean_restore/
+/temp-gh-pages/
