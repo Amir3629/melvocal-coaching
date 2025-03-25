@@ -35,35 +35,12 @@ export default function ServiceSelection({ selectedService, onSelect }: ServiceS
   }
 
   return (
-    <div 
-      className="w-full max-w-[420px] mx-auto px-4 sm:px-6" 
-      style={{ 
-        direction: 'ltr',
-        textAlign: 'left'
-      }}
-      dir="ltr"
-    >
-      <div className="mb-8" style={{ direction: 'ltr' }}>
-        <h2 
-          className="text-[28px] font-bold text-white mb-3" 
-          style={{ 
-            direction: 'ltr',
-            textAlign: 'left',
-            display: 'block'
-          }}
-          dir="ltr"
-        >
+    <div className="w-full max-w-[420px] mx-auto px-4 sm:px-6 [direction:ltr] [text-align:left]">
+      <div className="mb-8 [direction:ltr]">
+        <h2 className="text-[28px] font-bold text-white mb-3 block [direction:ltr] [text-align:left]">
           {t('booking.selectService', 'Dienst auswählen')}
         </h2>
-        <p 
-          className="text-base text-gray-400 leading-relaxed"
-          style={{ 
-            direction: 'ltr',
-            textAlign: 'left',
-            display: 'block'
-          }}
-          dir="ltr"
-        >
+        <p className="text-base text-gray-400 leading-relaxed block [direction:ltr] [text-align:left]">
           {t('booking.selectServiceDesc', 'Wählen Sie den gewünschten Service aus.')}
         </p>
       </div>
@@ -78,43 +55,21 @@ export default function ServiceSelection({ selectedService, onSelect }: ServiceS
           whileTap="tap"
           custom={0}
           onClick={() => onSelect('professioneller-gesang')}
-          className={`w-full p-5 rounded-xl border transition-all duration-300 ${
+          className={`w-full p-5 rounded-xl border transition-all duration-300 block [direction:ltr] [text-align:left] ${
             selectedService === 'professioneller-gesang'
               ? 'bg-[#1A1A1A] border-[#C8A97E] shadow-lg'
               : 'bg-[#121212] border-gray-800 hover:border-[#C8A97E]/50'
           }`}
-          style={{ 
-            direction: 'ltr',
-            textAlign: 'left',
-            display: 'block'
-          }}
-          dir="ltr"
         >
-          <div className="flex items-start gap-4" style={{ direction: 'ltr' }}>
+          <div className="flex items-start gap-4 [direction:ltr]">
             <div className="w-12 h-12 rounded-full bg-[#1A1A1A] flex items-center justify-center flex-shrink-0">
               <Mic className="w-6 h-6 text-[#C8A97E]" />
             </div>
-            <div className="flex-1 min-w-0" style={{ direction: 'ltr', textAlign: 'left' }}>
-              <h3 
-                className="text-lg font-semibold text-white mb-1"
-                style={{ 
-                  direction: 'ltr',
-                  textAlign: 'left',
-                  display: 'block'
-                }}
-                dir="ltr"
-              >
+            <div className="flex-1 min-w-0 [direction:ltr] [text-align:left]">
+              <h3 className="text-lg font-semibold text-white mb-1 block [direction:ltr] [text-align:left]">
                 {t('booking.liveJazzPerformance', 'Live Jazz Performance')}
               </h3>
-              <p 
-                className="text-sm text-gray-400"
-                style={{ 
-                  direction: 'ltr',
-                  textAlign: 'left',
-                  display: 'block'
-                }}
-                dir="ltr"
-              >
+              <p className="text-sm text-gray-400 block [direction:ltr] [text-align:left]">
                 {t('booking.nachVereinbarung', 'Nach Vereinbarung')}
               </p>
             </div>
@@ -135,43 +90,21 @@ export default function ServiceSelection({ selectedService, onSelect }: ServiceS
           whileTap="tap"
           custom={1}
           onClick={() => onSelect('vocal-coaching')}
-          className={`w-full p-5 rounded-xl border transition-all duration-300 ${
+          className={`w-full p-5 rounded-xl border transition-all duration-300 block [direction:ltr] [text-align:left] ${
             selectedService === 'vocal-coaching'
               ? 'bg-[#1A1A1A] border-[#C8A97E] shadow-lg'
               : 'bg-[#121212] border-gray-800 hover:border-[#C8A97E]/50'
           }`}
-          style={{ 
-            direction: 'ltr',
-            textAlign: 'left',
-            display: 'block'
-          }}
-          dir="ltr"
         >
-          <div className="flex items-start gap-4" style={{ direction: 'ltr' }}>
+          <div className="flex items-start gap-4 [direction:ltr]">
             <div className="w-12 h-12 rounded-full bg-[#1A1A1A] flex items-center justify-center flex-shrink-0">
               <Music className="w-6 h-6 text-[#C8A97E]" />
             </div>
-            <div className="flex-1 min-w-0" style={{ direction: 'ltr', textAlign: 'left' }}>
-              <h3 
-                className="text-lg font-semibold text-white mb-1"
-                style={{ 
-                  direction: 'ltr',
-                  textAlign: 'left',
-                  display: 'block'
-                }}
-                dir="ltr"
-              >
+            <div className="flex-1 min-w-0 [direction:ltr] [text-align:left]">
+              <h3 className="text-lg font-semibold text-white mb-1 block [direction:ltr] [text-align:left]">
                 {t('booking.vocalCoachingAndGesang', 'Vocal Coaching & Gesangsunterricht')}
               </h3>
-              <p 
-                className="text-sm text-gray-400"
-                style={{ 
-                  direction: 'ltr',
-                  textAlign: 'left',
-                  display: 'block'
-                }}
-                dir="ltr"
-              >
+              <p className="text-sm text-gray-400 block [direction:ltr] [text-align:left]">
                 60 min
               </p>
             </div>
