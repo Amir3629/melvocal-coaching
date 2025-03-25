@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [solution-3]
+    branches: [solution-4]
 
 permissions:
   contents: write
@@ -20,29 +20,21 @@ jobs:
           node-version: 18
 
       - name: Install Dependencies
-        run: |
-          npm install
-          npm install -g serve
+        run: npm install
 
-      - name: Update next.config.js
+      - name: Configure Next.js
         run: |
-          echo "module.exports = { output: 'export', images: { unoptimized: true }, basePath: '/melvocal-coaching', assetPrefix: '/melvocal-coaching/' }" > next.config.js
+          echo 'module.exports = { output: "export", images: { unoptimized: true }, basePath: "/melvocal-coaching" }' > next.config.js
 
       - name: Build
-        run: |
-          npm run build
-          touch out/.nojekyll
+        run: npm run build
 
-      - name: Test Build
-        run: |
-          serve -s out -p 3000 &
-          sleep 5
-          curl -I http://localhost:3000
+      - name: Add .nojekyll file
+        run: touch out/.nojekyll
 
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          branch: gh-pages
-          folder: out
-          clean-exclude: |
-            .nojekyll
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
+          cname: melvocal-coaching.com
