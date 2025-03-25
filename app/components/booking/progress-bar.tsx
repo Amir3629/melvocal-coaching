@@ -3,118 +3,85 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { Check, Music, Calendar, FileText } from 'lucide-react'
-import MobileProgressBar from './mobile-progress-bar'
+import { Check, FileText } from 'lucide-react'
 
 // Form step type
-type FormStep = 'service' | 'details' | 'confirm' | number
+type FormStep = 'service' | 'details' | 'confirm'
 
 interface ProgressBarProps {
   currentStep: FormStep;
   totalSteps?: number;
-  labels?: string[];
-  onStepClick?: (step: number) => void;
 }
 
-export default function ProgressBar({ currentStep, totalSteps = 3, labels, onStepClick }: ProgressBarProps) {
+export default function ProgressBar({ currentStep }: ProgressBarProps) {
   const { t } = useTranslation()
   
+  const steps = [
+    {
+      id: 'service',
+      label: t('booking.dienst', 'Dienst'),
+      icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 4L10.6667 14.6667H13.3333L12 4Z" fill="currentColor"/>
+        <path d="M7.33333 9.33333L6 20H8.66667L7.33333 9.33333Z" fill="currentColor"/>
+        <path d="M16.6667 9.33333L15.3333 20H18L16.6667 9.33333Z" fill="currentColor"/>
+      </svg>
+    },
+    {
+      id: 'details',
+      label: t('booking.details', 'Details'),
+      icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19 4H5C3.89543 4 3 4.89543 3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6C21 4.89543 20.1046 4 19 4Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
+        <path d="M16 2V6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M8 2V6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M3 10H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    },
+    {
+      id: 'confirm',
+      label: t('booking.confirm', 'Bestätigen'),
+      icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 6L9 17L4 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    }
+  ]
+
   return (
-    <>
-      {/* Mobile view - only visible on small screens */}
-      <div className="md:hidden w-full">
-        <MobileProgressBar 
-          currentStep={currentStep} 
-          totalSteps={totalSteps} 
-          labels={labels} 
-          onStepClick={onStepClick}
-        />
-      </div>
-      
-      {/* Desktop view - hidden on small screens */}
-      <div className="hidden md:block max-w-4xl mx-auto mb-6 relative">
-        <div className="flex justify-between items-center">
-          {/* Step 1: Service */}
-          <div className="flex flex-col items-center relative z-10">
-            <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 transition-all duration-300 ${
-              currentStep === 'service' 
-                ? 'bg-[#C8A97E] text-black' 
-                : currentStep === 'details' || currentStep === 'confirm'
-                  ? 'bg-[#2A2A2A] text-[#C8A97E] border border-[#C8A97E]'
-                  : 'bg-[#2A2A2A] text-white'
-            }`}>
-              {currentStep === 'details' || currentStep === 'confirm' ? (
-                <Check size={18} className="text-[#C8A97E]" />
-              ) : (
-                <Music size={18} />
-              )}
-            </div>
-            <span className={`text-sm ${
-              currentStep === 'service' ? 'text-[#C8A97E] font-medium' : 'text-gray-400'
-            }`}>
-              {t('booking.dienst', 'Dienst')}
+    <div className="flex justify-between items-center max-w-md mx-auto px-4 py-2">
+      {steps.map((step, index) => (
+        <React.Fragment key={step.id}>
+          {/* Step */}
+          <div className="flex flex-col items-center">
+            <motion.div
+              animate={{
+                color: currentStep === step.id 
+                  ? '#C8A97E' 
+                  : (steps.findIndex(s => s.id === currentStep) > steps.findIndex(s => s.id === step.id))
+                    ? '#C8A97E'
+                    : '#4B5563',
+                scale: currentStep === step.id ? 1.1 : 1
+              }}
+              className="mb-1"
+            >
+              {step.icon}
+            </motion.div>
+            <span className="text-xs text-gray-400">
+              {step.label}
             </span>
           </div>
-          
+
           {/* Connector */}
-          <div className="flex-1 h-0.5 mx-2 bg-gray-800 relative z-0">
+          {index < steps.length - 1 && (
             <motion.div 
-              className="h-full bg-[#C8A97E]"
-              initial={{ width: '0%' }}
-              animate={{ width: currentStep === 'service' ? '0%' : currentStep === 'details' ? '50%' : '100%' }}
-              transition={{ duration: 0.5 }}
+              className="h-[2px] flex-1 mx-2"
+              animate={{
+                backgroundColor: steps.findIndex(s => s.id === currentStep) > index 
+                  ? '#C8A97E' 
+                  : '#4B5563'
+              }}
             />
-          </div>
-          
-          {/* Step 2: Details */}
-          <div className="flex flex-col items-center relative z-10">
-            <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 transition-all duration-300 ${
-              currentStep === 'details' 
-                ? 'bg-[#C8A97E] text-black' 
-                : currentStep === 'confirm'
-                  ? 'bg-[#2A2A2A] text-[#C8A97E] border border-[#C8A97E]'
-                  : 'bg-[#2A2A2A] text-gray-500'
-            }`}>
-              {currentStep === 'confirm' ? (
-                <Check size={18} className="text-[#C8A97E]" />
-              ) : (
-                <Calendar size={18} />
-              )}
-            </div>
-            <span className={`text-sm ${
-              currentStep === 'details' ? 'text-[#C8A97E] font-medium' : 'text-gray-400'
-            }`}>
-              {t('booking.details', 'Details')}
-            </span>
-          </div>
-          
-          {/* Connector */}
-          <div className="flex-1 h-0.5 mx-2 bg-gray-800 relative z-0">
-            <motion.div 
-              className="h-full bg-[#C8A97E]"
-              initial={{ width: '0%' }}
-              animate={{ width: currentStep === 'confirm' ? '100%' : '0%' }}
-              transition={{ duration: 0.5 }}
-            />
-          </div>
-          
-          {/* Step 3: Confirmation */}
-          <div className="flex flex-col items-center relative z-10">
-            <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 transition-all duration-300 ${
-              currentStep === 'confirm' 
-                ? 'bg-[#C8A97E] text-black' 
-                : 'bg-[#2A2A2A] text-gray-500'
-            }`}>
-              <FileText size={18} />
-            </div>
-            <span className={`text-sm ${
-              currentStep === 'confirm' ? 'text-[#C8A97E] font-medium' : 'text-gray-400'
-            }`}>
-              {t('booking.confirm', 'Bestätigen')}
-            </span>
-          </div>
-        </div>
-      </div>
-    </>
+          )}
+        </React.Fragment>
+      ))}
+    </div>
   )
 } 

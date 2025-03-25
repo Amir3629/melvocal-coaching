@@ -26,13 +26,13 @@ export default function SubmitButton({
       onClick={onClick}
       disabled={disabled || isSubmitting}
       className={`
-        w-full py-2 md:py-3 px-4 font-medium rounded-lg transition-colors flex items-center justify-center
-        text-sm md:text-base
+        py-2.5 px-5 sm:py-3 sm:px-6 font-medium rounded-lg transition-all flex items-center justify-center
         ${isLastStep 
-          ? 'bg-[#C8A97E] text-black hover:bg-[#D4AF37]' 
-          : 'bg-white/10 text-white hover:bg-white/20'
+          ? 'bg-[#C8A97E] text-black hover:bg-[#D4AF37] active:bg-[#B89665]' 
+          : 'bg-[#1A1A1A] text-white hover:bg-[#222] active:bg-[#282828] border border-gray-700'
         }
         ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
+        shadow-sm hover:shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#C8A97E] focus:ring-offset-[#121212]
       `}
       whileTap={{ scale: 0.98 }}
       initial={{ opacity: 0, y: 10 }}
@@ -40,17 +40,21 @@ export default function SubmitButton({
       transition={{ duration: 0.3 }}
     >
       {isSubmitting ? (
-        <Loader2 className="w-4 h-4 md:w-5 md:h-5 mr-1.5 md:mr-2 animate-spin" />
+        <>
+          <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-spin" />
+          <span>{t('booking.processing', 'Verarbeitung')}</span>
+        </>
       ) : isLastStep ? (
-        <Check className="w-4 h-4 md:w-5 md:h-5 mr-1.5 md:mr-2" />
+        <>
+          <Check className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
+          <span>{t('booking.submitBooking', 'Buchung absenden')}</span>
+        </>
       ) : (
-        <ArrowRight className="w-4 h-4 md:w-5 md:h-5 mr-1.5 md:mr-2" />
+        <>
+          <span>{t('booking.nextStep', 'Weiter')}</span>
+          <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
+        </>
       )}
-      
-      {isLastStep 
-        ? t('booking.submitBooking', 'Buchung absenden')
-        : t('booking.nextStep', 'Weiter')
-      }
     </motion.button>
   )
 } 

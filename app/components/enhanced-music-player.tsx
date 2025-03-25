@@ -17,6 +17,7 @@ export default function EnhancedMusicPlayer() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showMiniPlayer, setShowMiniPlayer] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   
   const audioRef = useRef<HTMLAudioElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -28,6 +29,24 @@ export default function EnhancedMusicPlayer() {
     youtubeId: "hFdMHvB6-Jk",
     image: "/photo_8_2025-02-27_12-05-55.jpg"
   };
+
+  // Check for mobile device on mount and window resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    // Check on initial render
+    checkMobile();
+    
+    // Add event listener for window resize
+    window.addEventListener('resize', checkMobile);
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
+  }, []);
 
   // Get YouTube thumbnail URL - use higher quality image
   const getYouTubeThumbnail = (youtubeId: string) => {
@@ -184,142 +203,202 @@ export default function EnhancedMusicPlayer() {
     console.log("Mini player clicked");
   };
 
+  // Render different player for mobile vs desktop
   return (
-    <div className="relative w-full py-24 overflow-hidden" ref={sectionRef}>
-      <div className="absolute inset-0 bg-black/95 backdrop-blur-xl z-0"></div>
-      
-      <div className="relative z-10 flex flex-col items-center">
-        <h2 className="text-3xl font-bold text-white mb-6">Meine Musik</h2>
-        <div className="w-16 h-1 bg-[#C8A97E] mb-12"></div>
-        
-        {/* Single Disc Container */}
-        <div className="relative w-full h-96 mx-auto mb-4">
-          {/* Main Vinyl Disc */}
-          <motion.div 
-            className="absolute top-1/2 left-1/2 w-96 h-96 -translate-x-1/2 -translate-y-1/2 cursor-pointer z-30"
-            transition={{ duration: 0.3 }}
-            style={{ boxShadow: '0 25px 60px rgba(0, 0, 0, 0.7)' }}
+    <section ref={sectionRef} id="music" className="py-16 md:py-24 bg-black relative overflow-hidden w-full">
+      <div className="container mx-auto px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-2 text-white">Meine Musik</h2>
+          <div className="w-24 h-0.5 bg-[#C8A97E] mx-auto mt-4 mb-12"></div>
+          
+          {/* Music player */}
+          <div className="w-full flex flex-col items-center justify-center">
+            {/* Audio element */}
+            <audio
+              ref={audioRef}
+              src={getAudioPath(track.file)}
+              preload="auto"
+              onEnded={handleEnded}
+              onError={handleError}
+              className="hidden"
+            />
+            
+            {/* Main Vinyl Player */}
+            <div className="w-full flex justify-center">
+              {/* Different sized containers for mobile vs desktop */}
+              <div className={isMobile ? "w-[280px] h-[280px]" : "w-[320px] h-[320px]"}>
+                <div 
+                  className="relative w-full h-full"
             onClick={handlePlay}
           >
-            {/* Main disc */}
-            <div className="absolute inset-0 rounded-full overflow-hidden shadow-2xl">
-              {/* Disc image background - spinning only when playing */}
-              <motion.div 
-                className="absolute inset-0 rounded-full overflow-hidden"
-                animate={{ rotate: isPlaying ? 360 : 0 }}
-                transition={{ 
-                  duration: 40, 
-                  ease: "linear", 
-                  repeat: isPlaying ? Infinity : 0,
-                  repeatType: "loop" 
-                }}
-              >
-                <Image 
-                  src={getImagePath(track.image)}
-                  alt={track.title}
-                  fill
-                  style={{ objectFit: 'cover', objectPosition: 'center' }}
-                  className="opacity-100"
-                  priority
-                  unoptimized
-                />
-              </motion.div>
-              
-              {/* Inner disc with grooves - spinning only when playing */}
-              <motion.div 
-                className="absolute inset-0 rounded-full bg-black/30 backdrop-blur-none"
-                animate={{ rotate: isPlaying ? 360 : 0 }}
-                transition={{ 
-                  duration: 40, 
-                  ease: "linear", 
-                  repeat: isPlaying ? Infinity : 0,
-                  repeatType: "loop" 
-                }}
-              >
-                {/* Vinyl grooves */}
-                <div className="absolute inset-0 rounded-full">
-                  <div className="absolute inset-[15px] rounded-full border border-[#444]/70"></div>
-                  <div className="absolute inset-[30px] rounded-full border border-[#444]/70"></div>
-                  <div className="absolute inset-[45px] rounded-full border border-[#444]/70"></div>
-                  <div className="absolute inset-[60px] rounded-full border border-[#444]/70"></div>
-                  <div className="absolute inset-[75px] rounded-full border border-[#444]/70"></div>
-                  <div className="absolute inset-[90px] rounded-full border border-[#444]/70"></div>
-                  <div className="absolute inset-[105px] rounded-full border border-[#444]/70"></div>
-                  <div className="absolute inset-[120px] rounded-full border border-[#444]/70"></div>
-                </div>
-                
-                {/* Center button */}
-                <div className="absolute inset-0 m-auto w-32 h-32 rounded-full bg-black flex items-center justify-center">
-                  <motion.button
-                    className="w-24 h-24 rounded-full bg-black flex items-center justify-center hover:bg-black/70 transition-colors"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={handlePlay}
-                    transition={{ duration: 0.5 }}
+                  {/* Vinyl Disc and Album Art */}
+                  <div 
+                    className="absolute inset-0 flex items-center justify-center cursor-pointer bg-black rounded-full overflow-hidden"
+                    style={{
+                      animation: isPlaying ? 'spin 20s linear infinite' : 'none',
+                      boxShadow: '0 4px 30px rgba(0, 0, 0, 0.5)'
+                    }}
                   >
-                    {isLoading ? (
-                      <div className="w-8 h-8 border-2 border-[#C8A97E] border-t-transparent rounded-full animate-spin"></div>
-                    ) : isPlaying ? (
-                      <Pause className="w-8 h-8 text-[#C8A97E]" />
+                    {/* Mobile vs Desktop disc styling */}
+                    {isMobile ? (
+                      // Mobile-optimized disc with constrained album art
+                      <div className="relative w-full h-full rounded-full overflow-hidden">
+                        {/* Black Vinyl Background */}
+                        <div className="absolute inset-0 bg-black z-0"></div>
+                        
+                        {/* Album Cover Image - specifically optimized for mobile */}
+                        <div className="absolute inset-0 rounded-full overflow-hidden" style={{ contain: 'strict' }}>
+                          <div className="relative w-full h-full">
+                            <Image 
+                              src={getImagePath(track.image)}
+                              alt={track.title}
+                              fill
+                              sizes="280px"
+                              style={{
+                                objectFit: 'cover',
+                                objectPosition: 'center',
+                                transform: 'scale(1.05)', /* Slightly scale up to ensure no white gaps */
+                                width: '100%',
+                                height: '100%',
+                                borderRadius: '50%'
+                              }}
+                              className="rounded-full"
+                              priority
+                            />
+                          </div>
+                        </div>
+                        
+                        {/* Center Hole */}
+                        <div className="absolute top-1/2 left-1/2 w-4 h-4 bg-black rounded-full z-10 transform -translate-x-1/2 -translate-y-1/2"></div>
+                        
+                        {/* Vinyl Grooves */}
+                        <div className="absolute inset-0 z-5 pointer-events-none">
+                          <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+                            <circle cx="50" cy="50" r="48" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
+                            <circle cx="50" cy="50" r="35" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
+                            <circle cx="50" cy="50" r="30" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
+                            <circle cx="50" cy="50" r="25" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
+                            <circle cx="50" cy="50" r="20" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
+                            <circle cx="50" cy="50" r="15" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
+                          </svg>
+                        </div>
+                      </div>
                     ) : (
-                      <Play className="w-9 h-9 text-[#C8A97E] ml-1" />
+                      // Desktop-sized disc rendering (original implementation)
+                      <>
+                        {/* Black Vinyl Background */}
+                        <div className="absolute inset-0 bg-black z-0"></div>
+                        
+                        {/* Album Cover Image */}
+                        <div className="absolute inset-0 z-5 pointer-events-none overflow-hidden rounded-full">
+                          <Image
+                            src={getImagePath(track.image)}
+                            alt={track.title}
+                            fill
+                            style={{
+                              objectFit: 'cover',
+                              objectPosition: 'center',
+                              transform: 'scale(1.05)', /* Slightly scale up to ensure no white gaps */
+                              borderRadius: '50%',
+                              mixBlendMode: 'normal'
+                            }}
+                            priority
+                          />
+                        </div>
+                        
+                        {/* Center Hole */}
+                        <div className="absolute top-1/2 left-1/2 w-4 h-4 bg-black rounded-full z-10 transform -translate-x-1/2 -translate-y-1/2"></div>
+                        
+                        {/* Vinyl Grooves */}
+                        <div className="absolute inset-0 z-5 pointer-events-none">
+                          <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+                            <circle cx="50" cy="50" r="48" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
+                            <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
+                            <circle cx="50" cy="50" r="35" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
+                            <circle cx="50" cy="50" r="30" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
+                            <circle cx="50" cy="50" r="25" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
+                            <circle cx="50" cy="50" r="20" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
+                            <circle cx="50" cy="50" r="15" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
+                          </svg>
+                        </div>
+                      </>
                     )}
-                  </motion.button>
+                    
+                    {/* Play Button Overlay */}
+                    <div 
+                      className="absolute inset-0 flex items-center justify-center z-20"
+                      style={{
+                        backgroundColor: 'rgba(0,0,0,0.4)',
+                        opacity: isPlaying ? 0 : 1,
+                        transition: 'opacity 0.3s ease'
+                      }}
+                    >
+                      <div className="bg-black bg-opacity-60 p-4 rounded-full">
+                        {isPlaying ? (
+                          <Pause className="w-10 h-10 text-white" />
+                        ) : (
+                          <Play className="w-10 h-10 text-white ml-1" />
+                        )}
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </motion.div>
+              </div>
             </div>
-          </motion.div>
+            
+            {/* Track Info */}
+            <div className="mt-8 text-white">
+              <h3 className="text-2xl font-bold">{track.title}</h3>
+              <p className="text-lg opacity-80">{track.artist}</p>
+            </div>
         </div>
-        
-        {/* Track title and artist */}
-        <div className="text-center mt-8 mb-4">
-          <h3 className="text-xl font-medium text-white mb-1">{track.title}</h3>
-          <p className="text-sm text-[#C8A97E]">{track.artist}</p>
         </div>
       </div>
       
-      {/* Hidden audio element */}
-      <audio
-        ref={audioRef}
-        onEnded={handleEnded}
-        onError={handleError}
-        preload="auto"
-        className="hidden"
-        src="/audio/AUDIO-2025-03-19-16-15-29.mp3"
-      />
-      
-      {/* Show any error messages */}
-      {error && (
-        <div className="text-red-500 mt-4 text-center">
-          {error}
-        </div>
-      )}
-
-      {/* Floating Mini Player */}
+      {/* Mini player for scrolled state */}
       <AnimatePresence>
-        {showMiniPlayer && isPlaying && (
+        {showMiniPlayer && (
           <motion.div 
-            className="fixed bottom-6 right-6 z-50 flex items-center space-x-2 bg-black/80 backdrop-blur-lg rounded-full p-2 pl-4 pr-3 shadow-2xl border border-[#C8A97E]/20"
-            initial={{ y: 80, opacity: 0 }}
+            initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            exit={{ y: 80, opacity: 0 }}
-            transition={{ duration: 0.7, ease: "easeInOut" }}
+            exit={{ y: 100, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="fixed bottom-4 right-4 z-50 bg-black bg-opacity-80 backdrop-blur-md p-4 rounded-lg shadow-lg flex items-center"
           >
-            <div className="flex items-center space-x-3 cursor-pointer">
-              <Music className="w-5 h-5 text-[#C8A97E]" />
-              <div className="text-white text-sm">{track.title}</div>
-            </div>
-            <motion.button
-              className="w-8 h-8 rounded-full bg-[#C8A97E]/10 hover:bg-[#C8A97E]/20 flex items-center justify-center transition-colors"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={handlePlay}
+            <div 
+              className="w-10 h-10 rounded-full overflow-hidden mr-3 flex-shrink-0"
+              style={{
+                animation: isPlaying ? 'spin 8s linear infinite' : 'none',
+              }}
             >
-              <Pause className="w-4 h-4 text-[#C8A97E]" />
-            </motion.button>
+              <Image
+                src={getImagePath(track.image)}
+                alt={track.title}
+                width={40}
+                height={40}
+                className="object-cover w-full h-full"
+              />
+            </div>
+            <div className="mr-4">
+              <p className="text-white text-sm font-medium">{track.title}</p>
+              <p className="text-gray-300 text-xs">{track.artist}</p>
+            </div>
+            <button 
+              onClick={handlePlay}
+              className="w-8 h-8 flex items-center justify-center bg-white bg-opacity-20 rounded-full"
+            >
+              {isPlaying ? (
+                <Pause className="w-4 h-4 text-white" />
+              ) : (
+                <Play className="w-4 h-4 text-white ml-0.5" />
+              )}
+            </button>
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </section>
   );
 } 

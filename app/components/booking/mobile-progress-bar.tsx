@@ -3,148 +3,153 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { Check } from 'lucide-react'
+import { CheckIcon } from '@heroicons/react/24/solid'
 
-// Types
-type FormStep = 'service' | 'details' | 'confirm' | number
+// Define the type for form steps
+type FormStep = 'service' | 'details' | 'confirm'
 
+// Props for the MobileProgressBar component
 interface MobileProgressBarProps {
-  currentStep: FormStep;
-  totalSteps: number;
-  labels?: string[];
-  onStepClick?: (step: number) => void;
+  currentStep: FormStep
+  totalSteps: number
+  labels: string[]
 }
 
-// Reusable step button component
-const StepButton = ({ 
-  step, 
-  currentStep, 
-  label, 
-  onClick 
-}: { 
-  step: number; 
-  currentStep: FormStep; 
-  label: string; 
-  onClick?: () => void; 
-}) => {
-  const isActive = currentStep === step || 
-                  (typeof currentStep === 'string' && 
-                   (currentStep === 'service' && step === 0) || 
-                   (currentStep === 'details' && step === 1) || 
-                   (currentStep === 'confirm' && step === 2));
-  
-  const isCompleted = typeof currentStep === 'number' 
-    ? currentStep > step 
-    : (currentStep === 'details' && step === 0) || 
-      (currentStep === 'confirm' && (step === 0 || step === 1));
-
-  return (
-    <button 
-      onClick={onClick}
-      className={`
-        flex flex-col items-center justify-center
-        ${isActive || isCompleted ? 'cursor-pointer' : 'cursor-not-allowed opacity-70'}
-      `}
-      role="button"
-      tabIndex={0}
-    >
-      <div className={`
-        w-8 h-8 rounded-full flex items-center justify-center mb-1
-        transition-all duration-300
-        ${isActive 
-          ? 'bg-[#C8A97E] text-black' 
-          : isCompleted
-            ? 'bg-[#2A2A2A] text-[#C8A97E] border border-[#C8A97E]'
-            : 'bg-[#2A2A2A] text-gray-500'
-        }
-      `}>
-        {isCompleted ? (
-          <Check size={16} className="text-[#C8A97E]" />
-        ) : (
-          <span>{step + 1}</span>
-        )}
-      </div>
-      
-      <span className={`
-        text-xs
-        ${isActive 
-          ? 'text-[#C8A97E] font-medium' 
-          : isCompleted 
-            ? 'text-[#C8A97E]' 
-            : 'text-gray-400'
-        }
-      `}>
-        {label}
-      </span>
-    </button>
-  );
-};
-
 export default function MobileProgressBar({ 
-  currentStep, 
-  totalSteps, 
-  labels = [],
-  onStepClick
+  currentStep,
+  totalSteps,
+  labels 
 }: MobileProgressBarProps) {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   
-  // Convert string currentStep to number for progress calculation
-  const currentStepNumber = typeof currentStep === 'number' 
-    ? currentStep 
-    : currentStep === 'service' 
-      ? 0 
-      : currentStep === 'details' 
-        ? 1 
-        : currentStep === 'confirm' 
-          ? 2 
-          : 0;
-  
-  // Default labels if not provided
-  const stepLabels = labels.length === totalSteps 
-    ? labels 
-    : Array(totalSteps).fill(0).map((_, i) => 
-        i === 0 
-          ? t('booking.service', 'Dienst') 
-          : i === totalSteps - 1 
-            ? t('booking.confirm', 'Bestätigen') 
-            : t('booking.details', 'Details')
-      );
-  
-  // Handle step click
-  const handleStepClick = (step: number) => {
-    // Only allow clicking on completed steps or the current step
-    if (onStepClick && (step <= currentStepNumber)) {
-      onStepClick(step);
+  // Check if a step is completed
+  const isCompleted = (step: string): boolean => {
+    if (step === 'service') {
+      return currentStep !== 'service'
+    } else if (step === 'details') {
+      return currentStep === 'confirm'
     }
-  };
+    return false
+  }
   
+  // Check if a step is active
+  const isActive = (step: string): boolean => {
+    return currentStep === step
+  }
+  
+  // Define step data for rendering
+  const steps = [
+    {
+      id: 'service',
+      name: t('booking.service', 'Dienst'),
+      description: t('booking.selectService', 'Dienst auswählen'),
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+      )
+    },
+    {
+      id: 'details',
+      name: t('booking.details', 'Details'),
+      description: t('booking.enterDetails', 'Details eingeben'),
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+      )
+    },
+    {
+      id: 'confirm',
+      name: t('booking.confirm', 'Bestätigen'),
+      description: t('booking.confirmation', 'Bestätigung'),
+      icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+        </svg>
+      )
+    }
+  ]
+
   return (
-    <div className="w-full py-2 px-1 booking-progress-mobile">
-      {/* Progress bar */}
-      <div className="relative h-1.5 bg-gray-800 rounded-full mb-4">
-        <motion.div 
-          className="absolute left-0 top-0 h-full bg-[#C8A97E] rounded-full"
-          initial={{ width: '0%' }}
-          animate={{ 
-            width: `${(currentStepNumber / (totalSteps - 1)) * 100}%` 
-          }}
-          transition={{ duration: 0.3 }}
-        />
-      </div>
-      
-      {/* Step indicators */}
-      <div className="flex justify-between items-start">
-        {Array.from({ length: totalSteps }, (_, i) => (
-          <StepButton 
-            key={i}
-            step={i}
-            currentStep={currentStep}
-            label={stepLabels[i]}
-            onClick={() => handleStepClick(i)}
-          />
+    <div className="sm:hidden mb-6 px-2 py-4 bg-[#121212] border border-gray-800 rounded-xl">
+      <div className="space-y-5">
+        {steps.map((step, index) => (
+          <div key={step.id} className="relative">
+            {/* Connect lines between steps */}
+            {index < steps.length - 1 && (
+              <div 
+                className="absolute left-4 top-10 h-full w-0.5 -ml-px" 
+                style={{
+                  background: `linear-gradient(to bottom, 
+                    ${isCompleted(step.id) ? '#C8A97E' : '#374151'} 0%, 
+                    ${isCompleted(steps[index + 1].id) ? '#C8A97E' : '#374151'} 100%)`
+                }}
+              />
+            )}
+            
+            <div className="relative flex items-start group">
+              {/* Step circle */}
+              <div className="flex-shrink-0 h-8 w-8 flex items-center justify-center">
+                <motion.div
+                  initial={false}
+                  animate={{
+                    backgroundColor: isCompleted(step.id) 
+                      ? '#C8A97E' 
+                      : isActive(step.id) 
+                        ? '#1f2937' 
+                        : '#111827',
+                    borderColor: isCompleted(step.id) 
+                      ? '#C8A97E' 
+                      : isActive(step.id) 
+                        ? '#C8A97E' 
+                        : '#374151',
+                    scale: isActive(step.id) ? 1.1 : 1
+                  }}
+                  className="h-8 w-8 rounded-full border-2 flex items-center justify-center shadow-md"
+                  transition={{ duration: 0.2 }}
+                >
+                  {isCompleted(step.id) ? (
+                    <CheckIcon className="h-5 w-5 text-black" />
+                  ) : (
+                    <div className={`${isActive(step.id) ? 'text-[#C8A97E]' : 'text-gray-400'}`}>
+                      {step.icon}
+                    </div>
+                  )}
+                </motion.div>
+              </div>
+              
+              {/* Step text */}
+              <div className="ml-4 pt-0.5">
+                <motion.div
+                  initial={false}
+                  animate={{
+                    color: isCompleted(step.id) 
+                      ? '#d1d5db' 
+                      : isActive(step.id) 
+                        ? '#C8A97E' 
+                        : '#9ca3af'
+                  }}
+                  className="text-sm font-medium"
+                  transition={{ duration: 0.2 }}
+                >
+                  {step.name}
+                </motion.div>
+                <motion.div
+                  initial={false}
+                  animate={{
+                    color: isActive(step.id) ? '#d1d5db' : '#6b7280'
+                  }}
+                  className="text-xs"
+                  transition={{ duration: 0.2 }}
+                >
+                  {step.description}
+                </motion.div>
+              </div>
+            </div>
+          </div>
         ))}
       </div>
     </div>
-  );
+  )
 }
-

@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
 import { useMedia } from "./media-context"
 import { getImagePath } from '@/app/utils/image-path';
-import MobileMusicPlayer from './mobile-music-player';
 
 interface Song {
   title: string;
@@ -85,7 +84,6 @@ export default function MusicPlayer() {
   const [activeDiscIndex, setActiveDiscIndex] = useState(0);
   const [isTransitioningDiscs, setIsTransitioningDiscs] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const videoRef = useRef<HTMLIFrameElement>(null);
   const progressBarRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<HTMLDivElement>(null);
@@ -96,20 +94,6 @@ export default function MusicPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null)
 
   const currentSong = songs[currentSongIndex];
-  
-  // Initialize and update isMobile state
-  useEffect(() => {
-    // Set initial mobile state
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    
-    // Check on mount and on resize
-    checkMobile();
-    
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
   
   // Prevent scrolling when dragging
   useEffect(() => {
@@ -167,12 +151,8 @@ export default function MusicPlayer() {
     if (isDragging || isTransitioningDiscs) {
       // Create a truly infinite carousel by adding discs in a way that allows
       // continuous scrolling in either direction
-      
-      // Use fewer discs on mobile for better performance
-      const discRange = isMobile ? 2 : 3;
-      
-      // Add discs within the range
-      for (let i = -discRange; i <= discRange; i++) {
+      // We'll add 3 discs on each side of the active disc for smoother transitions
+      for (let i = -3; i <= 3; i++) {
         // Calculate the index with proper wrapping
         let index = (roundedActiveIndex + i) % totalSongs;
         if (index < 0) index = totalSongs + index;
@@ -182,40 +162,34 @@ export default function MusicPlayer() {
       // Add additional discs for seamless looping when approaching the edges
       // This ensures that when you reach the end of the list, the beginning discs
       // are already visible and vice versa
-      if (roundedActiveIndex <= discRange) {
+      if (roundedActiveIndex <= 2) {
         // Near the beginning, add discs from the end
-        for (let i = 1; i <= discRange; i++) {
-          indices.push((totalSongs - i) % totalSongs);
-        }
-      } else if (roundedActiveIndex >= totalSongs - discRange) {
+        indices.push((totalSongs - 3) % totalSongs);
+        indices.push((totalSongs - 2) % totalSongs);
+        indices.push((totalSongs - 1) % totalSongs);
+      } else if (roundedActiveIndex >= totalSongs - 3) {
         // Near the end, add discs from the beginning
-        for (let i = 0; i < discRange; i++) {
-          indices.push(i);
-        }
+        indices.push(0);
+        indices.push(1);
+        indices.push(2);
       }
     } else {
-      // When not dragging, show the current disc and one or two on each side for smooth transitions
+      // When not dragging, show the current disc and two on each side for smooth transitions
       indices.push(roundedActiveIndex);
       
-      // Add one or two discs on each side depending on device
-      const prevRange = isMobile ? 1 : 2;
-      const nextRange = isMobile ? 1 : 2;
+      // Add two discs on each side
+      const prevIndex1 = (roundedActiveIndex - 1 + totalSongs) % totalSongs;
+      const prevIndex2 = (roundedActiveIndex - 2 + totalSongs) % totalSongs;
+      const nextIndex1 = (roundedActiveIndex + 1) % totalSongs;
+      const nextIndex2 = (roundedActiveIndex + 2) % totalSongs;
       
-      // Add previous discs
-      for (let i = 1; i <= prevRange; i++) {
-        indices.push((roundedActiveIndex - i + totalSongs) % totalSongs);
-      }
-      
-      // Add next discs
-      for (let i = 1; i <= nextRange; i++) {
-        indices.push((roundedActiveIndex + i) % totalSongs);
-      }
+      indices.push(prevIndex1, prevIndex2, nextIndex1, nextIndex2);
     }
     
     // Remove any duplicate indices that might have been added
     const uniqueIndices = Array.from(new Set(indices));
     setVisibleDiscs(uniqueIndices);
-  }, [currentSongIndex, dragOffset, isDragging, isTransitioningDiscs, songs.length, isMobile]);
+  }, [currentSongIndex, dragOffset, isDragging, isTransitioningDiscs, songs.length]);
 
   // Set player ready after a short delay
   useEffect(() => {
@@ -383,19 +357,6 @@ export default function MusicPlayer() {
     }
   }, [currentlyPlaying, isPlaying])
 
-  // Listen for window resize events to update disc positions
-  useEffect(() => {
-    const handleResize = () => {
-      // Force re-render when window size changes
-      // This ensures our responsive disc positions update
-      // The isMobile state will be updated through its own effect
-      setVisibleDiscs(prev => [...prev]);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [visibleDiscs]);
-
   const handlePlayPause = (trackIndex: number) => {
     if (currentSongIndex === trackIndex && isPlaying) {
       audioRef.current?.pause();
@@ -428,33 +389,12 @@ export default function MusicPlayer() {
     }
   };
   
-  // Add a togglePlay function
-  const togglePlay = () => {
-    if (isPlaying) {
-      audioRef.current?.pause();
-      setIsPlaying(false);
-    } else {
-      audioRef.current?.play().catch(error => {
-        console.error("Error playing audio:", error);
-      });
-      setIsPlaying(true);
-    }
-  };
-
-  // Fix the handleDiscClick function
+  // Make the disc only clickable in the center play button
   const handleDiscClick = (songIndex: number) => {
-    // If we're clicking on the current song, toggle play/pause
-    if (songIndex === currentSongIndex) {
-      togglePlay();
-    } else {
-      // Otherwise, switch to the new song and start playing
+    // Update the current song index
     setCurrentSongIndex(songIndex);
     setActiveDiscIndex(songIndex);
-      
-      // The actual play action will happen when the audio source changes
-      setIsPlaying(true);
   }
-  };
   
   // Handler specifically for the play button
   const handlePlayButtonClick = (e: React.MouseEvent) => {
@@ -651,41 +591,64 @@ export default function MusicPlayer() {
   };
 
   // Position calculation for the discs - create a smooth, natural circular arrangement
-  const getDiscPosition = (index: number, isMobile: boolean) => {
-    // Calculate distance from active disc
-    const distanceFromActive = index - activeDiscIndex + dragOffset;
+  const getDiscPosition = (index: number) => {
+    const totalSongs = songs.length;
+    // Find the shortest distance between this disc index and the active disc
+    // This ensures we're always using the most direct path for smooth animations
+    const indexDiff = ((index - activeDiscIndex) % totalSongs + totalSongs) % totalSongs;
+    let distance = indexDiff <= totalSongs / 2 ? indexDiff : indexDiff - totalSongs;
     
-    // Much smaller offsets for mobile to prevent discs from going off-screen
-    const maxXOffset = isMobile ? 60 : 180; // Further reduce horizontal spacing 
-    const maxYOffset = isMobile ? 5 : 20;   // Keep minimal vertical arc
-    const zDepth = isMobile ? 30 : 100;     // Keep same depth effect
+    // If we're dragging, adjust position based on drag offset
+    if (isDragging) {
+      // Convert dragOffset to a floating-point disc position adjustment
+      const dragAdjustment = dragOffset / 250;
+      distance -= dragAdjustment;
+    }
     
-    // Calculate x factor - less exponential for smoother transition
-    const xFactor = isMobile 
-      ? Math.sign(distanceFromActive) * Math.min(Math.abs(distanceFromActive), 0.9) 
-      : Math.sign(distanceFromActive) * Math.pow(Math.abs(distanceFromActive), 1.2);
+    // Calculate x offset - Apply an exponential curve to the position for a more natural spacing
+    // When discs move away from center, they accelerate in their movement
+    const maxXOffset = 400; // Maximum horizontal offset in pixels
+    const xFactor = Math.abs(distance) < 1 ? distance : Math.sign(distance) * Math.pow(Math.abs(distance), 1.2);
+    const xPosition = xFactor * (maxXOffset / 2);
     
-    // Calculate position with tighter constraints
-    const xPosition = xFactor * maxXOffset;
-    const yPosition = Math.abs(distanceFromActive) * maxYOffset;
-    const zPosition = -Math.abs(distanceFromActive) * zDepth;
+    // Calculate y offset - discs slightly move down as they move away from center
+    // This creates a slight arc or 3D effect
+    const maxYOffset = 60; // Maximum vertical offset in pixels
+    const yPosition = Math.pow(Math.abs(distance), 1.5) * maxYOffset;
     
-    return { x: xPosition, y: yPosition, z: zPosition };
+    // Calculate z offset for 3D effect - center disc is closest to user (z = 0)
+    // Discs further away have larger negative z values
+    const zPosition = -Math.abs(distance) * 150;
+    
+    return {
+      x: xPosition,
+      y: yPosition,
+      z: zPosition,
+    };
   };
 
   // Scale calculation for discs - center disc is largest, discs get smaller as they move away
-  const getDiscScale = (index: number, isMobile: boolean = false) => {
-    // Calculate distance from the active disc
-    const distanceFromActive = Math.abs(index - activeDiscIndex + dragOffset);
+  const getDiscScale = (index: number) => {
+    const totalSongs = songs.length;
+    // Find the shortest distance between this disc index and the active disc
+    const indexDiff = ((index - activeDiscIndex) % totalSongs + totalSongs) % totalSongs;
+    let distance = indexDiff <= totalSongs / 2 ? indexDiff : indexDiff - totalSongs;
     
-    // On mobile, we want to scale down inactive discs more aggressively
-    const minScale = isMobile ? 0.6 : 0.7;
-    const falloffRate = isMobile ? 0.2 : 0.15;
+    // If we're dragging, adjust distance based on drag offset
+    if (isDragging) {
+      const dragAdjustment = dragOffset / 250;
+      distance -= dragAdjustment;
+    }
     
-    // Base scale is 1.0 for the active disc
-    const scale = Math.max(minScale, 1 - (distanceFromActive * falloffRate));
+    // Create a non-linear scaling effect that decreases more rapidly as discs move away
+    // Base scale determines the size of the center disc (1 = 100%)
+    const baseScale = 1.0;
+    const minScale = 0.3; // Minimum scale for the furthest discs
     
-    return scale;
+    // Calculate exponential scale reduction
+    const scaleFactor = Math.max(minScale, baseScale - (Math.pow(Math.abs(distance), 1.3) * 0.25));
+    
+    return scaleFactor;
   };
 
   // Opacity calculation - center disc is most opaque, discs get more transparent as they move away
@@ -789,145 +752,117 @@ export default function MusicPlayer() {
     } as unknown as React.MouseEvent<HTMLDivElement>);
   };
 
-  // Render mobile or desktop version based on screen size
-  if (isMobile) {
-    return <MobileMusicPlayer />;
-  }
-
   return (
-    <div className="relative w-full flex flex-col items-center justify-center music-player-container">
-      {/* Fixed width container to preserve aspect ratio - make it wider */}
-      <div className="w-[300px] mx-auto">
+    <div className="relative w-full h-full flex flex-col items-center justify-center overflow-hidden">
       <div 
-          className="relative w-full aspect-square"
+        className="relative w-full h-[500px] perspective-1000"
         style={{
           perspective: '1000px',
+          transformStyle: 'preserve-3d'
         }}
       >
         <div 
-            className="absolute inset-0 flex items-center justify-center"
-            style={{ touchAction: 'pan-y', userSelect: 'none' }}
+          className="absolute w-full h-full"
+          style={{
+            transformStyle: 'preserve-3d',
+            transform: 'translateZ(0)'
+          }}
+            onMouseDown={handleDragStart}
           onTouchStart={handleTouchStart}
+          onMouseMove={handleDragMove}
           onTouchMove={handleTouchMove}
+            onMouseUp={handleDragEnd}
           onTouchEnd={handleTouchEnd}
-          >
-            {visibleDiscs.map((discIndex, idx) => {
-              // Get the actual song index
-              const normalizedIndex = ((discIndex % songs.length) + songs.length) % songs.length;
-              const song = songs[normalizedIndex];
-              const isActive = normalizedIndex === currentSongIndex;
-              
-              // Calculate position based on screen size
-              const position = getDiscPosition(discIndex, isMobile);
-              const scale = getDiscScale(discIndex, isMobile);
+          onMouseLeave={handleDragEnd}
+        >
+          <div className="relative w-full h-full flex items-center justify-center">
+            {visibleDiscs.map((songIndex) => {
+              const position = getDiscPosition(songIndex);
+              const scale = getDiscScale(songIndex);
+              const opacity = getDiscOpacity(songIndex);
+              const zIndex = getDiscZIndex(songIndex);
+              const blur = getDiscBlur(songIndex);
+              const isActive = songIndex === activeDiscIndex;
               
               return (
-                <div
-                  key={`disc-${discIndex}-${idx}`}
+                <motion.div
+                  key={songIndex}
+                  className="absolute cursor-pointer"
                   style={{
-                    position: 'absolute',
-                    transform: `translate3d(${position.x}px, ${position.y}px, ${position.z}px) scale(${scale})`,
-                    width: '180px',
-                    height: '180px',
-                    zIndex: isActive ? 10 : 0,
+                    zIndex,
+                    filter: `blur(${blur}px)`,
                     transformStyle: 'preserve-3d',
-                    transition: 'transform 0.3s ease',
+                    transform: `translate3d(${position.x}px, ${position.y}px, ${position.z}px) scale(${scale})`,
+                    transition: isDragging ? 'none' : 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                    opacity,
+                    willChange: 'transform, opacity'
                   }}
-                  onClick={() => handleDiscClick(normalizedIndex)}
+                  whileHover={isActive ? { scale: scale * 1.05 } : {}}
+                  onClick={() => handleDiscClick(songIndex)}
                 >
-                  {/* Vinyl disc with image filling entire area */}
-                  <div
+                  {/* Vinyl disc with improved cover image */}
+                  <div 
+                    className={`relative w-[250px] h-[250px] rounded-full overflow-hidden
+                      ${isActive ? 'ring-4 ring-[#C8A97E] ring-opacity-80 shadow-lg shadow-black/50' : ''}`}
                     style={{
-                      width: '100%',
-                      height: '100%',
-                      borderRadius: '50%',
-                      backgroundColor: 'black',
-                      position: 'relative',
-                      overflow: 'hidden',
-                      boxShadow: isActive ? '0 8px 32px rgba(0,0,0,0.5)' : 'none',
-                      animation: isActive && isPlaying ? 'spin 20s linear infinite' : 'none',
+                      transform: `rotateY(${position.x * 0.1}deg)`,
+                      backfaceVisibility: 'hidden',
+                      boxShadow: isActive 
+                        ? '0 8px 25px rgba(0,0,0,0.5), inset 0 0 10px rgba(0,0,0,0.6)' 
+                        : '0 5px 15px rgba(0,0,0,0.3), inset 0 0 8px rgba(0,0,0,0.4)'
                     }}
                   >
-                    {/* Album cover image filling the entire disc */}
-                    <div
-                      style={{
-                        position: 'absolute',
-                        width: '100%',
-                        height: '100%',
-                        borderRadius: '50%',
-                        overflow: 'hidden',
-                        zIndex: 1,
-                      }}
-                    >
-                    <Image
-                        src={song.coverImage}
-                        alt={song.title}
-                      fill
-                      sizes="100vw"
-                      style={{
-                          objectFit: 'cover',
-                          objectPosition: 'center',
-                          width: '100%',
-                          height: '100%',
-                          transform: 'scale(1.1)', // Slightly scale up to ensure full coverage
-                          position: 'absolute',
-                          top: 0,
-                          left: 0,
-                        }}
-                        priority
-                      />
-                    </div>
+                    {/* Black vinyl background instead of the gray circle */}
+                    <div className="absolute inset-0 bg-black rounded-full z-0"></div>
                     
-                    {/* Center hole */}
-                    <div
+                    {/* Vinyl grooves effect */}
+                    <div className="absolute inset-0 z-10 rounded-full opacity-15"
                       style={{
-                        position: 'absolute',
-                        width: '12px',
-                        height: '12px',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        backgroundColor: 'black',
-                        borderRadius: '50%',
-                        boxShadow: 'inset 0 2px 5px rgba(255, 255, 255, 0.1)',
-                        zIndex: 5,
+                        background: 'repeating-radial-gradient(circle at center, rgba(50,50,50,0.4) 0px, rgba(0,0,0,0.8) 1px, rgba(0,0,0,0.8) 2px, rgba(50,50,50,0.4) 3px)',
+                        mixBlendMode: 'overlay'
+                      }}
+                    ></div>
+                    
+                    {/* Cover image - zoomed in to fill the disc completely */}
+                    <Image
+                      src={getImagePath(songs[songIndex].coverImage)}
+                      alt={songs[songIndex].title}
+                      fill
+                      className="object-cover z-5 scale-125"
+                      sizes="250px"
+                      priority={isActive}
+                      style={{
+                        objectPosition: 'center center'
                       }}
                     />
-
-                    {/* Play button overlay - only on active disc */}
-                    {isActive && (
-                      <div
-                        style={{
-                          position: 'absolute',
-                          width: '40px',
-                          height: '40px',
-                          top: '50%',
-                          left: '50%',
-                          transform: 'translate(-50%, -50%)',
-                          backgroundColor: 'rgba(0,0,0,0.6)',
-                          backdropFilter: 'blur(2px)',
-                          boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
-                          borderRadius: '50%',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          zIndex: 10,
-                          cursor: 'pointer',
-                        }}
+                    
+                    {/* Subtle reflection overlay */}
+                    <div className="absolute inset-0 z-15 rounded-full opacity-20 pointer-events-none" 
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 100%)',
+                      }}
+                    ></div>
+                    
+                    {/* Center hole with play button for active discs */}
+                    <div className="absolute top-1/2 left-1/2 w-12 h-12 -translate-x-1/2 -translate-y-1/2 bg-black rounded-full z-20 flex items-center justify-center">
+                      {isActive ? (
+                        <div className="w-10 h-10 rounded-full bg-[#C8A97E] flex items-center justify-center cursor-pointer transition-transform hover:scale-110"
                              onClick={(e) => {
                                e.stopPropagation();
-                          togglePlay();
-                        }}
-                      >
-                        {isPlaying ? (
-                          <Pause className="w-5 h-5 text-white" />
-                        ) : (
-                          <Play className="w-5 h-5 text-white ml-0.5" />
+                               handlePlayButtonClick(e);
+                             }}>
+                          {isPlaying && currentSongIndex === songIndex ? (
+                            <div className="w-3 h-3 bg-black mx-[1px]"></div>
+                          ) : (
+                            <div className="w-0 h-0 border-t-[5px] border-t-transparent border-l-[10px] border-l-black border-b-[5px] border-b-transparent ml-1"></div>
                           )}
                         </div>
+                      ) : (
+                        <div className="w-3 h-3 rounded-full bg-[#C8A97E] opacity-60"></div>
                       )}
                     </div>
                   </div>
+                </motion.div>
               );
             })}
           </div>
@@ -935,7 +870,7 @@ export default function MusicPlayer() {
       </div>
 
       {/* Player controls */}
-      <div className="mt-6 md:mt-8 w-full max-w-md px-4">
+      <div className="mt-8 w-full max-w-md px-4">
         {/* ... existing controls code ... */}
               </div>
     </div>

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import ProgressBar from './progress-bar'
+import MobileProgressBar from './mobile-progress-bar'
 import ServiceSelection from './service-selection'
 import LiveSingingForm from './live-singing-form'
 import VocalCoachingForm from './vocal-coaching-form'
@@ -49,40 +50,24 @@ export default function BookingForm() {
   
   // Handle form data changes
   const handleFormChange = (data: Partial<FormData>) => {
-    setFormData(prev => ({ ...prev, ...data }))
+    setFormData({ ...formData, ...data })
   }
   
-  // Go to next step
+  // Handle next step
   const handleNextStep = () => {
     if (currentStep < 3) {
       setCurrentStep(currentStep + 1)
-      // Scroll to top on mobile when changing steps
-      if (window.innerWidth < 768) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+      // Scroll to top when changing steps
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }
   
-  // Go to previous step
+  // Handle previous step
   const handlePrevStep = () => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1)
-      // Scroll to top on mobile when changing steps
-      if (window.innerWidth < 768) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
-    }
-  }
-  
-  // Handle direct step navigation from progress bar
-  const handleStepClick = (step: number) => {
-    // Only allow navigation to previous steps or current step
-    if (step <= currentStep) {
-      setCurrentStep(step);
-      // Scroll to top on mobile
-      if (window.innerWidth < 768) {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }
+      // Scroll to top when changing steps
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }
   
@@ -114,6 +99,13 @@ export default function BookingForm() {
       default:
         return ''
     }
+  }
+  
+  // Convert step number to step string for progress bars
+  const getStepIdentifier = (): 'service' | 'details' | 'confirm' => {
+    if (currentStep === 0) return 'service';
+    if (currentStep === 1 || currentStep === 2) return 'details';
+    return 'confirm';
   }
   
   // Render the current step
@@ -197,10 +189,11 @@ export default function BookingForm() {
   }
   
   return (
-    <div className="w-full px-4 sm:px-6 md:max-w-4xl md:mx-auto">
-      <div className="mb-4 md:mb-8 mt-4">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6">
+      {/* Desktop progress bar (hidden on mobile) */}
+      <div className="hidden sm:block mb-8">
         <ProgressBar 
-          currentStep={currentStep} 
+          currentStep={getStepIdentifier()} 
           totalSteps={4} 
           labels={[
             t('booking.service', 'Dienst'),
@@ -208,15 +201,28 @@ export default function BookingForm() {
             t('booking.details', 'Details'),
             t('booking.confirm', 'Bestätigen')
           ]}
-          onStepClick={handleStepClick}
         />
       </div>
       
-      <div className="mb-4 md:mb-6">
-        <h2 className="text-xl md:text-2xl font-bold text-white">
+      {/* Mobile progress bar (hidden on desktop) */}
+      <div className="sm:hidden">
+        <MobileProgressBar 
+          currentStep={getStepIdentifier()} 
+          totalSteps={4} 
+          labels={[
+            t('booking.service', 'Dienst'),
+            t('booking.personal', 'Persönlich'),
+            t('booking.details', 'Details'),
+            t('booking.confirm', 'Bestätigen')
+          ]}
+        />
+      </div>
+      
+      <div className="mb-6">
+        <h2 className="text-2xl font-bold text-white">
           {getStepTitle()}
         </h2>
-        <p className="text-sm md:text-base text-gray-400 mt-2">
+        <p className="text-gray-400 mt-2">
           {currentStep === 0 && t('booking.selectServiceDesc', 'Wählen Sie den gewünschten Dienst aus.')}
           {currentStep === 1 && t('booking.personalInfoDesc', 'Geben Sie Ihre Kontaktdaten ein.')}
           {currentStep === 2 && t('booking.serviceDetailsDesc', 'Geben Sie weitere Details zu Ihrer Anfrage an.')}
@@ -224,22 +230,24 @@ export default function BookingForm() {
         </p>
       </div>
       
-      <div className="bg-[#121212] border border-gray-800 rounded-xl p-4 md:p-6 mb-4 md:mb-6 w-full">
+      <div className="bg-[#121212] border border-gray-800 rounded-xl p-4 sm:p-6 mb-6 overflow-hidden">
         {renderStep()}
       </div>
       
-      <div className="mt-4 md:mt-8 flex justify-between w-full">
-        {currentStep > 0 && (
+      <div className="mt-6 mb-8 flex justify-between items-center">
+        {currentStep > 0 ? (
           <button
             type="button"
             onClick={handlePrevStep}
-            className="px-4 md:px-6 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors text-sm md:text-base"
+            className="px-4 sm:px-6 py-2 bg-[#1A1A1A] text-white rounded-lg hover:bg-[#222] transition-colors border border-gray-700"
           >
             {t('booking.back', 'Zurück')}
           </button>
+        ) : (
+          <div></div>
         )}
         
-        <div className={currentStep > 0 ? 'ml-auto' : 'w-full'}>
+        <div className={currentStep === 0 ? 'w-full' : 'w-auto'}>
           {currentStep < 3 ? (
             <SubmitButton 
               onClick={handleNextStep} 
