@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [solution-3]
 
 permissions:
   contents: write
@@ -13,33 +13,36 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-        with:
-          persist-credentials: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'npm'
 
       - name: Install Dependencies
         run: |
-          npm ci
-          npm install sharp
+          npm install
+          npm install -g serve
+
+      - name: Update next.config.js
+        run: |
+          echo "module.exports = { output: 'export', images: { unoptimized: true }, basePath: '/melvocal-coaching', assetPrefix: '/melvocal-coaching/' }" > next.config.js
 
       - name: Build
         run: |
           npm run build
           touch out/.nojekyll
-        env:
-          NEXT_PUBLIC_BASE_PATH: /melvocal-coaching
+
+      - name: Test Build
+        run: |
+          serve -s out -p 3000 &
+          sleep 5
+          curl -I http://localhost:3000
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
           folder: out
-          clean: true
-          single-commit: true
-          git-config-name: github-actions[bot]
-          git-config-email: github-actions[bot]@users.noreply.github.com
+          clean-exclude: |
+            .nojekyll
