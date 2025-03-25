@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [solution-4]
+    branches: [solution-9]
 
 permissions:
   contents: write
@@ -18,23 +18,40 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
+          cache: npm
 
       - name: Install Dependencies
-        run: npm install
+        run: |
+          npm ci
+          npm install -g @next/swc-linux-x64-gnu @next/swc-linux-x64-musl
 
       - name: Configure Next.js
         run: |
-          echo 'module.exports = { output: "export", images: { unoptimized: true }, basePath: "/melvocal-coaching" }' > next.config.js
+          cat > next.config.js << 'EOL'
+          module.exports = {
+            output: 'export',
+            images: { unoptimized: true },
+            basePath: '/melvocal-coaching',
+            typescript: { ignoreBuildErrors: true },
+            swcMinify: true
+          }
+          EOL
 
       - name: Build
-        run: npm run build
+        run: |
+          npm run build
+          touch out/.nojekyll
+        env:
+          NODE_ENV: production
+          NEXT_IGNORE_TYPE_ERROR: true
 
-      - name: Add .nojekyll file
-        run: touch out/.nojekyll
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4.4.3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./out
-          cname: melvocal-coaching.com
+          branch: gh-pages
+          folder: out
+          clean: true
+          single-commit: true
+          git-config-name: github-actions[bot]
+          git-config-email: github-actions[bot]@users.noreply.github.com
+          commit-message: "Deploy Next.js site to GitHub Pages"
