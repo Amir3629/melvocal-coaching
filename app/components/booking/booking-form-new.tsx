@@ -45,16 +45,19 @@ interface FormData {
   privacyAccepted: boolean;
 }
 
+// Form step type
+type FormStep = 'service' | 'details' | 'confirm';
+
 export default function BookingForm() {
   const { t } = useTranslation()
   const router = useRouter()
-  const [currentStep, setCurrentStep] = useState(0)
-  const [selectedService, setSelectedService] = useState<ServiceType>(null)
+  const [currentStep, setCurrentStep] = useState<FormStep>('service')
+  const [selectedService, setSelectedService] = useState<ServiceType | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
   
   // Initialize form data with empty values
-  const [formData, setFormData] = useState<BookingFormData>({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     phone: '',
@@ -69,24 +72,28 @@ export default function BookingForm() {
   }
   
   // Handle form data changes
-  const handleFormChange = (data: Partial<BookingFormData>) => {
+  const handleFormChange = (data: Partial<FormData>) => {
     setFormData(prev => ({ ...prev, ...data }))
   }
   
-  // Go to next step
+  // Handle next step
   const handleNextStep = () => {
-    if (currentStep < 3) {
-      setCurrentStep(currentStep + 1)
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+    if (currentStep === 'service') {
+      setCurrentStep('details')
+    } else if (currentStep === 'details') {
+      setCurrentStep('confirm')
     }
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
   
-  // Go to previous step
+  // Handle previous step
   const handlePrevStep = () => {
-    if (currentStep > 0) {
-      setCurrentStep(currentStep - 1)
-      window.scrollTo({ top: 0, behavior: 'smooth' })
+    if (currentStep === 'confirm') {
+      setCurrentStep('details')
+    } else if (currentStep === 'details') {
+      setCurrentStep('service')
     }
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
   
   // Handle form submission
@@ -106,13 +113,11 @@ export default function BookingForm() {
   // Get step title
   const getStepTitle = () => {
     switch (currentStep) {
-      case 0:
+      case 'service':
         return t('booking.selectService', 'Dienst auswählen')
-      case 1:
+      case 'details':
         return t('booking.personalInfo', 'Persönliche Informationen')
-      case 2:
-        return t('booking.serviceDetails', 'Details zum Dienst')
-      case 3:
+      case 'confirm':
         return t('booking.confirmation', 'Bestätigung')
       default:
         return ''
@@ -122,14 +127,14 @@ export default function BookingForm() {
   // Render the current step
   const renderStep = () => {
     switch (currentStep) {
-      case 0:
+      case 'service':
         return (
           <ServiceSelection 
             selectedService={selectedService} 
             onSelect={handleServiceSelect} 
           />
         )
-      case 1:
+      case 'details':
         return (
           <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -190,33 +195,7 @@ export default function BookingForm() {
             </div>
           </div>
         )
-      case 2:
-        switch (selectedService) {
-          case 'professioneller-gesang':
-            return (
-              <LiveSingingFormStep 
-                formData={formData} 
-                onChange={handleFormChange} 
-              />
-            )
-          case 'vocal-coaching':
-            return (
-              <VocalCoachingFormStep 
-                formData={formData} 
-                onChange={handleFormChange} 
-              />
-            )
-          case 'gesangsunterricht':
-            return (
-              <WorkshopFormStep 
-                formData={formData} 
-                onChange={handleFormChange} 
-              />
-            )
-          default:
-            return null
-        }
-      case 3:
+      case 'confirm':
         return (
           <ConfirmationStep 
             formData={formData} 
@@ -232,21 +211,11 @@ export default function BookingForm() {
   // Check if the current step is valid
   const isStepValid = () => {
     switch (currentStep) {
-      case 0:
+      case 'service':
         return !!selectedService
-      case 1:
+      case 'details':
         return !!formData.name && !!formData.email && !!formData.phone
-      case 2:
-        // Basic validation for service-specific forms
-        if (selectedService === 'professioneller-gesang') {
-          return !!formData.eventType && !!formData.eventDate && !!formData.performanceType
-        } else if (selectedService === 'vocal-coaching') {
-          return !!formData.sessionType && !!formData.skillLevel
-        } else if (selectedService === 'gesangsunterricht') {
-          return !!formData.workshopTheme && !!formData.groupSize
-        }
-        return false
-      case 3:
+      case 'confirm':
         return formData.termsAccepted && formData.privacyAccepted
       default:
         return false
@@ -272,11 +241,9 @@ export default function BookingForm() {
         >
           <div className="mb-8">
             <ProgressBar 
-              currentStep={currentStep} 
-              totalSteps={4} 
+              currentStep={currentStep}
               labels={[
                 t('booking.service', 'Dienst'),
-                t('booking.personal', 'Persönlich'),
                 t('booking.details', 'Details'),
                 t('booking.confirm', 'Bestätigen')
               ]}
@@ -288,15 +255,14 @@ export default function BookingForm() {
               {getStepTitle()}
             </h2>
             <p className="text-gray-400 mt-2">
-              {currentStep === 0 && t('booking.selectServiceDesc', 'Wählen Sie den gewünschten Dienst aus.')}
-              {currentStep === 1 && t('booking.personalInfoDesc', 'Geben Sie Ihre Kontaktdaten ein.')}
-              {currentStep === 2 && t('booking.serviceDetailsDesc', 'Geben Sie weitere Details zu Ihrer Anfrage an.')}
-              {currentStep === 3 && t('booking.confirmationDesc', 'Überprüfen Sie Ihre Angaben und senden Sie die Anfrage ab.')}
+              {currentStep === 'service' && t('booking.selectServiceDesc', 'Wählen Sie den gewünschten Dienst aus.')}
+              {currentStep === 'details' && t('booking.personalInfoDesc', 'Geben Sie Ihre Kontaktdaten ein.')}
+              {currentStep === 'confirm' && t('booking.confirmationDesc', 'Überprüfen Sie Ihre Angaben und senden Sie die Anfrage ab.')}
             </p>
           </div>
           
           <div className="bg-[#121212] border border-gray-800 rounded-xl p-6 mb-6">
-            {currentStep === 3 ? (
+            {currentStep === 'confirm' ? (
               <ConfirmationStep
                 formData={formData}
                 serviceType={selectedService}
@@ -309,7 +275,7 @@ export default function BookingForm() {
           </div>
           
           <div className="mt-8 flex justify-between">
-            {currentStep > 0 && (
+            {currentStep !== 'service' && (
               <button
                 type="button"
                 onClick={handlePrevStep}
@@ -319,8 +285,8 @@ export default function BookingForm() {
               </button>
             )}
             
-            <div className={currentStep > 0 ? 'ml-auto' : 'w-full'}>
-              {currentStep < 3 ? (
+            <div className={currentStep !== 'service' ? 'ml-auto' : 'w-full'}>
+              {currentStep !== 'confirm' ? (
                 <SubmitButton 
                   onClick={handleNextStep} 
                   disabled={!isStepValid()}

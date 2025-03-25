@@ -21,21 +21,21 @@ interface FormData {
   eventType?: 'wedding' | 'corporate' | 'private' | 'other';
   eventDate?: string;
   guestCount?: string;
-  musicPreferences?: string[];
+  musicPreferences: string[];
   jazzStandards?: string;
   performanceType?: 'solo' | 'band';
   
   // Vocal Coaching fields
   sessionType?: '1:1' | 'group' | 'online';
   skillLevel?: 'beginner' | 'intermediate' | 'advanced';
-  focusArea?: string[];
+  focusArea: string[];
   preferredDate?: string;
   preferredTime?: string;
   
   // Workshop fields
   workshopTheme?: string;
   groupSize?: string;
-  preferredDates?: string[];
+  preferredDates: string[];
   workshopDuration?: string;
   
   // Legal
@@ -247,10 +247,17 @@ export default function ConfirmationStep({ formData, serviceType, onChange, onCl
     }
   }
   
+  // Initialize arrays if they don't exist
+  const safeFormData = {
+    ...formData,
+    musicPreferences: formData.musicPreferences || [],
+    focusArea: formData.focusArea || [],
+    preferredDates: formData.preferredDates || []
+  };
+  
   // Get preferred dates formatted
   const getPreferredDatesFormatted = () => {
-    if (!formData.preferredDates?.length) return '';
-    return formData.preferredDates.map(date => formatDate(date)).join(', ');
+    return safeFormData.preferredDates.map(date => formatDate(date));
   }
   
   // Get service-specific details
@@ -258,7 +265,7 @@ export default function ConfirmationStep({ formData, serviceType, onChange, onCl
     switch(serviceType) {
       case 'professioneller-gesang':
         return (
-          <div className="space-y-2">
+          <div className="space-y-4">
             <div className="flex items-center text-sm">
               <Calendar className="w-4 h-4 mr-2 text-[#C8A97E]" />
               <span className="text-gray-400">{t('booking.eventDate', 'Datum')}:</span>
@@ -274,11 +281,18 @@ export default function ConfirmationStep({ formData, serviceType, onChange, onCl
               <span className="text-gray-400">{t('booking.performanceType', 'Performance')}:</span>
               <span className="ml-2 text-white">{getPerformanceTypeName()}</span>
             </div>
+            {safeFormData.musicPreferences.length > 0 && (
+              <div className="flex items-center text-sm">
+                <Music className="w-4 h-4 mr-2 text-[#C8A97E]" />
+                <span className="text-gray-400">{t('booking.musicPreferences', 'Musikwünsche')}:</span>
+                <span className="ml-2 text-white">{safeFormData.musicPreferences.join(', ')}</span>
+              </div>
+            )}
           </div>
         );
       case 'vocal-coaching':
         return (
-          <div className="space-y-2">
+          <div className="space-y-4">
             <div className="flex items-center text-sm">
               <BookOpen className="w-4 h-4 mr-2 text-[#C8A97E]" />
               <span className="text-gray-400">{t('booking.sessionType', 'Session')}:</span>
@@ -294,11 +308,18 @@ export default function ConfirmationStep({ formData, serviceType, onChange, onCl
               <span className="text-gray-400">{t('booking.preferredDate', 'Datum')}:</span>
               <span className="ml-2 text-white">{formatDate(formData.preferredDate)}</span>
             </div>
+            {safeFormData.focusArea.length > 0 && (
+              <div className="flex items-center text-sm">
+                <BookOpen className="w-4 h-4 mr-2 text-[#C8A97E]" />
+                <span className="text-gray-400">{t('booking.focusArea', 'Fokus')}:</span>
+                <span className="ml-2 text-white">{safeFormData.focusArea.join(', ')}</span>
+              </div>
+            )}
           </div>
         );
       case 'gesangsunterricht':
         return (
-          <div className="space-y-2">
+          <div className="space-y-4">
             <div className="flex items-center text-sm">
               <BookOpen className="w-4 h-4 mr-2 text-[#C8A97E]" />
               <span className="text-gray-400">{t('booking.workshopTheme', 'Thema')}:</span>
@@ -314,11 +335,11 @@ export default function ConfirmationStep({ formData, serviceType, onChange, onCl
               <span className="text-gray-400">{t('booking.duration', 'Dauer')}:</span>
               <span className="ml-2 text-white">{getWorkshopDuration()}</span>
             </div>
-            {formData.preferredDates?.length > 0 && (
+            {safeFormData.preferredDates.length > 0 && (
               <div className="flex items-center text-sm">
                 <Calendar className="w-4 h-4 mr-2 text-[#C8A97E]" />
                 <span className="text-gray-400">{t('booking.preferredDates', 'Termine')}:</span>
-                <span className="ml-2 text-white">{getPreferredDatesFormatted()}</span>
+                <span className="ml-2 text-white">{getPreferredDatesFormatted().join(', ')}</span>
               </div>
             )}
           </div>
