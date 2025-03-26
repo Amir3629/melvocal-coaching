@@ -34,26 +34,40 @@ export default function ServiceCard({
   link
 }: ServiceCardProps) {
   const [isHovered, setIsHovered] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
 
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
   const handleMouseEnter = () => {
-    setIsHovered(true)
+    if (!isMobile) setIsHovered(true)
   }
 
   const handleMouseLeave = () => {
-    setIsHovered(false)
+    if (!isMobile) setIsHovered(false)
+  }
+
+  const handleClick = () => {
+    if (isMobile) setIsHovered(!isHovered)
   }
 
   // Animation variants for the card
   const cardVariants = {
     collapsed: { 
-      height: 320
+      height: isMobile ? "auto" : 320
     },
     expanded: { 
       height: "auto",
       transition: { 
-        duration: 5.0,
+        duration: isMobile ? 0.3 : 0.5,
         ease: [0.16, 1, 0.3, 1]
       }
     }
@@ -66,8 +80,8 @@ export default function ServiceCard({
       opacity: 1,
       y: 0,
       transition: {
-        delay: i * 0.2,
-        duration: 0.6,
+        delay: i * 0.1,
+        duration: 0.4,
         ease: "easeOut"
       }
     })
@@ -80,9 +94,10 @@ export default function ServiceCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay }}
-      className="group relative w-full bg-black/20 backdrop-blur-sm rounded-xl overflow-hidden"
+      className={`group relative w-full bg-black/20 backdrop-blur-sm rounded-xl overflow-hidden ${isMobile ? 'min-h-[420px]' : ''}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={handleClick}
       variants={cardVariants}
       animate={isHovered ? "expanded" : "collapsed"}
     >
@@ -94,10 +109,10 @@ export default function ServiceCard({
               alt={title}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              className="object-cover opacity-40"
+              className={`object-cover opacity-40 ${isMobile ? 'object-top' : ''}`}
               style={{
                 filter: isHovered ? 'none' : 'blur(1px)',
-                transition: "filter 5s ease-out",
+                transition: "filter 0.3s ease-out",
                 transform: "translateZ(0)",
                 backfaceVisibility: "hidden"
               }}
@@ -112,10 +127,10 @@ export default function ServiceCard({
         </div>
       )}
 
-      <div className="relative p-6 flex flex-col">
+      <div className="relative p-6 flex flex-col h-full">
         <div className="flex items-start gap-3 mb-4">
           {icon && (
-            <div className="text-[#C8A97E]">
+            <div className="text-[#C8A97E] flex-shrink-0">
               {icon}
             </div>
           )}
@@ -125,17 +140,21 @@ export default function ServiceCard({
           </div>
         </div>
 
-        <p className="text-sm text-gray-300 mb-6">{description}</p>
+        <p className="text-sm text-gray-300 mb-6 line-clamp-3">{description}</p>
 
         <ul className="space-y-2 mb-6">
           {features.map((feature, index) => (
-            <li
+            <motion.li
               key={index}
-              className="flex items-center gap-2 text-white/90"
+              className="flex items-start gap-2 text-white/90"
+              variants={textVariants}
+              initial="hidden"
+              animate="visible"
+              custom={index}
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#C8A97E]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C8A97E] mt-2 flex-shrink-0" />
               <span className="text-sm">{feature}</span>
-            </li>
+            </motion.li>
           ))}
         </ul>
 
@@ -147,7 +166,7 @@ export default function ServiceCard({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 1.0 }}
+              transition={{ duration: 0.3 }}
             >
               {details.includes && (
                 <div>
@@ -167,13 +186,14 @@ export default function ServiceCard({
                     {details.includes.map((item, index) => (
                       <motion.li
                         key={index}
-                        className="text-white/90 text-sm"
+                        className="text-white/90 text-sm flex items-start gap-1"
                         variants={textVariants}
                         initial="hidden"
                         animate="visible"
                         custom={index + 1}
                       >
-                        • {item}
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#C8A97E] mt-2 flex-shrink-0" />
+                        <span>{item}</span>
                       </motion.li>
                     ))}
                   </ul>
@@ -198,13 +218,14 @@ export default function ServiceCard({
                     {details.suitable.map((item, index) => (
                       <motion.li
                         key={index}
-                        className="text-white/90 text-sm"
+                        className="text-white/90 text-sm flex items-start gap-1"
                         variants={textVariants}
                         initial="hidden"
                         animate="visible"
                         custom={index + (details.includes ? details.includes.length + 2 : 1)}
                       >
-                        • {item}
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#C8A97E] mt-2 flex-shrink-0" />
+                        <span>{item}</span>
                       </motion.li>
                     ))}
                   </ul>
@@ -257,13 +278,10 @@ export default function ServiceCard({
                   }
                 >
                   <a 
-                    href={link} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="inline-block text-[#C8A97E] text-sm hover:text-[#D4B88F] transition-colors"
-                    onClick={(e) => e.stopPropagation()}
+                    href={link}
+                    className="inline-block px-4 py-2 bg-[#C8A97E] text-black text-sm font-medium rounded-full hover:bg-[#C8A97E]/90 transition-colors"
                   >
-                    Für mehr erfahren →
+                    Mehr erfahren
                   </a>
                 </motion.div>
               )}
