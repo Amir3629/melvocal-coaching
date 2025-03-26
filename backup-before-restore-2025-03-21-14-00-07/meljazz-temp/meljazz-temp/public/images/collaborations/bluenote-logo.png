@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:fb="http://www.facebook.com/2008/fbml"
+      xml:lang="ja" lang="ja">
+<head>
+	<!-- meta -->
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=1024">
+	<meta name="Description" content="東京・南青山のジャズ・クラブ、ブルーノート東京（BLUE NOTE TOKYO）のオフィシャルウェブサイト。">
+	<meta name="Keywords" content="BLUE NOTE TOKYO,blue note tokyo,ブルーノート東京,TOKYO,tokyo,東京,JAZZ,jazz,ジャズ,LIVE,live,ライブ,CLUB,club,クラブ,RESTAURANT,restaurant,レストラン,青山,表参道,骨董通り">
+	<meta property="og:title" content="BLUE NOTE TOKYO" />
+	<meta property="og:type" content="website" />
+	<meta property="og:site_name" content="Blue Note TOKYO" />
+	<meta property="og:description" content="東京・南青山のジャズ・クラブ、ブルーノート東京（BLUE NOTE TOKYO）のオフィシャルウェブサイト。"/>
+	<meta property="og:url" content="https://www.bluenote.co.jp/jp/" />
+	<meta property="og:image" content="https://www.bluenote.co.jp/og.png" />
+	<!-- title -->
+	<title>BLUE NOTE TOKYO</title>
+	<!-- stylesheets: Base -->
+	<link rel="stylesheet" type="text/css" media="all" href="/src/css/common/base.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="/src/css/common/style.css" />
+	<!-- stylesheets: Custom -->
+	<link rel="stylesheet" type="text/css" media="all" href="/src/css/index.css" />
+
+<style type="text/css">
+#block-recommend .block-inner-parts img { width:270px !important;  }
+</style>
+</head>
+<body>
+<p id="bgForOpening">
+<img src="/jp/banner/bg/bg_180104a002.jpg" alt="" width="1440" height="700">
+</p>
+
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<div id="page"> 
+
+	<!-- Tag Manager -->
+<!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-548QGR"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-548QGR');</script>
+<!-- End Google Tag Manager -->
+
+<!-- Yahoo! Tag Manager -->
+<script type="text/javascript">
+  (function () {
+    var tagjs = document.createElement("script");
+    var s = document.getElementsByTagName("script")[0];
+    tagjs.async = true;
+    tagjs.src = "//s.yjtag.jp/tag.js#site=2qclRQ1";
+    s.parentNode.insertBefore(tagjs, s);
+  }());
+</script>
+<noscript>
+  <iframe src="//b.yjtag.jp/iframe?c=2qclRQ1" width="1" height="1" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+</noscript>
+<!-- End Yahoo! Tag Manager -->
+<!-- Tag Manager -->
+
+<link rel="stylesheet" type="text/css" media="all" href="/src/css/common/header.css" />
+
+<div id="Header">
+  <div class="wrapper clearfix">
+    <h1><a href="/jp/"><img src="/src/imgs/header/logo.gif" alt="BLUE NOTE TOKYO" width="176" height="57" /></a></h1>
+    <div class="rightArea clearfix">
+      <div class="clearfix mb20">
+        <p class="socialArea" style="width: 216px;">
+          <img src="/src/imgs/header/h-follow.gif" alt="Follow us" width="45" height="10" class="mt05 mr10" /><a href="http://twitter.com/BlueNoteTokyo" target="_blank"><img src="/src/imgs/header/bt-x.gif" alt="X" width="20" height="20" class="mr05" /></a><a href="http://www.facebook.com/BLUE.NOTE.TOKYO.official" target="_blank"><img src="/src/imgs/header/bt-facebook.gif" alt="facebook" width="20" height="20" class="mr05" /></a><a href="https://www.instagram.com/bluenotetokyo" target="_blank"><img src="/src/imgs/header/bt-instagram.gif" alt="instagram" width="20" height="20" class="mr05" /></a><a href="https://page.line.me/?accountId=655kyhlo" target="_blank"><img src="/src/imgs/header/bt-line.gif" alt="youtube" width="20" height="20" class="mr05"></a><a href="https://www.youtube.com/user/BlueNoteTokyoTV" target="_blank"><img src="/src/imgs/header/bt-youtube.gif" alt="youtube" width="20" height="20" class="mr05" /></a><a href="https://www.tiktok.com/@bluenotetokyo" target="_blank"><img src="/src/imgs/header/bt-tiktok.gif" alt="tiktok" width="20" height="20"></a>
+          
+        </p>
+        <p id="hnav">
+          <a href="https://store.bluenote.co.jp/ec/" target="_blank">オンラインストア</a><a href="https://reserve.bluenote.co.jp/bn-reserve/reserve2/BC0100_confirm.jsp" target="_blank">マイページ</a><a href="/jp/access/">アクセス</a><a href="https://reserve.bluenote.co.jp/bn-reserve/mailmg/BC0010_mail.jsp">メールマガジン</a><a href="/jp/reservation/">初めての方へ</a>
+          
+        </p>
+      </div>
+      <ul class="gnav clear clearfix">
+        <li class="ABOUT">
+          <a href="/jp/about/"><img src="/src/imgs/header/nav-about_ov.gif" alt="ABOUT US" width="142" height="30" /></a>
+          <p class="hsnav">
+            <a href="/jp/about/" class="ABOUT"><img src="/src/imgs/header/snav-about_ov.gif" alt="ABOUT BLUE NOTE TOKYO" width="200" height="30" /></a>
+            <a href="/jp/floor/" class="FLOOR"><img src="/src/imgs/header/snav-floor_ov.gif" alt="FLOOR LAYOUT" width="200" height="30" /></a>
+            <a href="/jp/access/" class="ACCESS"><img src="/src/imgs/header/snav-access_ov.gif" alt="ACCESS" width="200" height="30" /></a>
+            
+            <a href="/jp/info/" class="INFO"><img src="/src/imgs/header/snav-info_ov.gif" alt="INFORMATION" width="200" height="30" /></a>
+          </p>
+        </li>
+        <li class="SCHEDULE">
+          <a href="https://reserve.bluenote.co.jp/reserve/schedule/"><img src="/src/imgs/header/nav-schedule_ov.gif" alt="SCHEDULE" width="142" height="30" /></a>
+        </li>
+        <li class="FOOD">
+          <a href="/jp/food/"><img src="/src/imgs/header/nav-food_ov.gif" alt="FOOD &amp; DRINK" width="142" height="30" /></a>
+          <p class="hsnav">
+            <a href="/jp/food/" class="FOOD"><img src="/src/imgs/header/snav-food_ov.gif" alt="FOOD MENU" width="142" height="30" /></a>
+            <a href="/jp/food/drink/" class="DRINK"><img src="/src/imgs/header/snav-drink_ov.gif" alt="DRINK MENU" width="142" height="30" /></a>
+            <a href="/jp/food/wine/" class="WINE"><img src="/src/imgs/header/snav-wine_ov.gif" alt="WINE MENU" width="142" height="30" /></a>
+          </p>
+        </li>
+        <li class="REPORTS"><a href="/jp/reports/"><img src="/src/imgs/header/nav-reports_ov.gif" alt="LIVE REPORTS" width="142" height="30" /></a></li>
+        <li class="FAQ"><a href="/jp/faq/"><img src="/src/imgs/header/nav-faq_ov.gif" alt="FAQ" width="142" height="30" /></a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+	<div id="container">
+	  	<div class="wrapper relative">
+        
+			<div id="mainVisual">
+            
+	            <!-- ////////////////////////////// -->
+                <!-- BG : JS で制御 -->
+          		<!-- ////////////////////////////// -->
+				<p class="bg" id="switchBg">
+					<!--
+					
+                        <img src="/jp/banner/bg/bg_180104a002.jpg" alt="" width="1440" height="700">
+                    
+                        <img src="/jp/banner/bg/bg_180104b02.jpg" alt="" width="1440" height="700">
+                    
+                        <img src="/jp/banner/bg/bg_140104c.jpg" alt="" width="1440" height="700">
+                    
+                        <img src="/jp/banner/bg/bg_140104d.jpg" alt="" width="1440" height="700">
+                    
+					-->
+				</p>
+            
+				<div class="relative clearfix pt20 pb20">
+                
+
+                
+                <!-- ////////////////////////////// -->
+                	<!-- RESERVATION -->
+          			<!-- ////////////////////////////// -->
+                	<div id="reservationArea">
+                    	<h3><img src="/src/imgs/index/h-reservation.gif" alt="RESERVATION" width="148" height="16"></h3>
+                    	<div class="inner">
+                        	<h4>オンライン予約</h4>
+                        	<p class="ahoverArea mb15">
+                            	<a href="https://reserve.bluenote.co.jp/reserve/schedule/index"><img src="/src/imgs/index/bt-schedule.gif" alt="公演スケジュール" width="138" height="60"></a>
+                        	</p>
+                        	<h4>電話予約</h4>
+                        	<p class="mb25"><img src="/src/imgs/index/text-tel.gif" alt="03-5485-0088" width="145" height="48"></p>
+                        	<ul class="bts ahoverArea">
+                            	<li><a href="/jp/reservation/"><img src="/src/imgs/index/bt-reservation.gif" alt="初めての方へ" width="138" height="28"></a></li>
+                            	<li><a href="/jp/faq/"><img src="/src/imgs/index/bt-faq.gif" alt="よくある質問" width="138" height="28"></a></li>
+                        	</ul>
+                    	</div>
+                	</div>
+                
+          			<!-- ////////////////////////////// -->
+                	<!-- TONIGHT : JS で追加・制御 -->
+          			<!-- ////////////////////////////// -->
+                	<div id="tonightArea">
+                    	<a href="#">
+                        	<h3><img src="/src/imgs/index/h-tonight.gif" alt="TONIGHT" width="106" height="16"></h3>
+                        	<div class="inner hasTonight">
+                            	<div class="inner02">
+                                	<p class="pic"><img alt="" width="135" height="135"></p>
+                                	<p class="name georgia"></p>
+                            	</div>
+                            	<p class="ac pt15"><img src="/src/imgs/index/bt-tonight-detail.gif" alt="詳細を見る" width="135" height="26" class="ahover par3"></p>
+                        	</div>
+                        	<div class="inner closed"><img src="/src/imgs/index/closed.gif" alt="CLOSED TONIGHT"></div>
+                        	<div class="inner private"><img src="/src/imgs/index/private.gif" alt="PRIVATE TONIGHT"></div>
+                    	</a>
+                	</div>
+                
+          			<!-- ////////////////////////////// -->
+                	<!-- CARROUSEL : JS で制御 -->
+          			<!-- ////////////////////////////// -->
+                	<div id="carrouselArea" class="clearfix">
+                    	<p class="btBack">
+                        	<a href="#back"><img src="/src/imgs/index/bt-back-01.gif" alt="" width="30" height="105"></a>
+                    	</p>
+                        <div class="moveAreaWrapper">
+							<ul class="moveArea clearfix">
+								
+								<li class="clearfix">
+									<a href="https://www.bluenote.co.jp/jp/artists/james-mason/" target="_self">
+										<p class="thumb"><img src="/jp/banner/reco/20250723reco.jpg" alt="" width="85" height="85"></p>
+										<p class="text">【新規公演決定】<br>ジェームズ・メイソン <br>“リズム・オブ・ライフ” リヴィジテッド <br>at Blue Note Tokyo</p>
+									</a>
+								</li>
+								
+								<li class="clearfix">
+									<a href="https://www.bluenote.co.jp/jp/artists/citrus-sun/" target="_self">
+										<p class="thumb"><img src="/jp/banner/reco/20250502reco.jpg" alt="" width="85" height="85"></p>
+										<p class="text">【新規公演決定】<br>ブルーイ from インコグニート presents シトラス・サン <br>"ANACONGA"</p>
+									</a>
+								</li>
+								
+								<li class="clearfix">
+									<a href="https://www.bluenote.co.jp/jp/artists/the-philharmonik/" target="_self">
+										<p class="thumb"><img src="/jp/banner/reco/20250602reco.jpg" alt="" width="85" height="85"></p>
+										<p class="text">【新規公演決定】<br>ザ・フィルハーモニク</p>
+									</a>
+								</li>
+								
+								<li class="clearfix">
+									<a href="https://www.bluenote.co.jp/jp/artists/chris-botti/" target="_self">
+										<p class="thumb"><img src="/jp/banner/reco/20250515reco.jpg" alt="" width="85" height="85"></p>
+										<p class="text">【新規公演決定】<br>An Evening with クリス・ボッティ</p>
+									</a>
+								</li>
+								
+								<li class="clearfix">
+									<a href="https://www.bluenote.co.jp/jp/artists/gabi-hartmann/" target="_self">
+										<p class="thumb"><img src="/jp/banner/reco/20250511reco.jpg" alt="" width="85" height="85"></p>
+										<p class="text">【新規公演決定】<br>ギャビ・アルトマン with ジェシー・ハリス</p>
+									</a>
+								</li>
+								
+								<li class="clearfix">
+									<a href="https://www.bluenote.co.jp/jp/artists/naruyoshi-kikuchi/" target="_self">
+										<p class="thumb"><img src="/jp/banner/reco/20250401reco.jpg" alt="" width="85" height="85"></p>
+										<p class="text">【追加公演決定】<br>菊地成孔 ダブ・セクステット リユニオン</p>
+									</a>
+								</li>
+								
+								<li class="clearfix">
+									<a href="https://www.bluenote.co.jp/jp/artists/bela-fleck/" target="_self">
+										<p class="thumb"><img src="/jp/banner/reco/20250528reco.jpg" alt="" width="85" height="85"></p>
+										<p class="text">【新規公演決定】<br>ベラ・フレック、エドマール・カスタネーダ、アントニオ・サンチェス・トリオ</p>
+									</a>
+								</li>
+								
+								<li class="clearfix">
+									<a href="https://www.bluenote.co.jp/jp/artists/harvey-mason/" target="_self">
+										<p class="thumb"><img src="/jp/banner/reco/20250508reco.jpg" alt="" width="85" height="85"></p>
+										<p class="text">【新規公演決定】<br>ハーヴィー・メイソン <br>featuring ゴンサロ・ルバルカバ＆フェリックス・パストリアス <br>“チェンジング・パートナーズ  / トリオス・ツゥー” ヴァイナル・リリース・パーティ</p>
+									</a>
+								</li>
+								
+							</ul>
+						</div>
+					 	<p class="btNext"><a href="#next"><img src="/src/imgs/index/bt-next-01.gif" alt="" width="30" height="105"></a></p>
+					</div>
+                
+				</div>
+
+          		<!-- ////////////////////////////// -->
+                <!-- 重要なお知らせ or キャンペーン -->
+          		<!-- ////////////////////////////// -->
+				
+				
+				
+				<div id="alertArea">
+					
+					
+				</div>
+				
+            
+			</div>
+        
+			<p class="bg" id="openingBg"></p>
+
+        </div>
+
+		<input type="hidden" id="days_off" value="20140402,20140605,20140606,20140607,20140613" />
+
+
+		<ul id="upcomingData">
+			
+			
+			
+				
+					
+						
+							<li date-start="20250301" date-end="20250303" date-private="">
+								<div class="date">2025 3.1 sat., 3.2 sun., 3.3 mon.</div>
+								<div class="name"><a href="/jp/artists/rhiannon-giddens/"><!--202412191800公開-->RHIANNON GIDDENS & FRANCESCO TURRISI <br>with special guest KAORU WATANABE</a></div>
+								<div class="name_short">RHIANNON GIDDENS & FRANCESCO TURRISI with special guest KAORU WATANABE</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2024/12/20250301fl-thumb-510x287-50613.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2024/12/20250301-thumb-135x135-50612.jpg" alt=""></div>
+								<div class="intro_txt">アメリカーナの未来を担う才媛ふたたび  俊英ミュージシャンと紡ぐ音楽の対話</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250304" date-end="20250306" date-private="">
+								<div class="date">2025 3.4 tue., 3.5 wed., 3.6 thu.</div>
+								<div class="name"><a href="/jp/artists/sfjazz-collective/"><!--202501311700更新-->SFJAZZ COLLECTIVE</a></div>
+								<div class="name_short">SFJAZZ COLLECTIVE</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2024/12/20250304fl-thumb-510x287-50712.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2024/12/20250304-thumb-135x135-50710.jpg" alt=""></div>
+								<div class="intro_txt">ジャズ・シーン最高峰コレクティヴが再登場 結成20周年を記念したアニヴァーサリー公演</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250307" date-end="20250311" date-private="">
+								<div class="date">2025 3.7 fri., 3.8 sat., 3.10 mon., 3.11 tue.</div>
+								<div class="name"><a href="/jp/artists/holly-cole/"><!--大使館名義追加-->HOLLY COLE</a></div>
+								<div class="name_short">HOLLY COLE</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2024/12/20250307fl-thumb-510x287-50597.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2024/12/20250307-thumb-135x135-50596.jpg" alt=""></div>
+								<div class="intro_txt">「コーリング・ユー」の大ヒットで知られる世界的シンガー 最新アルバム『ダーク・ムーン』を携えたプレミアム・ステージ</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250309" date-end="20250309" date-private="">
+								<div class="date">2025 3.9 sun.</div>
+								<div class="name"><a href="/jp/artists/takuya-kuroda/">TAKUYA KURODA "EVERYDAY"</a></div>
+								<div class="name_short">TAKUYA KURODA "EVERYDAY"</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/01/20250309fl-thumb-510x287-50858.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/01/20250309-thumb-135x135-50857.jpg" alt=""></div>
+								<div class="intro_txt">黒田卓也が体現する“格式・伝統・進化” 新作『EVERYDAY』を携えたリリース・ツアー</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250312" date-end="20250315" date-private="">
+								<div class="date">2025 3.12 wed., 3.13 thu., 3.14 fri., 3.15 sat.</div>
+								<div class="name"><a href="/jp/artists/mike-stern/">MIKE STERN BAND <br>featuring RICHARD BONA, DENNIS CHAMBERS, BOB FRANCESCHINI & LENI STERN</a></div>
+								<div class="name_short">MIKE STERN BAND featuring RICHARD BONA, DENNIS CHAMBERS, BOB FRANCESCHINI & LENI STERN</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2024/12/20250312fl-thumb-510x287-50602.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2024/12/20250312-thumb-135x135-50601.jpg" alt=""></div>
+								<div class="intro_txt">コンテンポラリー・ジャズを牽引するトップ・ギタリスト リチャード・ボナを迎えて繰り広げる白熱のセッション</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250316" date-end="20250316" date-private="">
+								<div class="date">2025 3.16 sun.</div>
+								<div class="name"><a href="/jp/artists/tetsuo-sakurai/">TETSUO SAKURAI SESSION <br>Guest：CHIKUZEN SATŌ</a></div>
+								<div class="name_short">TETSUO SAKURAI SESSION Guest：CHIKUZEN SATŌ</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/01/20250316fl-thumb-510x287-51088.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/01/20250316-thumb-135x135-51087.jpg" alt=""></div>
+								<div class="intro_txt">炸裂する櫻井哲夫ワールドふたたび！ 佐藤竹善と凄腕メンバーを迎えた豪華セッション</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250318" date-end="20250320" date-private="">
+								<div class="date">2025 3.18 tue., 3.19 wed., 3.20 thu.</div>
+								<div class="name"><a href="/jp/artists/alfredo-rodriguez/"><!--メンバー変更-->ALFREDO RODRIGUEZ TRIO</a></div>
+								<div class="name_short">ALFREDO RODRIGUEZ TRIO</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2024/12/20250318fl-2-thumb-510x287-50618.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2024/12/20250318-thumb-135x135-50558.jpg" alt=""></div>
+								<div class="intro_txt">クインシー・ジョーンズを魅了した天才ピアニスト 天に召された恩師に捧げる渾身のステージ</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250321" date-end="20250322" date-private="">
+								<div class="date">2025 3.21 fri., 3.22 sat.</div>
+								<div class="name"><a href="/jp/artists/mari-natsuki/">MARI NATSUKI "MARI de MODE 7"</a></div>
+								<div class="name_short">MARI NATSUKI "MARI de MODE 7"</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2024/12/20250321fl-thumb-510x287-50617.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2024/12/20250321-thumb-135x135-50616.jpg" alt=""></div>
+								<div class="intro_txt">大人のラグジュアリーに酔いしれる “表現者”夏木マリが誘う極上の時間</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250324" date-end="20250326" date-private="">
+								<div class="date">2025 3.24 mon., 3.25 tue., 3.26 wed.</div>
+								<div class="name"><a href="/jp/artists/brian-bromberg/">THE BRIAN BROMBERG ACOUSTIC TRIO <br>with TOM ZINK & CHARLES RUGGIERO</a></div>
+								<div class="name_short">THE BRIAN BROMBERG ACOUSTIC TRIO with TOM ZINK & CHARLES RUGGIERO</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/01/20250324fl-thumb-510x287-51099.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/01/20250324-thumb-135x135-51098.jpg" alt=""></div>
+								<div class="intro_txt">超絶テクニックと圧巻の演奏力を誇る"低音王" アコースティック・トリオで魅せる最新作『ラファロ』の世界</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250327" date-end="20250328" date-private="">
+								<div class="date">2025 3.27 thu., 3.28 fri.</div>
+								<div class="name"><a href="/jp/artists/sarah-mckenzie/">SARAH McKENZIE QUARTET</a></div>
+								<div class="name_short">SARAH McKENZIE QUARTET</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2024/12/20250327fl-thumb-510x287-50741.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2024/12/20250327-thumb-135x135-50740.jpg" alt=""></div>
+								<div class="intro_txt">透明感あふれる歌声と優雅なピアノの弾き語り ワールド・ツアー・メンバーと届ける極上のひととき</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250329" date-end="20250330" date-private="">
+								<div class="date">2025 3.29 sat., 3.30 sun.</div>
+								<div class="name"><a href="/jp/artists/chihiro-yamanaka/">CHIHIRO YAMANAKA <br>Debut 20th Anniversary Special Live <br>feat. Rei (3.29 sat.) & KAORI MURAJI (3.30 sun.)</a></div>
+								<div class="name_short">CHIHIRO YAMANAKA Debut 20th Anniversary Special Live feat. Rei (3.29 sat.) & KAORI MURAJI (3.30 sun.)</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/01/20250329fl-thumb-510x287-51093.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/01/20250329-thumb-135x135-51092.jpg" alt=""></div>
+								<div class="intro_txt">ワールド・デビュー20周年を記念したスペシャル・ライヴ 村治佳織とReiを日替わりゲストに迎えて贈る２日間</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250401" date-end="20250402" date-private="">
+								<div class="date">2025 4.1 tue., 4.2 wed.</div>
+								<div class="name"><a href="/jp/artists/naruyoshi-kikuchi/"><!--公演日追加-->NARUYOSHI KIKUCHI DUB SEXTET reunion</a></div>
+								<div class="name_short">NARUYOSHI KIKUCHI DUB SEXTET reunion</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/02/20250401fl-2-thumb-510x287-51401.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/01/20250401-thumb-135x135-51101.jpg" alt=""></div>
+								<div class="intro_txt">シーンに衝撃を与えた伝説が再登場！ アジア・ツアー・ファイナルの凱旋ステージ</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250403" date-end="20250406" date-private="">
+								<div class="date">2025 4.3 thu., 4.4 fri., 4.5 sat., 4.6 sun.</div>
+								<div class="name"><a href="/jp/artists/take6/">TAKE 6</a></div>
+								<div class="name_short">TAKE 6</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/02/20250403fl-thumb-510x287-51284.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/02/20250403-thumb-135x135-51283.jpg" alt=""></div>
+								<div class="intro_txt">最高峰ヴォーカル・グループが9年ぶりに登場 極上のハーモニーに酔うプレミアム・ライヴ</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250407" date-end="20250408" date-private="">
+								<div class="date">2025 4.7 mon., 4.8 tue.</div>
+								<div class="name"><a href="/jp/artists/catherine-russell/">CATHERINE RUSSELL</a></div>
+								<div class="name_short">CATHERINE RUSSELL</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/02/20250407fl-thumb-510x287-51276.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/02/20250407-thumb-135x135-51272.jpg" alt=""></div>
+								<div class="intro_txt">グラミー賞ベスト・ジャズ・ヴォーカル・アルバムにノミネート   世界が認めるジャズ・ヴォーカリストの初リーダー公演</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250409" date-end="20250410" date-private="">
+								<div class="date">2025 4.9 wed., 4.10 thu.</div>
+								<div class="name"><a href="/jp/artists/silvia-perez-cruz/">SÍLVIA PÉREZ CRUZ & SALVADOR SOBRAL</a></div>
+								<div class="name_short">SÍLVIA PÉREZ CRUZ & SALVADOR SOBRAL</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/01/20250409fl-thumb-510x287-51085.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/01/20250409-thumb-135x135-51084.jpg" alt=""></div>
+								<div class="intro_txt">共鳴しあうふたりの新プロジェクトが始動 世界ツアーに先駆けたワールド・プレミア公演</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250411" date-end="20250411" date-private="">
+								<div class="date">2025 4.11 fri.</div>
+								<div class="name"><a href="/jp/artists/kiyoharu/">KIYOHARU</a></div>
+								<div class="name_short">KIYOHARU</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/02/20250411fl-thumb-510x287-51138.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/02/20250411-thumb-135x135-51137.jpg" alt=""></div>
+								<div class="intro_txt">デビュー30周年を迎えたカリスマ・ヴォーカリスト 唯一無二の世界に酔いしれるプレミアム・ライヴ</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250412" date-end="20250413" date-private="">
+								<div class="date">2025 4.12 sat., 4.13 sun.</div>
+								<div class="name"><a href="/jp/artists/cimafunk/">CIMAFUNK & LA TRIBU</a></div>
+								<div class="name_short">CIMAFUNK & LA TRIBU</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/01/20250412fl-thumb-510x287-50974.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/01/20250412-thumb-135x135-50973.jpg" alt=""></div>
+								<div class="intro_txt">キューバの新世代ファンク・スターが初登場 圧倒的グルーヴが巻き起こす必見のラテン旋風</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250414" date-end="20250414" date-private="">
+								<div class="date">2025 4.14 mon.</div>
+								<div class="name"><a href="/jp/artists/cimafunk-zainichifunk/">CIMAFUNK & LA TRIBU <br>with guests KENTA HAMANO & TAKEHIDE HASHIMOTO from ZAINICHI FUNK</a></div>
+								<div class="name_short">CIMAFUNK & LA TRIBU with guests KENTA HAMANO & TAKEHIDE HASHIMOTO from ZAINICHI FUNK</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/01/20250414fl-thumb-510x287-50975.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/01/20250414-thumb-135x135-50978.jpg" alt=""></div>
+								<div class="intro_txt">キューバ新世代と日本が誇るディープファンクバンド ファンクの名のもとに集う両者のスペシャル・コラボ</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250415" date-end="20250416" date-private="">
+								<div class="date">2025 4.15 tue., 4.16 wed.</div>
+								<div class="name"><a href="/jp/artists/claude-fontaine/">CLAUDE FONTAINE</a></div>
+								<div class="name_short">CLAUDE FONTAINE</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2024/12/20250415fl-thumb-510x287-50738.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2024/12/20250415-thumb-135x135-50737.jpg" alt=""></div>
+								<div class="intro_txt">レゲエ、ボサノヴァが溶け合う無国籍サウンド 儚く甘いウィスパー・ヴォイスが誘う理想郷</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250417" date-end="20250417" date-private="">
+								<div class="date">2025 4.17 thu.</div>
+								<div class="name"><a href="/jp/artists/yann-tomita/">YANN TOMITA <br>A.S.L. SHOWCASE 2025</a></div>
+								<div class="name_short">YANN TOMITA A.S.L. SHOWCASE 2025</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/02/20250417fl-thumb-510x287-51211.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/02/20250417-thumb-135x135-51210.jpg" alt=""></div>
+								<div class="intro_txt">ヤン富田オールスターズが集結！ 豪華クルーによるA.S.L.ショーケース最前線</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250418" date-end="20250419" date-private="">
+								<div class="date">2025 4.18 fri., 4.19 sat.</div>
+								<div class="name"><a href="/jp/artists/crazy-ken-band/">CRAZY KEN BAND <br>『ブルーノート東京のクレイジーケンバンド』</a></div>
+								<div class="name_short">CRAZY KEN BAND 『ブルーノート東京のクレイジーケンバンド』</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/02/20250418fl-thumb-510x287-51139.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/02/20250418-thumb-135x135-51131.jpg" alt=""></div>
+								<div class="intro_txt">“東洋一のサウンド・マシーン”CKB 春のブルーノート東京を彩る恒例ライヴ</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250421" date-end="20250424" date-private="">
+								<div class="date">2025 4.21 mon., 4.22 tue., 4.23 wed., 4.24 thu.</div>
+								<div class="name"><a href="/jp/artists/kenny-barron/">KENNY BARRON TRIO</a></div>
+								<div class="name_short">KENNY BARRON TRIO</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/01/20250421fl-thumb-510x287-51014.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/01/20250421-thumb-135x135-51013.jpg" alt=""></div>
+								<div class="intro_txt">現代最高峰ジャズ・ピアニストが帰還！ レギュラートリオで魅せる至高のステージ</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250425" date-end="20250427" date-private="">
+								<div class="date">2025 4.25 fri., 4.26 sat., 4.27 sun.</div>
+								<div class="name"><a href="/jp/artists/joel-ross/">JOEL ROSS' GOOD VIBES</a></div>
+								<div class="name_short">ジョエル・ロス' GOOD VIBES</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/02/20250425fl-thumb-510x287-51189.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/02/20250425-thumb-135x135-51196.jpg" alt=""></div>
+								<div class="intro_txt">進化が止まらない新世代ジャズの大本命 鬼才ヴィブラフォン奏者が待望の再登場</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250428" date-end="20250428" date-private="">
+								<div class="date">2025 4.28 mon.</div>
+								<div class="name"><a href="/jp/artists/shun-ishiwaka/">SHUN ISHIWAKA, MAY INOUE, SHOTA WATANABE & MARTY HOLOUBEK <br>with special guest JOEL ROSS</a></div>
+								<div class="name_short">SHUN ISHIWAKA, MAY INOUE, SHOTA WATANABE & MARTY HOLOUBEK with special guest JOEL ROSS</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/02/20250428fl-thumb-510x287-51193.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/02/20250428-thumb-135x135-51195.jpg" alt=""></div>
+								<div class="intro_txt">ジャズを新世代へ導く日米ヤング・ライオンズ 初共演で魅せるスペシャル・セッション</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250429" date-end="20250429" date-private="">
+								<div class="date">2025 4.29 tue.</div>
+								<div class="name"><a href="/jp/artists/john-scofield-bnt-all-star-jazz-orchestra/">BLUE NOTE TOKYO ALL-STAR JAZZ ORCHESTRA <br>directed by ERIC MIYASHIRO <br>with special guest JOHN SCOFIELD</a></div>
+								<div class="name_short">BLUE NOTE TOKYO ALL-STAR JAZZ ORCHESTRA directed by ERIC MIYASHIRO with special guest JOHN SCOFIELD</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/02/20250429fl-thumb-510x287-51144.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/02/20250429-thumb-135x135-51143.jpg" alt=""></div>
+								<div class="intro_txt">鬼才ギタリストとスター軍団の初共演 “International Jazz Day”を祝うスペシャル・ステージ</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250430" date-end="20250501" date-private="">
+								<div class="date">2025 4.30 wed., 5.1 thu.</div>
+								<div class="name"><a href="/jp/artists/john-scofield/">Celebrate "International Jazz Day" with <br>JOHN SCOFIELD SOLO</a></div>
+								<div class="name_short">Celebrate "International Jazz Day" with JOHN SCOFIELD SOLO</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/02/20250430fl-thumb-510x287-51149.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/02/20250430-thumb-135x135-51148.jpg" alt=""></div>
+								<div class="intro_txt">変幻自在なプレイで魅了する鬼才ギタリスト ギター・プレイの真髄を感じる待望のソロ公演</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250502" date-end="20250505" date-private="">
+								<div class="date">2025 5.2 fri., 5.3 sat., 5.4 sun., 5.5 mon.</div>
+								<div class="name"><a href="/jp/artists/citrus-sun/">Bluey from INCOGNITO presents CITRUS SUN <br>"ANACONGA"</a></div>
+								<div class="name_short">Bluey from INCOGNITO presents CITRUS SUN "ANACONGA"</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/02/20250502fl-thumb-510x287-51398.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/02/20250502-thumb-135x135-51397.jpg" alt=""></div>
+								<div class="intro_txt">ブルーイ率いるインコグニートの別働隊が降臨 全方位で楽しむ極上のファンキー・ライヴ</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250508" date-end="20250510" date-private="">
+								<div class="date">2025 5.8 thu., 5.9 fri., 5.10 sat.</div>
+								<div class="name"><a href="/jp/artists/harvey-mason/">HARVEY MASON <br>featuring GONZALO RUBALCABA & FELIX PASTORIUS <br>"Changing Partners / Trios 2" Vinyl Release Party</a></div>
+								<div class="name_short">HARVEY MASON featuring GONZALO RUBALCABA & FELIX PASTORIUS "Changing Partners / Trios 2" Vinyl Release Party</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/02/20250508fl-thumb-510x287-51277.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/02/20250508-thumb-135x135-51279.jpg" alt=""></div>
+								<div class="intro_txt">ピアノ・トリオで魅せる最高峰ドラマーの原点回帰 ゴンサロ・ルバルカバを迎えたスペシャル・コラボレーション</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250511" date-end="20250512" date-private="">
+								<div class="date">2025 5.11 sun., 5.12 mon.</div>
+								<div class="name"><a href="/jp/artists/gabi-hartmann/">GABI HARTMANN with JESSE HARRIS</a></div>
+								<div class="name_short">GABI HARTMANN with JESSE HARRIS</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/02/20250511fl-thumb-510x287-51395.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/02/20250511-thumb-135x135-51387.jpg" alt=""></div>
+								<div class="intro_txt">さらに深みを増したパリ出身のシンガー・ソングライター 待望のセカンド・アルバムを携えて再登場</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250515" date-end="20250519" date-private="">
+								<div class="date">2025 5.15 thu., 5.16 fri., 5.17 sat., 5.18 sun., 5.19 mon.</div>
+								<div class="name"><a href="/jp/artists/chris-botti/">An Evening with CHRIS BOTTI</a></div>
+								<div class="name_short">An Evening with CHRIS BOTTI</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/02/20250515fl-thumb-510x287-51394.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/02/20250515-thumb-135x135-51366.jpg" alt=""></div>
+								<div class="intro_txt">詩情あふれる音色と華麗なパフォーマンス “トランペットの貴公子”が贈るプレミアム・ライヴ</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250520" date-end="20250523" date-private="">
+								<div class="date">2025 5.20 tue., 5.21 wed., 5.22 thu., 5.23 fri.</div>
+								<div class="name"><a href="/jp/artists/michel-camilo/">MICHEL CAMILO TRIO <br>featuring DAFNIS PRIETO & RICKY RODRIGUEZ</a></div>
+								<div class="name_short">MICHEL CAMILO TRIO featuring DAFNIS PRIETO & RICKY RODRIGUEZ</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/02/20250520fl-thumb-510x287-51223.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/02/20250520-thumb-135x135-51222.jpg" alt=""></div>
+								<div class="intro_txt">ジャズ、ラテン、クラシックを横断する巨匠ピアニスト ベスト・メンバーのトリオで魅せるプレミアムな４日間</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250528" date-end="20250530" date-private="">
+								<div class="date">2025 5.28 wed., 5.29 thu., 5.30 fri.</div>
+								<div class="name"><a href="/jp/artists/bela-fleck/">BÉLA FLECK, EDMAR CASTAÑEDA, ANTONIO SÁNCHEZ TRIO</a></div>
+								<div class="name_short">BÉLA FLECK, EDMAR CASTAÑEDA, ANTONIO SÁNCHEZ TRIO</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/02/20250528fl-thumb-510x287-51274.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/02/20250528-thumb-135x135-51273.jpg" alt=""></div>
+								<div class="intro_txt">バンジョー、ハープ、ドラムのトップランナーが集結！ 大胆不敵なオールスター・トリオが初登場</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250602" date-end="20250602" date-private="">
+								<div class="date">2025 6.2 mon.</div>
+								<div class="name"><a href="/jp/artists/the-philharmonik/">THE PHILHARMONIK</a></div>
+								<div class="name_short">THE PHILHARMONIK</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/02/20250602fl-thumb-510x287-51399.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/02/20250602-thumb-135x135-51393.jpg" alt=""></div>
+								<div class="intro_txt">NPR「タイニー・デスク・コンテスト」で見事優勝！ ポップ・ミュージックの明日を担うマルチ・アーティスト</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250603" date-end="20250605" date-private="">
+								<div class="date">2025 6.3 tue., 6.4 wed., 6.5. thu.</div>
+								<div class="name"><a href="/jp/artists/benjamin-clementine/">BENJAMIN CLEMENTINE</a></div>
+								<div class="name_short">BENJAMIN CLEMENTINE</div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/02/20250603fl-thumb-510x287-51220.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/02/20250603-thumb-135x135-51219.jpg" alt=""></div>
+								<div class="intro_txt">マーキュリー賞に輝くシンガー・ソングライターが初登場 世界を魅了するディープ・ヴォイスに酔いしれる</div>
+							</li>
+						
+					
+				
+					
+						
+							<li date-start="20250723" date-end="20250723" date-private="">
+								<div class="date">2025 7.23 wed.</div>
+								<div class="name"><a href="/jp/artists/james-mason/">JAMES MASON <br>"Rhythm Of Life" Revisited <br>at Blue Note Tokyo </a></div>
+								<div class="name_short">JAMES MASON "Rhythm Of Life" Revisited at Blue Note Tokyo </div>
+								<div class="img_main"><img src="/jp/artists/assets_c/2025/02/20250723fl-thumb-510x287-51407.jpg" alt="" ></div>
+								<div class="img_sq"><img src="/jp/artists/assets_c/2025/02/20250723-thumb-135x135-51406.jpg" alt=""></div>
+								<div class="intro_txt">レア・グルーヴ不滅の金字塔『リズム・オブ・ライフ』が蘇る 長年の沈黙を破りジェームズ・メイソンが復活ライヴで登場</div>
+							</li>
+						
+					
+				
+			
+		</ul>
+
+
+		<div id="mainContentWrapper" class="relative">
+			<div id="mainContent">
+				<div id="mainContentInner" class="clearfix">
+					<div class="leftColumn">
+						<div class="mb40">
+							<h3 class="mb25"><img src="/src/imgs/index/h-upcoming.gif" alt="UPCOMING SHOWS" width="630" height="50"></h3>
+
+							<div id="upcomingBox">
+								<div class="upperArea">
+									<div id="upcomingShowImageArea">
+										<p class="img">
+											<a href="#"><img alt="" width="510" height="287"></a>
+										</p>
+										<p class="tonight"><img src="/src/imgs/index/icon-tonight.png" alt="TONIGHT" width="90" height="90" class="png"></p>
+									</div>
+									<div class="desc clearfix">
+										<div class="fl">
+											<a href="#">
+												<p class="date gothic">date</p>
+												<p class="name georgia">name</p>
+											</a>
+										</div>
+										<div class="fr">
+											<div class="intro gothic">intro</div>
+											<div class="ahoverArea">
+												<a href="#"><img src="/src/imgs/index/bt-showdetail.gif" alt="公演詳細情報・チケット予約はこちら" width="210" height="26"></a>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div id="upcomingThums" class="lowerArea clearfix">
+									<p class="btBack ahoverArea"><a href="#back"><img src="/src/imgs/index/bt-back-02.gif" alt="" width="31" height="31"></a></p>
+									<div class="moveAreaWrapper">
+										<p class="moveArea">
+											<a href="#"><img alt="" width="90" height="51"></a>
+										</p>
+									</div>
+									<p class="btNext ahoverArea"><a href="#next"><img src="/src/imgs/index/bt-next-02.gif" alt="" width="31" height="31"></a></p>
+									<p class="triangle"><img src="/src/imgs/index/triangle.gif" alt="" width="19" height="11"></p>
+								</div>
+							</div>
+
+							
+							
+							
+							
+							
+							
+							
+							<div class="pickupBox clearfix" date_end="20250303">
+								<div class="movieArea">
+									<p><iframe width="280" height="158" src="https://www.youtube.com/embed/79VFCQdv9ug" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+								</div>
+								<div class="text">
+									<h4 class="mb15"><img src="/src/imgs/index/h-pickup.gif" alt="PICK UP MOVIE" width="122" height="13"></h4>
+									<a href="/jp/artists/rhiannon-giddens/">
+										<p class="entryDate gothic">2025 3.1 sat., 3.2 sun., 3.3 mon.</p>
+										<p class="georgia">RHIANNON GIDDENS & FRANCESCO TURRISI with special guest KAORU WATANABE</p>
+									</a>
+									<p class="showCaption gothic">アメリカーナの未来を担う才媛ふたたび  俊英ミュージシャンと紡ぐ音楽の対話</p>
+									<p class="ahoverArea"><a href="/jp/artists/rhiannon-giddens/"><img src="/src/imgs/index/bt-showdetail-02.gif" alt="公演詳細はこちら" width="113" height="23"></a></p>
+								</div>
+							</div>
+							
+							
+							
+							
+							
+							
+							<div class="pickupBox clearfix" date_end="20250306">
+								<div class="movieArea">
+									<p><iframe width="280" height="158" src="https://www.youtube.com/embed/g9x1OQ4duqY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></p>
+								</div>
+								<div class="text">
+									<h4 class="mb15"><img src="/src/imgs/index/h-pickup.gif" alt="PICK UP MOVIE" width="122" height="13"></h4>
+									<a href="/jp/artists/sfjazz-collective/">
+										<p class="entryDate gothic">2025 3.4 tue., 3.5 wed., 3.6 thu.</p>
+										<p class="georgia">SFJAZZ COLLECTIVE</p>
+									</a>
+									<p class="showCaption gothic">ジャズ・シーン最高峰コレクティヴが再登場 結成20周年を記念したアニヴァーサリー公演</p>
+									<p class="ahoverArea"><a href="/jp/artists/sfjazz-collective/"><img src="/src/imgs/index/bt-showdetail-02.gif" alt="公演詳細はこちら" width="113" height="23"></a></p>
+								</div>
+							</div>
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+							
+						</div>
+
+                         <!--　blogここから　-->
+						<div style="width:630px; height:150px; margin:40px auto 50px auto; ">
+							<div id="infoArea">
+								<div class="relative">
+                                <h3 class="mb25"><a href="/jp/news/"><img src="/src/imgs/index/h-news.gif" alt="NEWS&FEATURES" width="630" height="50"></a></h3>
+									<p class="bt ahoverArea">
+										<a href="/jp/news/" target="_blank"><img src="/src/imgs/index/bt-infolist.gif" alt="一覧を見る" width="90" height="26"></a>
+										<hr color="#CCCCCC" size="1" />
+									</p>
+								</div>
+								
+								<style type="text/css">
+								.nf				{  padding:10px 0 0 0;  font-size:12px;	line-height:160%;	color: #000;	margin-right: 0px;	margin-bottom: 0px;	font-family: 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif;  }
+								.nf a			{  color:#222222;  text-decoration:none;  }
+								.nf a:hover		{  text-decoration:underline;  }
+								.nf_text 		{	float:right;  width:195px;	font-size:12px;	line-height:160%;	color: #000;	margin-right: 0px;	margin-bottom: 0px;  font-family: 'ヒラギノ角ゴ Pro W3','Hiragino Kaku Gothic Pro','メイリオ',Meiryo,'ＭＳ Ｐゴシック',sans-serif; }
+								.nf_text img	{ display:inline-block; vertical-align:top; padding:4px 0 0 4px; }
+								</style>  
+								
+								<div class="nf">
+									<table width="630" border="0" align="center" cellpadding="0" cellspacing="0">
+										<tr valign="top">
+											<td>
+												<!-- ////// -->
+												
+												<a href="/jp/news/features/14671/" target="_blank">
+													<img src="/jp/news/images/20250425JoelRoss_imageA.jpg" width="90" />
+													<div class="nf_text">
+														2025.02.28&nbsp;<img src="/src/imgs/index/icon-new.gif"><p>【JAM vol.235】JOEL ROSS</p>  
+													</div>
+												</a>
+												
+												<!-- ////// -->
+											</td>
+
+											<td width="20">&nbsp;</td>
+						
+											<td>
+												<!-- ////// -->
+												
+												<a href="/jp/news/features/14672/" target="_blank">
+													<img src="/jp/news/images/20250421KennyBarron_imageA.jpg" width="90" />
+													<div class="nf_text">
+														2025.02.28&nbsp;<img src="/src/imgs/index/icon-new.gif"><p>【JAM vol.235】KENNY BARRON</p>  
+													</div>
+												</a>
+												
+												<!-- ////// -->
+											</td>
+										</tr>
+									</table>     
+								</div>   
+
+							</div>
+						</div>
+						<!--　blogここまで　-->                   
+                    
+                    
+						<div id="infoArea">
+							<div class="relative">
+								<h3><a href="/jp/info/"><img src="/src/imgs/index/h-information.gif" alt="INFORMATION" width="630" height="75"></a></h3>
+								<p class="bt ahoverArea">
+									<a href="/jp/info/"><img src="/src/imgs/index/bt-infolist.gif" alt="一覧を見る" width="90" height="26"></a>
+								</p>
+							</div>
+
+							<ul class="gothic">
+								
+								
+								<li class="clearfix">
+									<a href="/jp/info/2025/03/03/may-his-soul-rest-in-peace-mr-duke-gadd1983---2025.html">
+										<p class="date">25.03.03</p>
+										<p class="text">May his soul rest in peace : Mr. Duke Gadd（1983 - 2025）</p>
+									</a>
+								</li>
+								
+								<li class="clearfix">
+									<a href="/jp/info/2025/03/02/-with-special-guest-134.html">
+										<p class="date">25.03.02</p>
+										<p class="text">リアノン・ギデンズ＆フランチェスコ・トゥリッシ with special guest 渡辺薫公演：ライヴ・フォトとレポートをアップしました。</p>
+									</a>
+								</li>
+								
+								<li class="clearfix">
+									<a href="/jp/info/2025/02/28/james-mason-rhythm-of-life-revisited-at-blue-note-tokyo.html">
+										<p class="date">25.02.28</p>
+										<p class="text">【新規公演決定】JAMES MASON "Rhythm Of Life" Revisited at Blue Note Tokyo</p>
+									</a>
+								</li>
+								
+								<li class="clearfix">
+									<a href="/jp/info/2025/02/28/bluey-from-incognito-presents-citrus-sun-anaconga-1.html">
+										<p class="date">25.02.28</p>
+										<p class="text">【新規公演決定】Bluey from INCOGNITO presents CITRUS SUN "ANACONGA"</p>
+									</a>
+								</li>
+								
+								<li class="clearfix">
+									<a href="/jp/info/2025/02/27/foto.html">
+										<p class="date">25.02.27</p>
+										<p class="text">森山良子 with 大江千里トリオ公演：セットリストとライヴ・フォトをアップしました。</p>
+									</a>
+								</li>
+								
+								<li class="clearfix">
+									<a href="/jp/info/2025/02/27/little-glee-monster-1.html">
+										<p class="date">25.02.27</p>
+										<p class="text">Little Glee Monster公演：セットリストとライヴ・フォトをアップしました。</p>
+									</a>
+								</li>
+								
+								<li class="clearfix">
+									<a href="/jp/info/2025/02/27/the-philharmonik.html">
+										<p class="date">25.02.27</p>
+										<p class="text">【新規公演決定】THE PHILHARMONIK</p>
+									</a>
+								</li>
+								
+								<li class="clearfix">
+									<a href="/jp/info/2025/02/27/an-evening-with-chris-botti.html">
+										<p class="date">25.02.27</p>
+										<p class="text">【新規公演決定】An Evening with CHRIS BOTTI</p>
+									</a>
+								</li>
+								
+							</ul>
+						</div>
+
+                    
+                    
+
+                    
+					</div>
+					
+					<div class="rightColumn">
+
+						<!-- RECOMMEND -->
+                    <div class="block" id="block-recommend" style="margin-bottom: 0;">
+							<h3><img src="/src/imgs/index/h-recommend.gif" alt="RECOMMEND" /></h3>
+							<!--
+              <div class="top-block-inner">
+                  <div class="block-inner-parts" style="display:none;"><a href="https://www.bluenote.co.jp/jp/artists/dave-koz/"><img src="/src/imgs/index/banner/20150501top.jpg"></a></div>
+                  <div class="top-block-inner-parts" style="display:none;"><a href="https://www.bluenote.co.jp/jp/artists/senri-oe/"><img src="/src/imgs/index/banner/20150505top.jpg"></a></div>                 
+              </div>
+-->
+<!--
+              <div class="block-inner"> 
+                  <div class="block-inner-parts" style="display:none;"><a href="http://bit.ly/1YEHvyq" target="_blank" onclick="javascript:_gaq.push(['_trackPageview', '/click/mini2015']);"><img src="/jp/banner/bnr_mini2015.jpg"></a></div>
+              </div>
+-->
+              <div class="block-inner">
+              <!--<div class="block-inner-parts" style="display:none;"><a href="http://sp.southernallstars.jp/kkbluenote/" target="_blank"><img src="/jp/banner/images/kuwata_minogashi20210308.jpg" alt="" width="270"></a></div>-->
+              <!--<div class="block-inner-parts" style="display:none;"><a href="https://jazzauditoria.com/" target="_blank"><img src="/jp/banner/images/BNT_TOP_JAO2021" alt="" width="270"></a></div>-->
+              <!--<div class="block-inner-parts" style="display:none;"><a href="https://www.bluenote.co.jp/jp/lp/livestreaming/" target="_blank"><img src="/jp/banner/images/livestreaming_top200618.jpg" alt="" width="270"></a></div>-->
+              <!--<div class="block-inner-parts" style="display:none;"><a href="https://www.bluenote.co.jp/jp/lp/fusion-summit-2023/" target="_blank"><img src="/jp/banner/images/BNR_PC_JF23.jpg" alt="" width="270"></a></div>-->
+              <!--<div class="block-inner-parts" style="display:none;"><a href="http://bit.ly/12y0hJM" onclick="javascript:_gaq.push(['_trackPageview', '/click/jammember']);" target="_blank"><img src="/jp/banner/jam_banner_members_top200611.jpg" alt="" width="270"></a></div>-->
+             <!-- <div class="block-inner-parts" style="display:none;"><a href="https://www.bluenote.co.jp/jp/artists/stacey-kent/#menu"><img src="/jp/banner/images/bnr_20180914settrio.jpg" alt="" width="270"></a></div>
+              <div class="block-inner-parts" style="display:none;"><a href="http://bit.ly/2Jmo3ql"><img src="/jp/banner/images/31stBanner.jpg" alt="" width="270"></a></div>-->
+</div>
+              <!--<div class="block-inner">    
+                  <div class="block-inner-parts" style="display:none;"><a href="http://bit.ly/1WVXhqr"><img src="/jp/banner/images/b_and_w_banner.jpg" alt="" width="270"></a></div>
+                  <div class="block-inner-parts" style="display:none;"><a href="http://bit.ly/1TVKa8o"><img src="/jp/banner/images/bnr_2016adeal.jpg" alt="" width="270"></a></div>
+                  <div class="block-inner-parts" style="display:none;"><a href="http://bit.ly/1Wurw7U"><img src="/jp/banner/images/bnr_20160713settrio.jpg" alt="" width="270"></a></div>
+                  <div class="block-inner-parts" style="display:none;"><a href="http://bit.ly/1QayZHb"><img src="/jp/banner/images/bnr_20160823settrio.jpg" alt="" width="270"></a></div>
+</div>-->
+						</div>
+
+
+						<!-- FEATURES_BLOG -->
+						
+						
+                        
+                    
+
+						<!-- BANNER_BLOG // FEATURES -->
+						
+						
+						<div class="block" id="block-features">
+						
+							<div class="block-inner">
+								<a href="https://www.bluenote.co.jp/jp/lp/pat-metheny-2025/?utm_source=google&utm_medium=bnr&utm_campaign=Pat2025tour" target="_blank">
+									<img src="/jp/banner/TOP_PC_Pat1080%E2%80%8A%C3%97%E2%80%8A540.jpg" alt="" width="270">
+								</a>
+							</div>
+						
+						
+						
+							<div class="block-inner">
+								<a href="https://www.bluenote.co.jp/jp/lp/takuya-kuroda-2025/?utm_source=Official&utm_medium=Schedule_bnr&utm_campaign=TakuyaKurodaTour_25" target="_blank">
+									<img src="/jp/banner/TK_TOP_PC_1080%E2%80%8A%C3%97%E2%80%8A540_re2.jpg" alt="" width="270">
+								</a>
+							</div>
+						
+						
+						
+							<div class="block-inner">
+								<a href="https://www.bluenote.co.jp/jp/news/features/14591/?utm_source=Official&utm_medium=TOP_bnrNF&utm_campaign=RHIANNON" target="_blank">
+									<img src="/jp/banner/TOPBNR_N%26F_1080_540_RHIANNONGIDDENS.jpg" alt="" width="270">
+								</a>
+							</div>
+						
+						
+						
+							<div class="block-inner">
+								<a href="https://www.bluenote.co.jp/jp/member/" target="_blank">
+									<img src="/jp/banner/banner/jamsession_bnr.jpg" alt="" width="270">
+								</a>
+							</div>
+						
+						
+						
+							<div class="block-inner">
+								<a href="https://www.bluenote.co.jp/jp/special/gift/" target="_blank">
+									<img src="/jp/banner/GiftCard2022PC.jpg" alt="" width="270">
+								</a>
+							</div>
+						
+						
+						
+							<div class="block-inner">
+								<a href="https://page.line.me/?accountId=655kyhlo" target="_blank">
+									<img src="/jp/banner/Line-BNR.jpg" alt="" width="270">
+								</a>
+							</div>
+						
+						</div>
+						
+						
+
+
+						<!-- BANNER_BLOG // FOOD & DRINK -->
+						
+						
+						<div class="block" id="foodBlock">
+						
+							<div class="foodInner">
+								<h3><img src="/src/imgs/index/h-food.gif" alt="FOOD &amp; DRINK" width="149" height="15"></h3>
+								<a href="/jp/food/drink/" target="_self">
+									<p class="pic" id="foodPics">
+										<img src="/jp/banner/banner/topdrink_002.jpg" alt="" width="228" height="168">
+									</p>
+								</a>
+								<p class="text"><span class="en">【ORIGINAL ARTIST COCKTAIL】<br>Sky Eyes</span><br>スカイ アイズ<br>その他のドリンク・メニューはこちら</p>
+								<p class="ahoverArea">
+									<a href="/jp/food/drink/" target="_self"><img src="/src/imgs/index/bt-fooddetail.gif" alt="詳細を見る" width="153" height="28"></a>
+								</p>
+							</div>
+						
+						
+						
+							<div class="foodInner">
+								<h3><img src="/src/imgs/index/h-food.gif" alt="FOOD &amp; DRINK" width="149" height="15"></h3>
+								<a href="/jp/food/drink/" target="_self">
+									<p class="pic" id="foodPics">
+										<img src="/jp/banner/banner/topdrink_001.jpg" alt="" width="228" height="168">
+									</p>
+								</a>
+								<p class="text"><span class="en">【ORIGINAL ARTIST COCKTAIL】<br>Forest Breeze</span><br>フォレスト ブリーズ<br>その他のドリンク・メニューはこちら</p>
+								<p class="ahoverArea">
+									<a href="/jp/food/drink/" target="_self"><img src="/src/imgs/index/bt-fooddetail.gif" alt="詳細を見る" width="153" height="28"></a>
+								</p>
+							</div>
+						
+						
+						
+							<div class="foodInner">
+								<h3><img src="/src/imgs/index/h-food.gif" alt="FOOD &amp; DRINK" width="149" height="15"></h3>
+								<a href="/jp/food/" target="_self">
+									<p class="pic" id="foodPics">
+										<img src="/jp/banner/banner/topfood_005.jpg" alt="" width="228" height="168">
+									</p>
+								</a>
+								<p class="text"><span class="en">【DESSERTS】<br>Strawberry Tart with Rhubarb
+<br>and Burrata Cheese Cream
+</span><br>苺のタルト ルバーブ ブッラータチーズクリーム<br>その他のフード・メニューはこちら</p>
+								<p class="ahoverArea">
+									<a href="/jp/food/" target="_self"><img src="/src/imgs/index/bt-fooddetail.gif" alt="詳細を見る" width="153" height="28"></a>
+								</p>
+							</div>
+						
+						
+						
+							<div class="foodInner">
+								<h3><img src="/src/imgs/index/h-food.gif" alt="FOOD &amp; DRINK" width="149" height="15"></h3>
+								<a href="/jp/food/" target="_self">
+									<p class="pic" id="foodPics">
+										<img src="/jp/banner/banner/topfood_004.jpg" alt="" width="228" height="168">
+									</p>
+								</a>
+								<p class="text"><span class="en">【MAIN DISHES】<br>Japanese Beef Fillet Mignon Steak<br>with Red Wine and Madeira Sauce<br>Served with Potato<br>and Roquefort Cheese Gratin</span><br>国産牛フィレ肉のロティ 赤ワイン マデラ 2種のソース
+<br>グラタンドフィノワ・オ・ロックフォール<br>その他のフード・メニューはこちら</p>
+								<p class="ahoverArea">
+									<a href="/jp/food/" target="_self"><img src="/src/imgs/index/bt-fooddetail.gif" alt="詳細を見る" width="153" height="28"></a>
+								</p>
+							</div>
+						
+						
+						
+							<div class="foodInner">
+								<h3><img src="/src/imgs/index/h-food.gif" alt="FOOD &amp; DRINK" width="149" height="15"></h3>
+								<a href="/jp/food/" target="_self">
+									<p class="pic" id="foodPics">
+										<img src="/jp/banner/banner/topfood_003.jpg" alt="" width="228" height="168">
+									</p>
+								</a>
+								<p class="text"><span class="en">【MAIN DISHES】<br>Pan-fried Scallops
+<br>with Cider Cream and Italian Green Peas</span><br>帆立のポワレ シードルのクリーム ピゼリ
+<br>その他のフード・メニューはこちら</p>
+								<p class="ahoverArea">
+									<a href="/jp/food/" target="_self"><img src="/src/imgs/index/bt-fooddetail.gif" alt="詳細を見る" width="153" height="28"></a>
+								</p>
+							</div>
+						
+						
+						
+							<div class="foodInner">
+								<h3><img src="/src/imgs/index/h-food.gif" alt="FOOD &amp; DRINK" width="149" height="15"></h3>
+								<a href="/jp/food/" target="_self">
+									<p class="pic" id="foodPics">
+										<img src="/jp/banner/banner/topfood_002.jpg" alt="" width="228" height="168">
+									</p>
+								</a>
+								<p class="text"><span class="en">【APPETIZERS】<br>Roasted Vegetables from House Farm
+<br>with Kale Dip</span><br>ブルーノート農園野菜のロースト
+<br>ケールのディップ<br>その他のフード・メニューはこちら</p>
+								<p class="ahoverArea">
+									<a href="/jp/food/" target="_self"><img src="/src/imgs/index/bt-fooddetail.gif" alt="詳細を見る" width="153" height="28"></a>
+								</p>
+							</div>
+						
+						
+						
+							<div class="foodInner">
+								<h3><img src="/src/imgs/index/h-food.gif" alt="FOOD &amp; DRINK" width="149" height="15"></h3>
+								<a href="/jp/food/" target="_self">
+									<p class="pic" id="foodPics">
+										<img src="/jp/banner/banner/topfood_001.jpg" alt="" width="228" height="168">
+									</p>
+								</a>
+								<p class="text"><span class="en">【APPETIZERS】<br>Sea Bream Carpaccio
+<br>with Tomato Gelée and Kelp Oil</span><br>天然真鯛のカルパッチョ 
+<br>トマトジュレ 昆布オイル<br>その他のフード・メニューはこちら</p>
+								<p class="ahoverArea">
+									<a href="/jp/food/" target="_self"><img src="/src/imgs/index/bt-fooddetail.gif" alt="詳細を見る" width="153" height="28"></a>
+								</p>
+							</div>
+						
+						</div>
+						
+						     
+
+          
+						<!-- BANNER_BLOG // COLLABORATION -->
+						
+
+
+						<!-- BANNER_BLOG // チャンスエリア -->
+						
+
+
+						<!-- BANNER_BLOG // SPONSOR -->
+						<!--
+						
+						<div class="block mb00" id="block-sponsor">
+							<h3><img src="/src/imgs/index/h-sponsor.gif" alt="OFFICIAL SPONSOR" width="270" height="55"></h3>
+						                     
+							<div class="block-inner">
+								<a href="https://www.bluenote.co.jp/jp/jcb/?utm_source=TopBnr&utm_medium=banner&utm_content=top_jcbyoyaku&utm_campaign=top_jcbyoyaku" target="_blank">
+									<img src="/jp/banner/banner/logo_jcb2020.gif" alt="" width="270">
+								</a>
+							</div>
+						
+						</div>
+						
+						-->     
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="articleFooter">
+		<div class="wrapper clearfix">
+			<div class="left">
+				<div id="reportsHeading" class="clearfix">
+					<h3><a href="/jp/reports/"><img src="/src/imgs/index/h-reports.gif" alt="LIVE REPORTS" width="197" height="20"></a></h3>
+					<p class="bt ahoverArea"><a href="/jp/reports/"><img src="/src/imgs/index/bt-reportslist.gif" alt="一覧を見る" width="80" height="20"></a></p>
+				</div>
+				<ul id="reportsList">
+					<!-- LIVE REPORT -->
+					
+					
+						<li class="clearfix" date="20250302">
+							<a href="/jp/reports/2025/03/02/rhiannon-giddens-francesco-turrisi-with-special-guest-kaoru-watanabe.html">
+								<p class="pic">
+									<img src="https://www.bluenote.co.jp/jp/reports/assets_c/2025/03/00_20250301_RHIANNONGIDDENS_koga_0056_s-thumb-126xauto-51470.jpg" width="126" alt="" />
+								</p>
+								<div class="text">
+									<p class="gothic">
+										
+										2025 3.1 sat., 3.2 sun., 3.3 mon.
+										
+										<img class="newMark" src="/src/imgs/index/icon-new.gif" alt="NEW" width="28" height="10">
+									</p>
+									<p class="georgia">RHIANNON GIDDENS & FRANCESCO TURRISI with special guest KAORU WATANABE</p>
+								</div>
+							</a>
+						</li>
+					
+					
+					
+						<li class="clearfix" date="20250227">
+							<a href="/jp/reports/2025/02/27/ryoko-moriyama-with-senri-oe-trio.html">
+								<p class="pic">
+									<img src="https://www.bluenote.co.jp/jp/reports/assets_c/2025/02/00_20250116_ryokomoriyama_0203_s-thumb-126xauto-51447.jpg" width="126" alt="" />
+								</p>
+								<div class="text">
+									<p class="gothic">
+										
+										2025 1.16 thu.
+										
+										<img class="newMark" src="/src/imgs/index/icon-new.gif" alt="NEW" width="28" height="10">
+									</p>
+									<p class="georgia">RYOKO MORIYAMA with SENRI OE TRIO</p>
+								</div>
+							</a>
+						</li>
+					
+					
+				</ul>
+			</div>
+			<div class="right">
+				<div class="clearfix mb20">
+					<div id="facebookArea">
+						<h3><img src="/src/imgs/index/h-facebook.gif" alt="Facebook" width="225" height="31"></h3>
+						<div id="fb-root"></div>
+						<!--<script>
+							(function(d, s, id) {
+								var js, fjs = d.getElementsByTagName(s)[0];
+								if (d.getElementById(id)) return;
+								js = d.createElement(s); js.id = id;
+								js.src = "//connect.facebook.net/ja_JP/all.js#xfbml=1";
+								fjs.parentNode.insertBefore(js, fjs);
+							}(document, 'script', 'facebook-jssdk'));
+						</script>-->
+						<!--<fb:fan profile_id="220322551323207" href="http://www.facebook.com/BLUE.NOTE.TOKYO.official" width="225" height="340" show_faces="false" stream="true" header="false" border_color="#f0f0f0"  css="http://bluenote.co.jp/src/css/index_likebox.css?1"></fb:fan>-->
+						<div id="likeBox">
+                        <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FBLUE.NOTE.TOKYO.official%2F&tabs=timeline&width=225&height=100&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId" width="225" height="100" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+							<!--<fb:like-box href="http://www.facebook.com/BLUE.NOTE.TOKYO.official" width="225" show_faces="false" stream="false" header="false"></fb:like-box>-->
+						</div>
+					</div>
+					<div id="twitterArea">
+						<h3><img src="/src/imgs/index/h-twitter.gif" alt="Twitter" width="225" height="31"></h3>
+						<div id="followMe">
+							<div class="pic">
+								<a href="https://twitter.com/BlueNoteTokyo" target="_blank"><img src="/src/imgs/index/tw-pic.jpg" width="50" alt=""/></a>
+							</div>
+							<div class="txt">
+								<p><a href="https://twitter.com/BlueNoteTokyo" target="_blank">twitterで<br>「<span>ブルーノート東京</span>」<br>を見る</a></p>
+							</div>
+							<a href="https://twitter.com/BlueNoteTokyo" class="twitter-follow-button" data-show-count="false" data-lang="ja">@BlueNoteTokyoさんをフォロー</a>
+							<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+						</div>
+						<!-- <div id="timelineAreaTW"> -->
+						<!-- <a class="twitter-timeline" href="https://twitter.com/BlueNoteTokyo" data-widget-id="306600339753275392">@BlueNoteTokyo からのツイート</a> -->
+						<!-- <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script> -->
+						<!-- </div> -->
+					</div>
+				</div>
+				<p class="ahoverArea">
+					<a href="https://reserve.bluenote.co.jp/bn-reserve/mailmg/BC0010_mail.jsp" target="_blank"><img src="/src/imgs/index/bt-mailmagazine20210423.jpg" alt="Mail Magazine" width="465" height="100"></a>
+				</p>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="Footer">
+		<div class="wrapper">
+			<div class="clearfix" id="breadListWrapper">
+				<p id="breadList"><a href="/jp/">HOME</a></p>
+				<p id="btPagetop"><a href="#Header"><img src="/src/imgs/common/bt-pagetop.gif" alt="Page Top" width="77" height="13" class="ahover"></a></p>
+			</div>
+		<link rel="stylesheet" type="text/css" media="all" href="/src/css/common/footer.css" />
+<div id="footerSection01" class="clearfix">
+  <div class="left">
+    <p>
+      <a href="https://www.bluenote.co.jp/jp/lp/livestreaming2020/" target="_blank"><img src="/src/imgs/footer/bg-streaming2020.jpg" alt="LIVE STREAMING 2020" width="560" height="149" border="0"></a>
+    </p>
+    
+    <p class="ahoverArea"><a href="https://www.bluenote.co.jp/jp/member/" target="_blank"><img src="/src/imgs/footer/bt-member.jpg" alt="ブルーノート東京メンバーズクラブ" width="280" height="75" /></a><a href="/jp/special/gift_card/" target="_blank"><img src="/src/imgs/footer/bt-gift_card.jpg" alt="大切なあの人にギフトカードを" width="280" height="75" /></a></p>
+  </div>
+  <div class="right">
+    <h3><img src="/src/imgs/footer/h-reservation.gif" alt="RESERVATION" width="205" height="22" /></h3>
+    <div class="clearfix pr15 pl15">
+      <div class="fl">
+        <h4 class="gothic">オンライン予約</h4>
+        <p class="ahoverArea"><a href="https://reserve.bluenote.co.jp/reserve/schedule/"><img src="/src/imgs/footer/bt-schedule.gif" alt="公演スケジュール" width="188" height="68" /></a></p>
+      </div>
+      <div class="fr">
+        <h4 class="gothic">電話予約</h4>
+        <p><img src="/src/imgs/footer/text-tel.gif" alt="03-5485-0088" width="145" height="56" /></p>
+      </div>
+    </div>
+    <p class="bts ahoverArea"><a href="/jp/reservation/"><img src="/src/imgs/footer/bt-reservation.gif" alt="初めての方へ" width="138" height="28" class="mr05" /></a><a href="/jp/faq/"><img src="/src/imgs/footer/bt-faq.gif" alt="よくある質問" width="138" height="28" /></a></p>
+  </div>
+</div>
+<div id="footerSection02" class="clearfix">
+  <div class="left clearfix">
+    <p class="logo"><img src="/src/imgs/footer/logo.gif" alt="BLUE NOTE TOKYO" width="190" height="49" /></p>
+    <ul class="gnav clearfix">
+      <li class="ABOUT"><a href="/jp/about/"><img src="/src/imgs/footer/nav-about_ov.gif" alt="ABOUT US" width="170" height="30" /></a></li>
+      <li class="REPORTS"><a href="/jp/reports/"><img src="/src/imgs/footer/nav-reports_ov.gif" alt="LIVE REPORTS" width="170" height="30" /></a></li>
+      <li class="SCHEDULE"><a href="https://reserve.bluenote.co.jp/reserve/schedule/"><img src="/src/imgs/footer/nav-schedule_ov.gif" alt="SCHEDULE" width="170" height="30" /></a></li>
+      <li class="FAQ"><a href="/jp/faq/"><img src="/src/imgs/footer/nav-faq_ov.gif" alt="FAQ" width="170" height="30" /></a></li>
+      <li class="FOOD"><a href="/jp/food/"><img src="/src/imgs/footer/nav-food_ov.gif" alt="FOOD &amp; DRINK" width="170" height="30" /></a></li>
+    </ul>
+  </div>
+  <div class="right">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+      <tr>
+        <td valign="top" align="left">
+          <ul class="gnav">
+            <li class="PRIVACY"><a href="/jp/privacy/"><img src="/src/imgs/footer/nav-privacy_ov.gif" alt="PRIVACY POLICY" width="107" height="12" /></a></li>
+            <li class="RECRUIT"><a href="https://www.bluenote.co.jp/jp/recruit/" target="_blank"><img src="/src/imgs/footer/nav-recruit_ov.gif" alt="RECRUITMENT" width="92" height="12" /></a></li>
+            <li class="COMPANY"><a href="http://bluenotejapan.jp/" target="_blank"><img src="/src/imgs/footer/nav-company_ov.gif" alt="COMPANY PROFILE" width="117" height="12" /></a></li>
+          </ul>
+        </td>
+        <td valign="middle" align="left" class="clearfix">
+          <ul class="fnav">
+            <li><a href="https://store.bluenote.co.jp/ec/" target="_blank">オンラインストア</a></li>
+            <li><a href="https://reserve.bluenote.co.jp/bn-reserve/reserve2/BC0100_confirm.jsp" target="_blank">マイページ</a></li>
+            <li><a href="/jp/shoplaw/">特別商取引法に基づく表記</a></li>
+            <li><a href="/jp/bnt-policy/">Blue Note Tokyo POLICY</a></li>
+          </ul>
+          <ul class="fnav">
+            <li><a href="/jp/access/">アクセス</a></li>
+            <li><a href="https://reserve.bluenote.co.jp/bn-reserve/mailmg/BC0010_mail.jsp">メールマガジン</a></li>
+            <li><a href="/jp/reservation/">初めての方へ</a></li>
+            <li><a href="/jp/note/">免責事項</a></li>
+            
+          </ul>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+<div id="footerSection03" class="clearfix">
+  <p class="relatedLinks02">
+    <a href="http://www.bar-backyard.com/" target="_blank"><img src="/src/imgs/footer/backyard.gif" alt="BACKYARD" /></a>
+    <a href="https://www.bluenoteplace.jp/" target="_blank"><img src="/src/imgs/footer/blueNotePlace.gif" alt="BLUE NOTE PLACE" width="54" height="34"></a>
+    <a href="http://www.cottonclubjapan.co.jp/" target="_blank"><img src="/src/imgs/footer/related-02.gif" alt="COTTON CLUB" width="75" height="34" /></a>
+    
+    <a href="https://session-hamacho.jp/" target="_blank"><img src="/src/imgs/footer/related-09.gif" alt="SESSiON" width="80" height="34" /></a>
+    <a href="http://www.resonance.ne.jp/index.html" target="_blank"><img src="/src/imgs/footer/related-03.gif" alt="resonance" width="98" height="34" /></a>
+  </p>
+  <p class="relatedLinks"><a href="http://www.brooklynparlor.co.jp/" target="_blank"><img src="/src/imgs/footer/related-04.gif" alt="brooklyn parlor" width="53" height="34" /></a>
+    <a href="https://dining1045.jp/" target="_blank"><img src="/src/imgs/footer/related-07.gif" alt="cafe 104.5" width="89" height="34" /></a>
+    <a href="https://blue-yard.jp/" target="_blank"><img src="/src/imgs/footer/related-10.gif" alt="BLUE YARD" width="90" height="34"></a>
+    <a href="http://www.bluebookscafe.jp/" target="_blank"><img src="/src/imgs/footer/blue_book.gif" alt="BLUE BOOKS cafe" width="150" height="34" /></a>
+  </p>
+  
+  <p class="socialArea"><img src="/src/imgs/header/h-follow.gif" alt="Follow us" width="45" height="10" class="mt05 mr10">
+    <a href="http://twitter.com/BlueNoteTokyo" target="_blank"><img src="/src/imgs/header/bt-x.gif" alt="X" width="20" height="20" class="mr05"></a>
+    <a href="http://www.facebook.com/BLUE.NOTE.TOKYO.official" target="_blank"><img src="/src/imgs/header/bt-facebook.gif" alt="facebook" width="20" height="20" class="mr05"></a>
+    <a href="https://www.instagram.com/bluenotetokyo/" target="_blank"><img src="/src/imgs/header/bt-instagram.gif" alt="facebook" width="20" height="20" class="mr05"></a>
+    <a href="https://page.line.me/?accountId=655kyhlo" target="_blank"><img src="/src/imgs/header/bt-line.gif" alt="Youtube" width="20" height="20" class="mr05"></a>
+    <a href="https://www.youtube.com/user/BlueNoteTokyoTV" target="_blank"><img src="/src/imgs/header/bt-youtube.gif" alt="Youtube" width="20" height="20" class="mr05"></a>
+    <a href="https://www.tiktok.com/@bluenotetokyo" target="_blank"><img src="/src/imgs/header/bt-tiktok.gif" alt="tiktok" width="20" height="20"></a>
+    
+  </p>
+  <p class="copyright"><img src="/src/imgs/footer/copyright.gif" alt="COPYRIGHT &copy; BLUE NOTE JAPAN,INC" width="181" height="9" /></p>
+</div>
+		</div>
+	</div>
+
+</div>
+
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- javascripts: Base -->
+<script type="text/javascript" charset="UTF-8" src="/src/js/common/libs.min.js"></script>
+<!-- javascripts: Custom（indexのみこの位置で） -->
+<script type="text/javascript" charset="UTF-8" src="/src/js/index.js"></script>
+<script type="text/javascript" charset="UTF-8" src="/src/js/common/common.js"></script>
+<script type="module" charset="UTF-8" src="/src/js/common/shutto/shutto_header.min.js"></script>
+<!-- noscript -->
+<link rel="stylesheet" type="text/css" media="screen" href="/src/css/common/noscript/style.css" id="css-noscript" />
+<script type="text/javascript" charset="UTF-8" src="/src/js/common/noscript.js"></script>
+<noscript><hr class="hidden" /><div class="noscript" id="noscript"><div class="content">当サイトを最適な状態で閲覧していただくにはブラウザの<span>JavaScriptを有効</span>にしてご利用下さい。<br />JavaScriptを無効のままご覧いただいた場合には一部機能がご利用頂けない場合や正しい情報を取得できない場合がございます。</div></div></noscript><!-- #noscript -->
+
+<script type="text/javascript" src="/src/js/topBanner.js"></script>
+
+<noscript>
+	<div style="display:inline;">
+		<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/1001476321/?value=0&amp;label=2dPvCMe3iAMQ4aHF3QM&amp;guid=ON&amp;script=0"/>
+	</div>
+</noscript>
+
+</body>
+</html>

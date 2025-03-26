@@ -5,7 +5,7 @@ import ServiceCard from "./service-card"
 import { motion } from "framer-motion"
 import { useLanguage } from "./language-switcher"
 import { useTranslation } from 'react-i18next'
-import { useRef } from "react"
+import { useRef, useEffect, useState } from "react"
 
 interface ServiceDetails {
   includes: string[];
@@ -26,6 +26,16 @@ export default function ServicesSection() {
   const { currentLang } = useLanguage()
   const { t } = useTranslation()
   const ref = useRef<HTMLDivElement>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
 
   const services = [
     {
@@ -89,70 +99,87 @@ export default function ServicesSection() {
     }
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.1
+      }
+    }
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: "easeOut"
+      }
+    }
+  }
+
   return (
     <section 
       id="services" 
       ref={ref}
-      className="py-20 md:py-24 lg:py-28 bg-black relative"
+      className="py-14 sm:py-16 md:py-20 lg:py-24 bg-black relative overflow-hidden"
     >
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="section-heading mb-4 text-white"
-          >
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(200,169,126,0.1)_0%,rgba(0,0,0,0)_70%)]" />
+      
+      <div className="container mx-auto px-4 sm:px-6 relative">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-10%" }}
+          transition={{ duration: 0.7 }}
+          className="text-center mb-8 sm:mb-12"
+        >
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4">
             {t('services.title')}
-          </motion.h2>
-          <div className="w-24 h-0.5 bg-[#C8A97E] mx-auto opacity-80"></div>
-        </div>
+          </h2>
+          <div className="w-20 h-0.5 bg-[#C8A97E] mx-auto opacity-80" />
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="bg-black/40 backdrop-blur-sm rounded-lg p-6 border border-white/10"
-          >
-            <h3 className="text-xl font-medium text-white mb-4">
-              {t('services.singing.title')}
-            </h3>
-            <p className="text-white/70 mb-6">
-              {t('services.singing.description')}
-            </p>
-            <ul className="space-y-3">
-              {getFeatures('singing').map((feature, index) => (
-                <li key={index} className="flex items-center gap-2 text-white/60">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#C8A97E]" />
-                  {feature}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-6xl mx-auto">
-            {services.map((service, index) => {
-              const details = getDetails(service.key);
-              return (
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-10%" }}
+          className={`
+            grid gap-4 sm:gap-6
+            ${isMobile 
+              ? 'grid-cols-1' 
+              : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4'
+            }
+            max-w-7xl mx-auto
+          `}
+        >
+          {services.map((service) => {
+            const details = getDetails(service.key)
+            return (
+              <motion.div
+                key={service.key}
+                variants={itemVariants}
+                className="h-full"
+              >
                 <ServiceCard
-                  key={service.key}
                   title={t(`services.${service.key}.title`)}
                   subtitle={t(`services.${service.key}.subtitle`)}
                   description={t(`services.${service.key}.description`)}
-                  icon={<service.icon className="w-6 h-6" />}
+                  icon={<service.icon className="w-5 h-5" />}
                   features={getFeatures(service.key)}
                   details={details}
                   image={service.image}
-                  delay={index * 0.2}
                   link={service.link}
                 />
-              );
-            })}
-          </div>
-        </div>
+              </motion.div>
+            )
+          })}
+        </motion.div>
       </div>
     </section>
   )

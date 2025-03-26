@@ -1,0 +1,584 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --animation-duration: 300ms;
+    --transition-duration: 300ms;
+    --card-transition-duration: 200ms;
+    --background: #000000;
+    --foreground: #ffffff;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: #C8A97E;
+    --primary-foreground: 0 0% 98%;
+    --primary-hover: #B69A6E;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --radius: 0.75rem;
+    --font-scale-mobile: 0.875;
+    --container-padding-mobile: 1rem;
+  }
+
+  @media (prefers-reduced-motion) {
+    :root {
+      --animation-duration: 0ms;
+      --transition-duration: 0ms;
+      --card-transition-duration: 0ms;
+    }
+  }
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+  }
+
+  html {
+    font-size: calc(16px * var(--font-scale-mobile));
+    -webkit-text-size-adjust: 100%;
+    background: var(--background);
+    color: var(--foreground);
+    scroll-behavior: smooth;
+  }
+
+  @media (min-width: 768px) {
+    html {
+      font-size: 16px;
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    min-height: 100vh;
+    background: var(--background);
+    color: var(--foreground);
+    overflow-x: hidden;
+    cursor: url('/vocal-coaching/images/music-cursor.png') 16 16, pointer;
+  }
+}
+
+@layer components {
+  .heading-underline {
+    @apply relative pb-4;
+  }
+
+  .heading-underline::after {
+    content: "";
+    @apply absolute bottom-0 left-1/2 -translate-x-1/2 w-24 h-1 bg-[#C8A97E];
+  }
+
+  .parallax-bg {
+    @apply bg-fixed bg-center bg-no-repeat bg-cover;
+  }
+
+  .glass-effect {
+    @apply bg-black/30 backdrop-blur-md;
+  }
+
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
+
+  .hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-1;
+  }
+
+  .gold-gradient {
+    background: linear-gradient(135deg, #c8a97e 0%, #b89a6f 100%);
+  }
+
+  .dark-gradient {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.9) 100%);
+  }
+
+  .section-spacing {
+    @apply py-20 px-4 md:py-32;
+  }
+
+  .fixed-nav-button {
+    position: fixed !important;
+    transform: translateY(-50%) !important;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    perspective: 1000;
+    -webkit-perspective: 1000;
+    will-change: transform;
+    transition: transform 0.3s ease !important;
+  }
+
+  .fixed-nav-button:hover {
+    transform: translateY(-50%) scale(1.1) !important;
+  }
+}
+
+/* Custom section heading styles */
+.section-heading {
+  @apply text-4xl font-light tracking-wide text-white;
+  font-family: var(--font-playfair);
+  letter-spacing: 0.03em;
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.section-heading-container {
+  @apply text-center mb-12 relative;
+}
+
+.section-heading-container::after {
+  content: '';
+  @apply w-12 h-0.5 bg-[#C8A97E] absolute left-1/2 -translate-x-1/2 bottom-0;
+  opacity: 0.8;
+}
+
+/* Custom scrollbar styles */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #C8A97E #1A1A1A;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #1A1A1A;
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #C8A97E;
+  border-radius: 4px;
+  border: 2px solid #1A1A1A;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #D4AF37;
+}
+
+/* Mobile optimizations */
+@media (max-width: 768px) {
+  .section-heading {
+    @apply text-3xl;
+    font-size: 2rem;
+  }
+
+  .prose {
+    font-size: 0.95rem;
+  }
+
+  input, textarea, button {
+    font-size: 16px !important; /* Prevents iOS zoom on focus */
+  }
+
+  /* Improve touch targets */
+  button, 
+  [role="button"],
+  a {
+    @apply min-h-[44px] min-w-[44px];
+    padding: 0.5rem 1rem;
+  }
+
+  .cursor-music {
+    cursor: pointer;
+  }
+}
+
+/* Responsive container padding */
+.container {
+  @apply px-4 md:px-6 lg:px-8;
+  padding-left: var(--container-padding-mobile);
+  padding-right: var(--container-padding-mobile);
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Mobile typography adjustments */
+@media (max-width: 767px) {
+  /* Typography scaling */
+  h1 {
+    font-size: 2.25rem !important;
+    line-height: 1.2 !important;
+  }
+  
+  h2 {
+    font-size: 1.75rem !important;
+    line-height: 1.3 !important;
+  }
+  
+  p {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Button sizing */
+  .rounded-full {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+    font-size: 0.875rem !important;
+  }
+
+  /* Container padding */
+  .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Card scaling */
+  .card, [class*="card"] {
+    transform: scale(0.95) !important;
+  }
+
+  /* Spacing adjustments */
+  .space-y-8 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 1.5rem !important;
+  }
+
+  .gap-8 {
+    gap: 1rem !important;
+  }
+}
+
+/* Mobile spacing adjustments */
+@media (max-width: 767px) {
+  section {
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  .gap-8 {
+    gap: 1rem !important;
+  }
+
+  .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 1rem !important;
+  }
+}
+
+/* Mobile-specific UI adjustments */
+@media (max-width: 767px) {
+  /* Card and container scaling */
+  .grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Reduce overall card sizes */
+  .card, [class*="card"], .rounded-xl {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    transform: scale(0.95) !important;
+  }
+
+  /* Adjust image and logo sizes */
+  .aspect-video, 
+  img:not(.no-mobile-scale),
+  svg:not(.no-mobile-scale) {
+    max-width: 85% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  /* Logo specific scaling */
+  [class*="logo"], 
+  [class*="icon"],
+  [class*="badge"] {
+    transform: scale(0.85) !important;
+  }
+
+  /* Adjust padding and margins */
+  .p-6 {
+    padding: 0.75rem !important;
+  }
+
+  .p-8 {
+    padding: 1rem !important;
+  }
+
+  .m-6 {
+    margin: 0.75rem !important;
+  }
+
+  .m-8 {
+    margin: 1rem !important;
+  }
+
+  /* Container width adjustments */
+  .container,
+  .max-w-xl,
+  .max-w-2xl,
+  .max-w-3xl,
+  .max-w-4xl,
+  .max-w-5xl,
+  .max-w-6xl,
+  .max-w-7xl {
+    width: 92% !important;
+    max-width: 92% !important;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Adjust spacing between sections */
+  section {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .gap-8 {
+    gap: 0.75rem !important;
+  }
+
+  .space-y-6 > :not([hidden]) ~ :not([hidden]) {
+    margin-top: 0.75rem !important;
+  }
+
+  /* Adjust heights for mobile */
+  .h-[500px] {
+    height: 400px !important;
+  }
+
+  .h-[600px] {
+    height: 450px !important;
+  }
+
+  .min-h-screen {
+    min-height: 100vh !important;
+  }
+
+  /* Adjust border radius */
+  .rounded-xl {
+    border-radius: 0.5rem !important;
+  }
+
+  .rounded-lg {
+    border-radius: 0.375rem !important;
+  }
+
+  /* Improve touch targets while keeping visual size */
+  button, 
+  [role="button"],
+  a {
+    min-height: 40px !important;
+    min-width: 40px !important;
+    padding: 0.5rem 0.75rem !important;
+    font-size: 0.9375rem !important;
+  }
+}
+
+/* Reduce motion when requested */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 767px) {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .card, [class*="card"] {
+    transform: none !important;
+    transition: transform var(--card-transition-duration) ease-out !important;
+  }
+
+  .preserve-3d {
+    transition: transform var(--card-transition-duration) ease-out !important;
+  }
+
+  /* Improve touch response */
+  button, 
+  [role="button"],
+  a {
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
+  /* Optimize animations */
+  .animate-in,
+  .animate-out,
+  [class*="motion-"] {
+    will-change: transform, opacity;
+  }
+
+  /* Hardware acceleration for smooth animations */
+  .transform-gpu {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000;
+  }
+
+  /* Optimize scrolling */
+  body {
+    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+    overscroll-behavior-y: none;
+  }
+
+  /* Optimize images */
+  img {
+    content-visibility: auto;
+  }
+}
+
+@layer utilities {
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+
+  .rotate-y-180 {
+    transform: rotateY(180deg);
+  }
+
+  /* Custom Scrollbar Styles */
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: #1A1A1A;
+    border-radius: 10px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: #C8A97E;
+    border-radius: 10px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: #B69A6E;
+  }
+
+  /* Firefox */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #C8A97E #1A1A1A;
+  }
+
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #C8A97E #1A1A1A;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #1A1A1A;
+    border-radius: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #C8A97E;
+    border-radius: 4px;
+    border: 2px solid #1A1A1A;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #D4AF37;
+  }
+}
+
+/* 3D Transform Classes */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* Touch Device Support */
+@media (hover: none) {
+  .preserve-3d {
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .group:active .preserve-3d {
+    transform: rotateY(180deg);
+  }
+}
+
+.cursor-music {
+  cursor: url('/vocal-coaching/images/music-cursor.png') 16 16, pointer;
+}
+
+/* 3D Flip Card Styles */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+

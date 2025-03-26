@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="300" height="100" viewBox="0 0 300 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#C8A97E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B69A6E;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Planet Circle -->
+  <circle cx="60" cy="50" r="30" fill="black" stroke="url(#goldGradient)" stroke-width="2"/>
+  <circle cx="60" cy="50" r="20" fill="none" stroke="url(#goldGradient)" stroke-width="1" stroke-dasharray="2 4"/>
+  
+  <!-- Musical Note -->
+  <path d="M55 45L65 40V60M65 60C65 63.866 62.7614 67 60 67C57.2386 67 55 63.866 55 60C55 56.134 57.2386 53 60 53C62.7614 53 65 56.134 65 60Z" 
+        fill="url(#goldGradient)"/>
+
+  <!-- Main Text -->
+  <g filter="url(#glow)" transform="translate(100, 0)">
+    <text x="80" y="45" text-anchor="middle" font-family="Georgia" font-size="24" font-weight="bold" fill="url(#goldGradient)">PLANET</text>
+    <text x="80" y="70" text-anchor="middle" font-family="Georgia" font-size="20" fill="#FFFFFF">JAZZ CLUB</text>
+  </g>
+
+  <!-- Stars -->
+  <circle cx="250" cy="30" r="1" fill="url(#goldGradient)"/>
+  <circle cx="260" cy="40" r="1" fill="url(#goldGradient)"/>
+  <circle cx="270" cy="35" r="1" fill="url(#goldGradient)"/>
+</svg> 

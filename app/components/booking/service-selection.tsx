@@ -16,163 +16,156 @@ interface ServiceSelectionProps {
 export default function ServiceSelection({ selectedService, onSelect }: ServiceSelectionProps) {
   const { t } = useTranslation()
   
+  // Card animation variants
   const cardVariants = {
-    initial: { opacity: 0, x: -20 },
+    initial: { opacity: 0, y: 20 },
     animate: (index: number) => ({
       opacity: 1,
-      x: 0,
+      y: 0,
       transition: {
-        delay: index * 0.15,
-        duration: 0.5,
-        ease: [0.23, 1, 0.32, 1]
+        delay: 0.1 * index,
+        duration: 0.4,
+        ease: "easeOut"
       }
     }),
     hover: {
-      scale: 1.02,
-      transition: { duration: 0.2 }
+      y: -5,
+      boxShadow: "0 10px 20px rgba(0, 0, 0, 0.2)",
+      transition: {
+        duration: 0.2
+      }
     },
-    tap: { scale: 0.98 }
+    tap: {
+      scale: 0.98,
+      transition: {
+        duration: 0.1
+      }
+    }
   }
-
+  
   return (
-    <div className="w-full max-w-[420px] mx-auto px-4 sm:px-6 [direction:ltr] [text-align:left]">
-      <div className="mb-8 [direction:ltr]">
-        <h2 className="text-[28px] font-bold text-white mb-3 block [direction:ltr] [text-align:left]">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.5 }}
+      className="py-2 sm:py-4 w-full max-w-md mx-auto"
+    >
+      <div className="mb-4 text-center">
+        <h3 className="text-2xl font-semibold text-white text-left">
           {t('booking.selectService', 'Dienst auswählen')}
-        </h2>
-        <p className="text-base text-gray-400 leading-relaxed block [direction:ltr] [text-align:left]">
+        </h3>
+        <p className="text-gray-400 mt-2 text-left">
           {t('booking.selectServiceDesc', 'Wählen Sie den gewünschten Service aus.')}
         </p>
       </div>
-
-      <div className="space-y-4">
+      
+      <div className="flex flex-col space-y-3 mb-4">
         {/* Live Jazz Performance */}
-        <motion.button
+        <motion.div 
           variants={cardVariants}
           initial="initial"
           animate="animate"
           whileHover="hover"
           whileTap="tap"
           custom={0}
-          onClick={() => onSelect('professioneller-gesang')}
-          className={`w-full p-5 rounded-xl border transition-all duration-300 block [direction:ltr] [text-align:left] ${
-            selectedService === 'professioneller-gesang'
-              ? 'bg-[#1A1A1A] border-[#C8A97E] shadow-lg'
-              : 'bg-[#121212] border-gray-800 hover:border-[#C8A97E]/50'
+          className={`p-4 rounded-lg border cursor-pointer transition-all duration-300 transform ${
+            selectedService === 'professioneller-gesang' 
+              ? 'bg-gradient-to-br from-[#1A1A1A] to-[#222] border-[#C8A97E] shadow-lg shadow-[#C8A97E]/10' 
+              : 'bg-gradient-to-br from-[#0A0A0A] to-[#151515] border-gray-800 hover:border-[#C8A97E]/50'
           }`}
+          onClick={() => onSelect('professioneller-gesang')}
         >
-          <div className="flex items-start gap-4 [direction:ltr]">
-            <div className="w-12 h-12 rounded-full bg-[#1A1A1A] flex items-center justify-center flex-shrink-0">
+          <div className="flex items-center">
+            <div className="w-12 h-12 rounded-full bg-[#1A1A1A] flex items-center justify-center mr-4 flex-shrink-0">
               <Mic className="w-6 h-6 text-[#C8A97E]" />
             </div>
-            <div className="flex-1 min-w-0 [direction:ltr] [text-align:left]">
-              <h3 className="text-lg font-semibold text-white mb-1 block [direction:ltr] [text-align:left]">
+            <div className="flex-1 min-w-0">
+              <h4 className="text-lg font-medium text-white mb-1 text-left">
                 {t('booking.liveJazzPerformance', 'Live Jazz Performance')}
-              </h3>
-              <p className="text-sm text-gray-400 block [direction:ltr] [text-align:left]">
+              </h4>
+              <p className="text-gray-400 text-sm text-left">
                 {t('booking.nachVereinbarung', 'Nach Vereinbarung')}
               </p>
             </div>
             {selectedService === 'professioneller-gesang' && (
-              <div className="w-6 h-6 flex items-center justify-center">
-                <Check className="w-5 h-5 text-[#C8A97E]" />
+              <div className="w-8 h-8 rounded-full bg-[#C8A97E] flex items-center justify-center ml-4 flex-shrink-0">
+                <Check className="w-5 h-5 text-black" />
               </div>
             )}
           </div>
-        </motion.button>
-
-        {/* Vocal Coaching */}
-        <motion.button
+        </motion.div>
+        
+        {/* Vocal Coaching & Gesangsunterricht */}
+        <motion.div 
           variants={cardVariants}
           initial="initial"
           animate="animate"
           whileHover="hover"
           whileTap="tap"
           custom={1}
-          onClick={() => onSelect('vocal-coaching')}
-          className={`w-full p-5 rounded-xl border transition-all duration-300 block [direction:ltr] [text-align:left] ${
-            selectedService === 'vocal-coaching'
-              ? 'bg-[#1A1A1A] border-[#C8A97E] shadow-lg'
-              : 'bg-[#121212] border-gray-800 hover:border-[#C8A97E]/50'
+          className={`p-4 rounded-lg border cursor-pointer transition-all duration-300 transform ${
+            selectedService === 'vocal-coaching' 
+              ? 'bg-gradient-to-br from-[#1A1A1A] to-[#222] border-[#C8A97E] shadow-lg shadow-[#C8A97E]/10' 
+              : 'bg-gradient-to-br from-[#0A0A0A] to-[#151515] border-gray-800 hover:border-[#C8A97E]/50'
           }`}
+          onClick={() => onSelect('vocal-coaching')}
         >
-          <div className="flex items-start gap-4 [direction:ltr]">
-            <div className="w-12 h-12 rounded-full bg-[#1A1A1A] flex items-center justify-center flex-shrink-0">
+          <div className="flex items-center">
+            <div className="w-12 h-12 rounded-full bg-[#1A1A1A] flex items-center justify-center mr-4 flex-shrink-0">
               <Music className="w-6 h-6 text-[#C8A97E]" />
             </div>
-            <div className="flex-1 min-w-0 [direction:ltr] [text-align:left]">
-              <h3 className="text-lg font-semibold text-white mb-1 block [direction:ltr] [text-align:left]">
+            <div className="flex-1 min-w-0">
+              <h4 className="text-lg font-medium text-white mb-1 text-left">
                 {t('booking.vocalCoachingAndGesang', 'Vocal Coaching & Gesangsunterricht')}
-              </h3>
-              <p className="text-sm text-gray-400 block [direction:ltr] [text-align:left]">
+              </h4>
+              <p className="text-gray-400 text-sm text-left">
                 60 min
               </p>
             </div>
             {selectedService === 'vocal-coaching' && (
-              <div className="w-6 h-6 flex items-center justify-center">
-                <Check className="w-5 h-5 text-[#C8A97E]" />
+              <div className="w-8 h-8 rounded-full bg-[#C8A97E] flex items-center justify-center ml-4 flex-shrink-0">
+                <Check className="w-5 h-5 text-black" />
               </div>
             )}
           </div>
-        </motion.button>
-
+        </motion.div>
+        
         {/* Jazz Workshop */}
-        <motion.button
+        <motion.div 
           variants={cardVariants}
           initial="initial"
           animate="animate"
           whileHover="hover"
           whileTap="tap"
           custom={2}
-          onClick={() => onSelect('gesangsunterricht')}
-          className={`w-full p-5 rounded-xl border transition-all duration-300 ${
-            selectedService === 'gesangsunterricht'
-              ? 'bg-[#1A1A1A] border-[#C8A97E] shadow-lg'
-              : 'bg-[#121212] border-gray-800 hover:border-[#C8A97E]/50'
+          className={`p-4 rounded-lg border cursor-pointer transition-all duration-300 transform ${
+            selectedService === 'gesangsunterricht' 
+              ? 'bg-gradient-to-br from-[#1A1A1A] to-[#222] border-[#C8A97E] shadow-lg shadow-[#C8A97E]/10' 
+              : 'bg-gradient-to-br from-[#0A0A0A] to-[#151515] border-gray-800 hover:border-[#C8A97E]/50'
           }`}
-          style={{ 
-            direction: 'ltr',
-            textAlign: 'left',
-            display: 'block'
-          }}
-          dir="ltr"
+          onClick={() => onSelect('gesangsunterricht')}
         >
-          <div className="flex items-start gap-4" style={{ direction: 'ltr' }}>
-            <div className="w-12 h-12 rounded-full bg-[#1A1A1A] flex items-center justify-center flex-shrink-0">
+          <div className="flex items-center">
+            <div className="w-12 h-12 rounded-full bg-[#1A1A1A] flex items-center justify-center mr-4 flex-shrink-0">
               <Calendar className="w-6 h-6 text-[#C8A97E]" />
             </div>
-            <div className="flex-1 min-w-0" style={{ direction: 'ltr', textAlign: 'left' }}>
-              <h3 
-                className="text-lg font-semibold text-white mb-1"
-                style={{ 
-                  direction: 'ltr',
-                  textAlign: 'left',
-                  display: 'block'
-                }}
-                dir="ltr"
-              >
+            <div className="flex-1 min-w-0">
+              <h4 className="text-lg font-medium text-white mb-1 text-left">
                 {t('booking.jazzWorkshop', 'Jazz Workshop')}
-              </h3>
-              <p 
-                className="text-sm text-gray-400"
-                style={{ 
-                  direction: 'ltr',
-                  textAlign: 'left',
-                  display: 'block'
-                }}
-                dir="ltr"
-              >
+              </h4>
+              <p className="text-gray-400 text-sm text-left">
                 {t('booking.variableDuration', 'Variable Dauer')}
               </p>
             </div>
             {selectedService === 'gesangsunterricht' && (
-              <div className="w-6 h-6 flex items-center justify-center">
-                <Check className="w-5 h-5 text-[#C8A97E]" />
+              <div className="w-8 h-8 rounded-full bg-[#C8A97E] flex items-center justify-center ml-4 flex-shrink-0">
+                <Check className="w-5 h-5 text-black" />
               </div>
             )}
           </div>
-        </motion.button>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   )
 } 

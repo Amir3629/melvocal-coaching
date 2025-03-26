@@ -1,0 +1,8 @@
+.text-shadow {
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+}
+
+/* Add a stronger text shadow for headings */
+h3.text-shadow {
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 1px rgba(0, 0, 0, 0.5);
+} 

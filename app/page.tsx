@@ -434,6 +434,7 @@ export default function Home() {
       </section>
 
       <BookingForm isOpen={isBookingModalOpen} onClose={() => setIsBookingModalOpen(false)} />
+    <AIChat />
     </div>
   )
 }

@@ -1,0 +1,5 @@
+[33mcommit 4cdc567621093e9233b7e50947d62463340262df[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Amir3629 <amirhossein.firoozi@hotmail.com>
+Date:   Wed Mar 26 02:20:06 2025 +0100
+
+    Fix manifest error: Replace site.webmanifest with manifest.json

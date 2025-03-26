@@ -1,15 +1,21 @@
 /** @type {import('next').NextConfig} */
 
 const isProduction = process.env.NODE_ENV === 'production';
-const basePath = isProduction ? '/melvocal-coaching' : '';
+// Check for GitHub Pages deployment - default to false for Vercel
+const isGitHubPages = process.env.GITHUB_PAGES === 'true';
+const basePath = isProduction && isGitHubPages ? '/melvocal-coaching' : '';
 
 const nextConfig = {
   reactStrictMode: true,
-  basePath: basePath,
-  assetPrefix: basePath,
-  output: 'export',
+  // Only apply basePath and assetPrefix for GitHub Pages
+  ...(isGitHubPages ? {
+    basePath: basePath,
+    assetPrefix: basePath,
+  } : {}),
+  // Only set output to 'export' when deploying to GitHub Pages
+  ...(isGitHubPages ? { output: 'export' } : {}),
   images: {
-    unoptimized: true,
+    unoptimized: isGitHubPages, // Only unoptimize for GitHub Pages
     remotePatterns: [
       {
         protocol: 'https',
@@ -24,7 +30,7 @@ const nextConfig = {
     ],
     domains: ['images.unsplash.com'],
   },
-  trailingSlash: true,
+  trailingSlash: isGitHubPages, // Only use trailing slash for GitHub Pages
   webpack: (config) => {
     config.module.rules.push({
       test: /\.(woff|woff2|eot|ttf|otf|svg)$/i,
@@ -33,7 +39,7 @@ const nextConfig = {
     return config
   },
   publicRuntimeConfig: {
-    basePath: process.env.NODE_ENV === 'production' ? '/melvocal-coaching' : '',
+    basePath: isProduction && isGitHubPages ? '/melvocal-coaching' : '',
   },
   // Exclude backup and temporary directories
   experimental: {
