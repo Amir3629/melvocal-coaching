@@ -28,6 +28,11 @@ function isMediaRequest(url) {
   return url.match(/\.(mp4|webm|ogg|mp3|wav)$/i);
 }
 
+// Function to check if request has range header
+function hasRangeRequest(request) {
+  return request.headers.has('range');
+}
+
 // Handle messages from the client
 self.addEventListener('message', event => {
   // Respond immediately to prevent channel from closing
@@ -69,22 +74,46 @@ self.addEventListener('activate', event => {
 });
 
 async function handleMediaRequest(request) {
-  // For media files, try network first, then cache
-  try {
-    const response = await fetch(request);
-    // Only cache successful, complete responses
-    if (response.ok && response.status === 200) {
-      const cache = await caches.open(MEDIA_CACHE_NAME);
-      await cache.put(request, response.clone());
-      console.log('Service worker caching media resource:', request.url);
+  // For range requests, always go to network
+  if (hasRangeRequest(request)) {
+    try {
+      return await fetch(request);
+    } catch (error) {
+      console.error('Range request fetch failed:', error);
+      // Try to return a cached version if available
+      const cachedResponse = await caches.match(request);
+      if (cachedResponse) return cachedResponse;
+      throw error;
     }
+  }
+
+  // For non-range media requests
+  try {
+    // Try network first
+    const response = await fetch(request);
+    
+    // Only cache complete (non-partial) successful responses
+    if (response.ok && response.status === 200) {
+      try {
+        const cache = await caches.open(MEDIA_CACHE_NAME);
+        // Clone the response before putting it in the cache
+        const responseToCache = response.clone();
+        await cache.put(request, responseToCache);
+        console.log('Service worker caching media resource:', request.url);
+      } catch (cacheError) {
+        console.error('Failed to cache media resource:', cacheError);
+      }
+    }
+    
     return response;
   } catch (error) {
     // If network fails, try cache
     const cachedResponse = await caches.match(request);
     if (cachedResponse) {
+      console.log('Service worker serving cached media resource:', request.url);
       return cachedResponse;
     }
+    console.error('Media request failed and no cache available:', error);
     throw error;
   }
 }
@@ -103,9 +132,13 @@ async function handleRegularRequest(request) {
     
     // Only cache successful responses
     if (networkResponse.ok && shouldCache(request.url)) {
-      const cache = await caches.open(CACHE_NAME);
-      cache.put(request, networkResponse.clone());
-      console.log('Service worker caching new resource:', request.url);
+      try {
+        const cache = await caches.open(CACHE_NAME);
+        await cache.put(request, networkResponse.clone());
+        console.log('Service worker caching new resource:', request.url);
+      } catch (cacheError) {
+        console.error('Failed to cache resource:', cacheError);
+      }
     }
     
     return networkResponse;
