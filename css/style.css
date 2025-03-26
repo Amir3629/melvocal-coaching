@@ -248,8 +248,13 @@ body {
     border: none;
     color: var(--text-color);
     cursor: pointer;
-    z-index: 1000;
-    transition: all 0.3s ease;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    will-change: transform;
+    transform: translateZ(0);
 }
 
 .music-toggle:hover {
@@ -260,8 +265,213 @@ body {
     animation: pulse 2s infinite;
 }
 
+/* ===== Booking Steps ===== */
+.booking-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 5rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  /* Improve container performance */
+  contain: layout style;
+}
+
+.booking-steps .step-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  /* Hardware acceleration for smoother animations */
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  /* Fix: Equal height in desktop view */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Prevent text rendering issues during animations */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.booking-steps .step-card i {
+  font-size: 2.5rem;
+  color: var(--accent-color);
+  margin-bottom: 1rem;
+  /* Prevent icon shifting */
+  transform: translateZ(0);
+}
+
+.booking-steps .step-card h3 {
+  font-family: var(--font-heading);
+  margin-bottom: 1rem;
+  color: var(--text-color);
+}
+
+.booking-steps .step-card p {
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}
+
+.booking-steps .step-card:hover {
+  /* Optimized hover transitions */
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Mobile-Specific Refinements */
+@media (max-width: 480px) {
+  .booking-steps {
+    padding: 3rem 1rem;
+  }
+  
+  .step-card {
+    padding: 15px;
+    margin: 0 10px; /* Prevent edge-touching */
+  }
+  
+  /* Faster tap response */
+  .step-card:active {
+    transform: translateY(-2px);
+    transition: transform 0.1s ease;
+  }
+  
+  .booking-steps .step-card i {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .booking-steps .step-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .booking-steps .step-card p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Desktop layout for booking steps */
+@media (min-width: 768px) {
+  .booking-steps {
+    flex-direction: row;
+    justify-content: center; /* Better card distribution */
+    gap: 30px; /* More spacing between cards */
+  }
+  
+  .step-card {
+    min-width: 250px; /* Prevent uneven sizing */
+    flex: 1; /* Equal width distribution */
+  }
+}
+
+/* Optimize animations */
+@media (prefers-reduced-motion: reduce) {
+  .booking-steps .step-card {
+    transition: none;
+  }
+  
+  .booking-steps .step-card:hover {
+    transform: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* Animations */
 @keyframes pulse {
     0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
+    50% { transform: scale(1.05); }
     100% { transform: scale(1); }
+}
+
+/* ===== Optimized Booking Steps ===== */
+#booking-process {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  contain: layout;
+}
+
+.step-card {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+              box-shadow 0.25s ease;
+  will-change: transform;
+  backface-visibility: hidden;
+  height: 100%;
+}
+
+.step-card i {
+  font-size: 2.5rem;
+  color: var(--accent-color);
+  margin-bottom: 1.5rem;
+  display: inline-block;
+}
+
+.step-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.step-card p {
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+}
+
+.step-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+  #booking-process {
+    padding: 3rem 1.5rem;
+  }
+  
+  .step-card {
+    padding: 1.5rem;
+    margin: 0 0.5rem;
+  }
+  
+  .step-card i {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+}
+
+/* Desktop Enhancement */
+@media (min-width: 992px) {
+  #booking-process {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 2.5rem;
+  }
+  
+  .step-card {
+    flex: 1;
+    min-width: 280px;
+    max-width: 320px;
+  }
+}
+
+/* Reduced Motion Preference */
+@media (prefers-reduced-motion) {
+  .step-card {
+    transition: none !important;
+  }
 } 
