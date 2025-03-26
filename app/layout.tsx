@@ -5,6 +5,7 @@ import "./styles/typography.css"
 import "./styles/theme.css"
 import "./styles/navigation-fix.css"
 import "./styles/scrollbar.css"
+import "./lib/globals"
 import type { Metadata, Viewport } from "next"
 import { Inter, Playfair_Display, Cormorant_Garamond, Montserrat, Roboto } from "next/font/google"
 import RootClient from "./components/root-client"
@@ -169,6 +170,19 @@ export default function RootLayout({
         <script src={process.env.NODE_ENV === 'production' ? '/vocal-coaching/js/fix-ios-viewport.js' : '/js/fix-ios-viewport.js'}></script>
         <script src={process.env.NODE_ENV === 'production' ? '/vocal-coaching/js/ios-fix.js' : '/js/ios-fix.js'}></script>
         <script src={process.env.NODE_ENV === 'production' ? '/vocal-coaching/js/direct-fix.js' : '/js/direct-fix.js'}></script>
+        <script dangerouslySetInnerHTML={{
+          __html: `
+            // Define AIChat if it's not already defined
+            if (typeof window !== 'undefined' && !window.AIChat) {
+              window.AIChat = {
+                initialize: function() {},
+                render: function() {},
+                open: function() {},
+                close: function() {}
+              };
+            }
+          `
+        }} />
       </head>
       <body className={`${roboto.className} w-full min-w-full overflow-x-hidden bg-black`}>
         <MediaProvider>
