@@ -1,184 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="description" content="Melanie Wainwright - Professional Jazz Piano & Vocal Coach in Berlin offering private lessons, workshops and performance coaching.">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black">
-    <meta name="theme-color" content="#ffffff">
-    <title>Melanie Wainwright - Jazz Piano & Vocal Coach Berlin</title>
-    <link rel="stylesheet" href="css/style.css?v=20240326">
-    <link rel="manifest" href="manifest.json">
-    <link rel="icon" href="favicon.ico">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <!-- Prevent multiple script executions by adding the defer attribute -->
-    <script src="js/main.js" defer></script>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, viewport-fit=cover, maximum-scale=5, user-scalable=yes"/>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/melvocal-coaching/_next/static/css/f62416da9aa83f9e.css"/>
+    <link rel="stylesheet" href="/melvocal-coaching/_next/static/css/fafb6853528012ff.css"/>
+    <link rel="stylesheet" href="/melvocal-coaching/_next/static/css/526449ef055a3dd8.css"/>
+    
+    <!-- Icons and Manifest -->
+    <link rel="icon" href="/vocal-coaching/images/logo/ml-logo.PNG" type="image/png"/>
+    <link rel="shortcut icon" href="/vocal-coaching/favicon.ico"/>
+    <link rel="apple-touch-icon" href="/vocal-coaching/images/logo/ml-logo.PNG" sizes="180x180"/>
+    <link rel="manifest" href="/vocal-coaching/manifest.json"/>
+    
+    <!-- Meta tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+    <meta name="mobile-web-app-capable" content="yes"/>
+    <meta name="theme-color" content="#000000"/>
+    <meta name="description" content="Professional vocal coaching and performance in Berlin"/>
+    
+    <title>Mel jazz - Vocal Coaching in Berlin</title>
+
+    <!-- Critical CSS -->
+    <style>
+        :root {
+            --text-white: #fff;
+        }
+        
+        html, body {
+            width: 100vw !important;
+            max-width: 100vw !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background-color: black !important;
+            overflow-x: hidden !important;
+            position: relative !important;
+        }
+
+        @media screen and (max-width: 926px) {
+            body {
+                overflow-x: hidden !important;
+                width: 100% !important;
+                position: relative !important;
+            }
+        }
+    </style>
 </head>
-
 <body>
-    <!-- Main Navigation -->
-    <nav class="main-nav">
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#testimonials">Testimonials</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-    </nav>
-
-    <!-- Hero Section -->
-    <section id="hero" class="hero">
-        <video class="hero-video" autoplay muted loop playsinline poster="images/preview-poster.webp">
-            <source src="videos/preview.mp4" type="video/mp4">
-        </video>
-        <div class="hero-content">
-            <h1>Melanie Wainwright</h1>
-            <p>Jazz Piano & Vocal Coach in Berlin</p>
-            <a href="#booking-process" class="cta-button">Book a Lesson</a>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="services" class="services">
-        <h2>My Services</h2>
-        <div class="services-grid">
-            <div class="service-card" data-aos="fade-up">
-                <div class="card-image">
-                    <img src="vocal-coaching/images/services/singing.jpg" alt="Private Lessons">
-                    <div class="price-tag">From €60/hr</div>
-                </div>
-                <div class="card-content">
-                    <h3>Private Lessons</h3>
-                    <p>One-on-one instruction tailored to your goals and style preferences.</p>
-                    <ul>
-                        <li>Vocal Technique</li>
-                        <li>Piano Fundamentals</li>
-                        <li>Jazz Improvisation</li>
-                    </ul>
-                    <a href="#booking-process" class="learn-more">Book Now</a>
-                </div>
-            </div>
-            <!-- More service cards... -->
-        </div>
-    </section>
-
-    <!-- ===== Booking Steps ===== -->
-    <section class="booking-steps" id="booking-process">
-      <div class="step-card">
-        <i class="fas fa-search" aria-hidden="true"></i>
-        <h3>Step 1: Choose Your Plan</h3>
-        <p>Find the perfect coaching package for your goals</p>
-      </div>
-      <div class="step-card">
-        <i class="fas fa-calendar-check" aria-hidden="true"></i>
-        <h3>Step 2: Book Your Session</h3>
-        <p>Select your preferred date and time</p>
-      </div>
-      <div class="step-card">
-        <i class="fas fa-microphone-alt" aria-hidden="true"></i>
-        <h3>Step 3: Start Your Journey</h3>
-        <p>Begin your vocal transformation</p>
-      </div>
-    </section>
-
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="about-content" data-aos="fade-right">
-            <div class="about-text">
-                <h2>About Me</h2>
-                <p>With over 15 years of experience in jazz piano and vocals, I bring both technical expertise and creative passion to every lesson. My approach combines classical foundation with jazz improvisation, helping you develop your unique voice.</p>
-                <div class="experience-highlights">
-                    <div class="highlight">
-                        <span class="number">15+</span>
-                        <span class="label">Years Experience</span>
-                    </div>
-                    <div class="highlight">
-                        <span class="number">500+</span>
-                        <span class="label">Students Taught</span>
-                    </div>
-                    <div class="highlight">
-                        <span class="number">100+</span>
-                        <span class="label">Live Performances</span>
-                    </div>
-                </div>
-            </div>
-            <div class="about-image" data-aos="fade-left">
-                <img src="vocal-coaching/images/about/profile.jpg" alt="Melanie Wainwright">
-            </div>
-        </div>
-    </section>
-
-    <!-- Gallery Section -->
-    <section id="gallery" class="gallery">
-        <h2>Performance Gallery</h2>
-        <div class="gallery-grid">
-            <!-- Gallery items will be dynamically loaded -->
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials">
-        <h2>Student Testimonials</h2>
-        <div class="testimonials-container">
-            <!-- Testimonials will appear here -->
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="contact-content">
-            <div class="contact-info" data-aos="fade-right">
-                <h2>Get in Touch</h2>
-                <div class="contact-details">
-                    <div class="detail">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <p>Kreuzberg, Berlin</p>
-                    </div>
-                    <div class="detail">
-                        <i class="fas fa-envelope"></i>
-                        <p>info@melanie-wainwright.de</p>
-                    </div>
-                    <div class="detail">
-                        <i class="fas fa-phone"></i>
-                        <p>+49 (0) 123 456789</p>
-                    </div>
-                </div>
-                <div class="social-links">
-                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-spotify"></i></a>
-                </div>
-            </div>
-            <form class="contact-form" data-aos="fade-left">
-                <input type="text" placeholder="Your Name" required>
-                <input type="email" placeholder="Your Email" required>
-                <select required>
-                    <option value="">Select Service</option>
-                    <option value="private">Private Lessons</option>
-                    <option value="group">Group Workshop</option>
-                    <option value="online">Online Coaching</option>
-                </select>
-                <textarea placeholder="Your Message" required></textarea>
-                <button type="submit" class="submit-btn">Send Message</button>
-            </form>
-        </div>
-    </section>
-
-    <footer>
-        <div class="piano-footer">
-            <!-- Piano keys animation -->
-            <div class="keys-animation"></div>
-        </div>
-        <p>&copy; 2024 Melanie Wainwright. All rights reserved.</p>
-    </footer>
-
-    <!-- Background Music -->
-    <audio id="background-music" preload="auto">
-        <source src="audio/AUDIO-2025-03-19-16-15-29.mp3" type="audio/mp3">
-    </audio>
+    <div id="root"></div>
+    <script src="/melvocal-coaching/_next/static/chunks/webpack-7277738efea19c6f.js" defer></script>
+    <script src="/melvocal-coaching/_next/static/chunks/main-app-58acd66c2097b5fc.js" async></script>
 </body>
 </html> 
