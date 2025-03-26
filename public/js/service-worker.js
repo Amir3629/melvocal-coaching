@@ -1,11 +1,27 @@
 // Service Worker for Melanie Wainwright's vocal coaching website
-const CACHE_NAME = 'melanie-vocal-coach-cache-v1';
+const CACHE_NAME = 'melanie-vocal-coach-cache-v2';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
   '/css/style.css',
   '/js/main.js',
 ];
+
+// Media file types that may return 206 Partial Content responses
+const RANGE_REQUEST_MEDIA_TYPES = [
+  '.mp3',
+  '.mp4',
+  '.webm',
+  '.avi',
+  '.mov',
+  '.ogg',
+  '.wav'
+];
+
+// Check if URL is for a media file that might use range requests
+function isMediaFile(url) {
+  return RANGE_REQUEST_MEDIA_TYPES.some(type => url.endsWith(type));
+}
 
 // On install, cache the static assets
 self.addEventListener('install', event => {
@@ -35,8 +51,13 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Fetch event handler with fix for 206 Partial Content responses
+// Main fetch event handler
 self.addEventListener('fetch', event => {
+  // Skip range requests for media files as they will be handled by a dedicated handler
+  if (event.request.headers.has('range') || isMediaFile(event.request.url)) {
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request)
       .then(cachedResponse => {
@@ -50,8 +71,8 @@ self.addEventListener('fetch', event => {
         
         return fetch(fetchRequest)
           .then(response => {
-            // Check if valid response
-            if (!response || response.status !== 200) {
+            // Check if valid response and NOT a 206 Partial Content response
+            if (!response || response.status !== 200 || response.status === 206) {
               // Don't cache non-200 responses or 206 (Partial Content) responses
               return response;
             }
@@ -62,8 +83,12 @@ self.addEventListener('fetch', event => {
             // Open cache and store the response
             caches.open(CACHE_NAME)
               .then(cache => {
-                cache.put(event.request, responseToCache);
-                console.log('Service worker caching new resource:', event.request.url);
+                try {
+                  cache.put(event.request, responseToCache);
+                  console.log('Service worker caching new resource:', event.request.url);
+                } catch (error) {
+                  console.error('Failed to cache resource:', error);
+                }
               });
               
             return response;
@@ -76,10 +101,10 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// Handle media files with Range requests separately
+// Separate handler for range requests
 self.addEventListener('fetch', event => {
-  // Only handle Range requests separately
-  if (event.request.headers.has('range')) {
+  // Only handle Range requests
+  if (event.request.headers.has('range') || isMediaFile(event.request.url)) {
     event.respondWith(handleRangeRequest(event.request));
   }
 });
@@ -87,24 +112,31 @@ self.addEventListener('fetch', event => {
 async function handleRangeRequest(request) {
   // For range requests, always go to network
   try {
+    // Just return the network response without caching
     return await fetch(request);
   } catch (error) {
     console.error('Range request fetch failed:', error);
-    // Fall back to a non-range request from cache if available
-    const nonRangeRequest = new Request(request.url, {
-      method: request.method,
-      headers: request.headers,
-      mode: request.mode,
-      credentials: request.credentials,
-      redirect: request.redirect,
-      referrer: request.referrer
-    });
     
-    // Remove the range header
-    nonRangeRequest.headers.delete('range');
-    
-    const cachedResponse = await caches.match(nonRangeRequest);
-    if (cachedResponse) return cachedResponse;
+    // Try to return a full cached version if available
+    try {
+      // Create a non-range version of the request
+      const nonRangeRequest = new Request(request.url, {
+        method: request.method,
+        headers: new Headers(request.headers),
+        mode: request.mode,
+        credentials: request.credentials,
+        redirect: request.redirect,
+        referrer: request.referrer
+      });
+      
+      // Remove the range header
+      nonRangeRequest.headers.delete('range');
+      
+      const cachedResponse = await caches.match(nonRangeRequest);
+      if (cachedResponse) return cachedResponse;
+    } catch (cacheError) {
+      console.error('Cache fallback failed:', cacheError);
+    }
     
     // If there's no cached response, return a network error
     return new Response('Network error', { status: 503 });

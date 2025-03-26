@@ -94,4 +94,38 @@ document.addEventListener('DOMContentLoaded', function() {
   };
 
   logSections();
+
+  // Fix Chrome extension "Unchecked runtime.lastError: No tab with id" errors
+  const suppressChromeErrors = () => {
+    // Create a custom error handler for runtime.lastError
+    const originalConsoleError = console.error;
+    console.error = function(...args) {
+      // Filter out Chrome extension tab ID errors
+      const errorText = args.join(' ');
+      if (errorText.includes('Unchecked runtime.lastError: No tab with id:') || 
+          errorText.includes('A listener indicated an asynchronous response')) {
+        // Don't log these errors to console
+        return;
+      }
+      
+      // Pass through other errors
+      originalConsoleError.apply(console, args);
+    };
+
+    // Catch unhandled promise rejections related to Chrome extensions
+    window.addEventListener('unhandledrejection', event => {
+      if (event.reason && (
+        event.reason.message && (
+          event.reason.message.includes('Unchecked runtime.lastError') ||
+          event.reason.message.includes('A listener indicated an asynchronous response')
+        )
+      )) {
+        // Prevent the error from reaching the console
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    });
+  };
+
+  suppressChromeErrors();
 }); 
