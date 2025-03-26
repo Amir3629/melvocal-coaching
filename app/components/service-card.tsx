@@ -62,12 +62,16 @@ export default function ServiceCard({
   // Animation variants for the card
   const cardVariants = {
     collapsed: { 
-      height: isMobile ? "auto" : 320
+      height: isMobile ? "auto" : 320,
+      transition: { 
+        duration: 0.5,
+        ease: [0.16, 1, 0.3, 1]
+      }
     },
     expanded: { 
       height: "auto",
       transition: { 
-        duration: isMobile ? 0.3 : 0.5,
+        duration: 0.5,
         ease: [0.16, 1, 0.3, 1]
       }
     }
@@ -94,7 +98,7 @@ export default function ServiceCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ duration: 0.5, delay }}
-      className={`group relative w-full bg-black/20 backdrop-blur-sm rounded-xl overflow-hidden ${isMobile ? 'min-h-[420px]' : ''}`}
+      className={`group relative w-full bg-black/20 backdrop-blur-sm rounded-xl overflow-hidden ${isMobile ? 'min-h-[380px]' : ''}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
@@ -152,7 +156,7 @@ export default function ServiceCard({
               animate="visible"
               custom={index}
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-[#C8A97E] mt-2 flex-shrink-0" />
+              <span className="w-1 h-1 rounded-full bg-[#C8A97E]/50 mt-2 flex-shrink-0" />
               <span className="text-sm">{feature}</span>
             </motion.li>
           ))}
@@ -192,7 +196,7 @@ export default function ServiceCard({
                         animate="visible"
                         custom={index + 1}
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#C8A97E] mt-2 flex-shrink-0" />
+                        <span className="w-1 h-1 rounded-full bg-[#C8A97E]/50 mt-2 flex-shrink-0" />
                         <span>{item}</span>
                       </motion.li>
                     ))}
@@ -224,7 +228,7 @@ export default function ServiceCard({
                         animate="visible"
                         custom={index + (details.includes ? details.includes.length + 2 : 1)}
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#C8A97E] mt-2 flex-shrink-0" />
+                        <span className="w-1 h-1 rounded-full bg-[#C8A97E]/50 mt-2 flex-shrink-0" />
                         <span>{item}</span>
                       </motion.li>
                     ))}
