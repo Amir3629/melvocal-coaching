@@ -1,0 +1,129 @@
+/* iOS Safari Specific Fix */
+html, body, #__next {
+  width: 100% !important;
+  background-color: black !important;
+}
+
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: black !important;
+}
+
+/* iOS specific class */
+.ios-fix {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: black !important;
+  left: 0 !important;
+  right: 0 !important;
+}
+
+/* Minimal fix approach - make viewport exactly screen width */
+@supports (-webkit-touch-callout: none) {
+  /* iOS specific */
+  :root {
+    background-color: black !important;
+    --real-vw: 100vw;
+  }
+  
+  html, body {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: none !important;
+    -webkit-text-size-adjust: 100%;
+    background-color: black !important;
+  }
+  
+  /* Target the viewport directly */
+  @viewport {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+  }
+  
+  body:before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: black;
+    z-index: -10;
+  }
+  
+  /* Specific fix for iOS Safari full width */
+  @media screen and (max-device-width: 926px) {
+    body, html, #__next, main, .container, section {
+      width: 100% !important;
+      min-width: 100% !important;
+      max-width: 100% !important;
+      overflow-x: hidden !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      left: 0 !important;
+      right: 0 !important;
+      background-color: black !important;
+    }
+    
+    video, img {
+      width: 100% !important;
+      max-width: 100% !important;
+      background-color: black !important;
+    }
+  }
+  
+  /* Force iOS to use actual viewport width */
+  html, body, #__next, main, .container, section {
+    width: var(--real-vw) !important;
+    min-width: var(--real-vw) !important;
+    max-width: var(--real-vw) !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    position: relative !important;
+  }
+  
+  /* Eliminate any possible parent container constraints */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: var(--real-vw);
+    background-color: black;
+    z-index: -9999;
+  }
+  
+  /* Handle safe areas on iPhone X and newer */
+  @supports (padding: max(0px)) {
+    html, body {
+      padding-left: min(0px, env(safe-area-inset-left)) !important;
+      padding-right: min(0px, env(safe-area-inset-right)) !important;
+    }
+  }
+  
+  /* Force content containers to full width */
+  #hero, 
+  section,
+  [class*="container"] {
+    width: var(--real-vw) !important;
+    min-width: var(--real-vw) !important;
+    max-width: var(--real-vw) !important;
+    left: 0 !important;
+    right: 0 !important;
+  }
+  
+  /* Force media elements to extend fully */
+  video, img, svg {
+    max-width: var(--real-vw) !important;
+  }
+} 

@@ -1,0 +1,140 @@
+{
+  "nav": {
+    "home": "Start",
+    "services": "Leistungen",
+    "about": "Über mich",
+    "references": "Referenzen",
+    "testimonials": "Bewertungen",
+    "contact": "Kontakt"
+  },
+  "hero": {
+    "title": "Mel Jazz",
+    "subtitle": "Professionelles Vocal Coaching in Berlin",
+    "cta": "Leistungen entdecken"
+  },
+  "services": {
+    "title": "Leistungen",
+    "singing": {
+      "title": "Singen",
+      "subtitle": "Gesangsunterricht für alle",
+      "description": "Professionelles Stimmtraining für Bands, Musiker und ambitionierte Sänger - maßgeschneidert für Ihre künstlerische Entwicklung.",
+      "features": [
+        "Grundtechniken",
+        "Stimmbildung",
+        "Atemtechnik",
+        "Liedinterpretation"
+      ],
+      "details": {
+        "includes": [
+          "Stimmanalyse",
+          "Grundlagentraining",
+          "Liedauswahl",
+          "Übungsmaterial"
+        ],
+        "suitable": [
+          "Bands",
+          "Musiker",
+          "Anfänger",
+          "Fortgeschrittene"
+        ],
+        "duration": "45-60 Minuten",
+        "location": "Studio Berlin / Online"
+      }
+    },
+    "coaching": {
+      "title": "Vocal Coaching",
+      "subtitle": "Professionelles Coaching",
+      "description": "CVT-basiertes Stimmtraining für Profis - entwickeln Sie Ihre einzigartige Stimme und Performance auf höchstem Niveau.",
+      "features": [
+        "CVT Technik",
+        "Performance",
+        "Repertoire",
+        "Stilentwicklung"
+      ],
+      "details": {
+        "includes": [
+          "CVT Stimmanalyse",
+          "Techniktraining",
+          "Repertoireaufbau",
+          "Auftrittsvorbereitung"
+        ],
+        "suitable": [
+          "Profis",
+          "Semi-Profis",
+          "Fortgeschrittene"
+        ],
+        "duration": "60-90 Minuten",
+        "location": "Studio Berlin / Online"
+      }
+    },
+    "workshop": {
+      "title": "Workshop",
+      "subtitle": "Individuell & Intensiv",
+      "description": "Maßgeschneiderte Intensiv-Workshops für ein tiefgreifendes Erlebnis Ihrer stimmlichen Entwicklung.",
+      "features": [
+        "Ensemble-Arbeit",
+        "Harmonielehre",
+        "Improvisation",
+        "Auftritts­praxis"
+      ],
+      "details": {
+        "includes": [
+          "Intensivtraining",
+          "Theorie & Praxis",
+          "Individuelles Feedback",
+          "Auftrittsvorbereitung"
+        ],
+        "suitable": [
+          "Einzelpersonen",
+          "Kleine Gruppen",
+          "Bands"
+        ],
+        "duration": "Ab 3 Stunden (600€)",
+        "location": "Nach Vereinbarung"
+      }
+    },
+    "choir": {
+      "title": "Chor Next Door",
+      "subtitle": "Gemeinsam Singen",
+      "description": "Entdecken Sie die Freude am gemeinsamen Singen in unserem dynamischen Nachbarschaftschor - für alle Levels offen.",
+      "features": [
+        "Mehrstimmigkeit",
+        "Harmonie",
+        "Rhythmus",
+        "Gemeinschaft"
+      ],
+      "details": {
+        "includes": [
+          "Stimmbildung",
+          "Chorgesang",
+          "Auftritte",
+          "Events"
+        ],
+        "suitable": [
+          "Alle Level",
+          "Nachbarn",
+          "Musikbegeisterte"
+        ],
+        "duration": "90-120 Minuten",
+        "location": "Studio Berlin"
+      }
+    }
+  },
+  "references": {
+    "title": "Referenzen & Kooperationen"
+  },
+  "testimonials": {
+    "title": "Was andere sagen",
+    "subtitle": "Bewertungen von Schülern und Partnern"
+  },
+  "contact": {
+    "title": "Kontakt",
+    "subtitle": "Buchen Sie Ihre Stunde oder stellen Sie Fragen",
+    "form": {
+      "name": "Ihr Name",
+      "email": "Ihre E-Mail",
+      "message": "Ihre Nachricht",
+      "submit": "Nachricht senden"
+    }
+  }
+} 

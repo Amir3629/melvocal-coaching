@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="300" height="100" viewBox="0 0 300 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#C8A97E;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#B69A6E;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- TV Tower Silhouette -->
+  <g transform="translate(40, 20)">
+    <path d="M30 60V30L40 20L50 30V60" stroke="url(#goldGradient)" stroke-width="1.5" fill="none"/>
+    <circle cx="40" cy="15" r="5" stroke="url(#goldGradient)" stroke-width="1.5" fill="none"/>
+  </g>
+
+  <!-- Musical Notes -->
+  <g transform="translate(60, 30)">
+    <path d="M0 30V0L5 2V25M5 25C5 28.866 2.76142 32 0 32C-2.76142 32 -5 28.866 -5 25C-5 21.134 -2.76142 18 0 18C2.76142 18 5 21.134 5 25Z" 
+          fill="url(#goldGradient)"/>
+  </g>
+
+  <!-- Main Text -->
+  <g filter="url(#glow)" transform="translate(100, 0)">
+    <text x="70" y="45" text-anchor="middle" font-family="Arial" font-size="24" font-weight="bold" fill="url(#goldGradient)">BERLIN</text>
+    <text x="70" y="65" text-anchor="middle" font-family="Arial" font-size="16" letter-spacing="2" fill="#FFFFFF">MUSIC SCENE</text>
+  </g>
+
+  <!-- Decorative Elements -->
+  <path d="M30 85 L270 85" stroke="url(#goldGradient)" stroke-width="0.5" stroke-dasharray="1 4"/>
+  <circle cx="30" cy="85" r="2" fill="url(#goldGradient)"/>
+  <circle cx="270" cy="85" r="2" fill="url(#goldGradient)"/>
+</svg> 

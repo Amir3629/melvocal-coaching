@@ -1,0 +1,19 @@
+{
+  "name": "Mel Jazz - Vocal Coaching",
+  "short_name": "Mel Vocal",
+  "icons": [
+    {
+      "src": "/melvocal-coaching/images/logo/ml-logo.PNG",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/melvocal-coaching/images/logo/ml-logo.PNG",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}

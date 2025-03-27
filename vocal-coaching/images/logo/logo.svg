@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="48" viewBox="0 0 128 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&amp;display=swap');
+  </style>
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="'Playfair Display', serif" font-size="24" fill="white">
+    Mel jazz
+  </text>
+</svg> 

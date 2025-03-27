@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="160" height="60" viewBox="0 0 160 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(20, 15)">
+    <path d="M10,15 L110,15 M10,30 L110,30" stroke="currentColor" stroke-width="1"/>
+    <text x="60" y="25" font-family="Arial" font-weight="bold" font-size="14" fill="currentColor" text-anchor="middle">COMPLETE VOCAL INSTITUTE</text>
+  </g>
+</svg>
