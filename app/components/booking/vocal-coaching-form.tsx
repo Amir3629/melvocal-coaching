@@ -43,6 +43,26 @@ export default function VocalCoachingForm({ formData, onChange }: VocalCoachingF
     }
   }
   
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Format the form data for email
+    const emailSubject = encodeURIComponent(`Vocal Coaching Request: ${formData.skillLevel}`);
+    const emailBody = encodeURIComponent(`
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone}
+Skill Level: ${formData.skillLevel}
+Focus Areas: ${formData.focusArea?.join(', ')}
+Preferred Date: ${formData.preferredDate}
+Preferred Time: ${formData.preferredTime}
+Additional Message: ${formData.message}
+    `);
+    
+    // Open default email client
+    window.location.href = `mailto:booking@melvocal.com?subject=${emailSubject}&body=${emailBody}`;
+  };
+  
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="space-y-4">

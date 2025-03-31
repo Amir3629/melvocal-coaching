@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import ProgressBar from './progress-bar'
 import ServiceSelection from './service-selection'
+import PersonalInfoStep from './personal-info-step'
 import WorkshopFormStep from './workshop-form'
 import VocalCoachingFormStep from './vocal-coaching-form'
 import LiveSingingFormStep from './live-singing-form'
@@ -103,149 +104,16 @@ export default function BookingForm() {
     }, 1500)
   }
   
-  // Get step title
-  const getStepTitle = () => {
-    switch (currentStep) {
-      case 0:
-        return t('booking.selectService', 'Dienst auswählen')
-      case 1:
-        return t('booking.personalInfo', 'Persönliche Informationen')
-      case 2:
-        return t('booking.serviceDetails', 'Details zum Dienst')
-      case 3:
-        return t('booking.confirmation', 'Bestätigung')
-      default:
-        return ''
-    }
-  }
-  
-  // Render the current step
-  const renderStep = () => {
-    switch (currentStep) {
-      case 0:
-        return (
-          <ServiceSelection 
-            selectedService={selectedService} 
-            onSelect={handleServiceSelect} 
-          />
-        )
-      case 1:
-        return (
-          <div className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label htmlFor="name" className="block text-sm font-medium text-white">
-                  {t('booking.name', 'Name')} *
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  value={formData.name}
-                  onChange={(e) => handleFormChange({ name: e.target.value })}
-                  className="w-full px-4 py-2 bg-[#1A1A1A] border border-gray-800 rounded-lg focus:ring-[#C8A97E] focus:border-[#C8A97E] text-white"
-                  required
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <label htmlFor="email" className="block text-sm font-medium text-white">
-                  {t('booking.email', 'E-Mail')} *
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  value={formData.email}
-                  onChange={(e) => handleFormChange({ email: e.target.value })}
-                  className="w-full px-4 py-2 bg-[#1A1A1A] border border-gray-800 rounded-lg focus:ring-[#C8A97E] focus:border-[#C8A97E] text-white"
-                  required
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <label htmlFor="phone" className="block text-sm font-medium text-white">
-                  {t('booking.phone', 'Telefon')} *
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  value={formData.phone}
-                  onChange={(e) => handleFormChange({ phone: e.target.value })}
-                  className="w-full px-4 py-2 bg-[#1A1A1A] border border-gray-800 rounded-lg focus:ring-[#C8A97E] focus:border-[#C8A97E] text-white"
-                  required
-                />
-              </div>
-            </div>
-            
-            <div className="space-y-2">
-              <label htmlFor="message" className="block text-sm font-medium text-white">
-                {t('booking.message', 'Nachricht')}
-              </label>
-              <textarea
-                id="message"
-                value={formData.message}
-                onChange={(e) => handleFormChange({ message: e.target.value })}
-                rows={4}
-                className="w-full px-4 py-2 bg-[#1A1A1A] border border-gray-800 rounded-lg focus:ring-[#C8A97E] focus:border-[#C8A97E] text-white"
-              />
-            </div>
-          </div>
-        )
-      case 2:
-        switch (selectedService) {
-          case 'professioneller-gesang':
-            return (
-              <LiveSingingFormStep 
-                formData={formData} 
-                onChange={handleFormChange} 
-              />
-            )
-          case 'vocal-coaching':
-            return (
-              <VocalCoachingFormStep 
-                formData={formData} 
-                onChange={handleFormChange} 
-              />
-            )
-          case 'gesangsunterricht':
-            return (
-              <WorkshopFormStep 
-                formData={formData} 
-                onChange={handleFormChange} 
-              />
-            )
-          default:
-            return null
-        }
-      case 3:
-        return (
-          <ConfirmationStep 
-            formData={formData} 
-            serviceType={selectedService} 
-            onChange={handleFormChange} 
-          />
-        )
-      default:
-        return null
-    }
-  }
-  
-  // Check if the current step is valid
+  // Check if current step is valid
   const isStepValid = () => {
     switch (currentStep) {
       case 0:
-        return !!selectedService
+        return selectedService !== null
       case 1:
-        return !!formData.name && !!formData.email && !!formData.phone
+        return formData.name && formData.email && formData.phone
       case 2:
-        // Basic validation for service-specific forms
-        if (selectedService === 'professioneller-gesang') {
-          return !!formData.eventType && !!formData.eventDate && !!formData.performanceType
-        } else if (selectedService === 'vocal-coaching') {
-          return !!formData.sessionType && !!formData.skillLevel
-        } else if (selectedService === 'gesangsunterricht') {
-          return !!formData.workshopTheme && !!formData.groupSize
-        }
-        return false
+        // Add validation for service-specific fields
+        return true
       case 3:
         return formData.termsAccepted && formData.privacyAccepted
       default:
@@ -253,89 +121,106 @@ export default function BookingForm() {
     }
   }
   
-  // Handle smooth close function
-  const handleSmoothClose = (callback?: () => void) => {
-    setIsVisible(false)
-    setTimeout(() => {
-      if (callback) callback()
-    }, 500) // Match transition duration
-  }
-  
   return (
-    <AnimatePresence mode="wait">
-      {isVisible && (
-        <motion.div 
-          className="max-w-4xl mx-auto"
-          initial={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <div className="mb-8">
-            <ProgressBar 
-              currentStep={currentStep} 
-              totalSteps={4} 
-              labels={[
-                t('booking.service', 'Dienst'),
-                t('booking.personal', 'Persönlich'),
-                t('booking.details', 'Details'),
-                t('booking.confirm', 'Bestätigen')
-              ]}
-            />
-          </div>
-          
-          <div className="mb-6">
-            <h2 className="text-2xl font-bold text-white">
-              {getStepTitle()}
-            </h2>
-            <p className="text-gray-400 mt-2">
-              {currentStep === 0 && t('booking.selectServiceDesc', 'Wählen Sie den gewünschten Dienst aus.')}
-              {currentStep === 1 && t('booking.personalInfoDesc', 'Geben Sie Ihre Kontaktdaten ein.')}
-              {currentStep === 2 && t('booking.serviceDetailsDesc', 'Geben Sie weitere Details zu Ihrer Anfrage an.')}
-              {currentStep === 3 && t('booking.confirmationDesc', 'Überprüfen Sie Ihre Angaben und senden Sie die Anfrage ab.')}
-            </p>
-          </div>
-          
-          <div className="bg-[#121212] border border-gray-800 rounded-xl p-6 mb-6">
-            {currentStep === 3 ? (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.3 }}
+      className="min-h-screen bg-black text-white py-8 sm:py-12"
+    >
+      <div className="container mx-auto px-4 sm:px-6">
+        <ProgressBar currentStep={currentStep} totalSteps={4} />
+        
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentStep}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="max-w-2xl mx-auto"
+          >
+            {currentStep === 0 && (
+              <ServiceSelection 
+                selectedService={selectedService} 
+                onSelect={handleServiceSelect} 
+              />
+            )}
+            
+            {currentStep === 1 && (
+              <PersonalInfoStep
+                formData={formData}
+                onChange={handleFormChange}
+              />
+            )}
+            
+            {currentStep === 2 && selectedService && (
+              <>
+                {selectedService === 'professioneller-gesang' && (
+                  <LiveSingingFormStep 
+                    formData={formData} 
+                    onChange={handleFormChange} 
+                  />
+                )}
+                {selectedService === 'vocal-coaching' && (
+                  <VocalCoachingFormStep 
+                    formData={formData} 
+                    onChange={handleFormChange} 
+                  />
+                )}
+                {selectedService === 'gesangsunterricht' && (
+                  <WorkshopFormStep 
+                    formData={formData} 
+                    onChange={handleFormChange} 
+                  />
+                )}
+              </>
+            )}
+            
+            {currentStep === 3 && (
               <ConfirmationStep
                 formData={formData}
-                serviceType={selectedService}
+                selectedService={selectedService}
                 onChange={handleFormChange}
-                onClose={() => handleSmoothClose()}
               />
-            ) : (
-              renderStep()
             )}
-          </div>
-          
-          <div className="mt-8 flex justify-between">
+          </motion.div>
+        </AnimatePresence>
+        
+        <div className="max-w-2xl mx-auto mt-8 sm:mt-12">
+          <div className="flex justify-between items-center">
             {currentStep > 0 && (
               <button
-                type="button"
                 onClick={handlePrevStep}
-                className="px-6 py-2 bg-white/10 text-white rounded-lg hover:bg-white/20 transition-colors"
+                className="px-4 py-2 text-sm sm:text-base text-white bg-transparent border border-gray-800 rounded-lg hover:border-[#C8A97E] transition-colors duration-200"
               >
                 {t('booking.back', 'Zurück')}
               </button>
             )}
             
-            <div className={currentStep > 0 ? 'ml-auto' : 'w-full'}>
-              {currentStep < 3 ? (
-                <SubmitButton 
-                  onClick={handleNextStep} 
-                  disabled={!isStepValid()}
-                />
-              ) : (
-                <SubmitButton 
-                  isLastStep
-                  onClick={handleSubmit}
-                  isSubmitting={isSubmitting}
-                />
-              )}
-            </div>
+            {currentStep < 3 ? (
+              <button
+                onClick={handleNextStep}
+                disabled={!isStepValid()}
+                className={`ml-auto px-6 py-2.5 text-sm sm:text-base text-white rounded-lg transition-colors duration-200 ${
+                  isStepValid()
+                    ? 'bg-[#C8A97E] hover:bg-[#B69468]'
+                    : 'bg-gray-800 cursor-not-allowed'
+                }`}
+              >
+                {t('booking.next', 'Weiter')}
+              </button>
+            ) : (
+              <SubmitButton
+                onClick={handleSubmit}
+                isSubmitting={isSubmitting}
+                disabled={!isStepValid()}
+              />
+            )}
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
+        </div>
+      </div>
+    </motion.div>
   )
 } 

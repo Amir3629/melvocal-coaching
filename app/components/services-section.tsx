@@ -132,18 +132,18 @@ export default function ServicesSection() {
       
       <div className="container mx-auto px-4 sm:px-6 relative">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-10%" }}
-          transition={{ duration: 0.7 }}
+            transition={{ duration: 0.7 }}
           className="text-center mb-8 sm:mb-12"
-        >
+          >
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-3 sm:mb-4">
             {t('services.title')}
           </h2>
           <div className="w-20 h-0.5 bg-[#C8A97E] mx-auto opacity-80" />
-        </motion.div>
-
+          </motion.div>
+          
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -160,7 +160,7 @@ export default function ServicesSection() {
         >
           {services.map((service) => {
             const details = getDetails(service.key)
-            return (
+              return (
               <motion.div
                 key={service.key}
                 variants={itemVariants}
@@ -178,7 +178,7 @@ export default function ServicesSection() {
                 />
               </motion.div>
             )
-          })}
+            })}
         </motion.div>
       </div>
     </section>

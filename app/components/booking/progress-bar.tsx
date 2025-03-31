@@ -3,162 +3,67 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
-import { Check, Music, Calendar, FileText } from 'lucide-react'
-
-// Form step type
-type FormStep = 'service' | 'details' | 'confirm' | number
+import { Check } from 'lucide-react'
 
 interface ProgressBarProps {
-  currentStep: FormStep;
-  totalSteps?: number;
-  labels?: string[];
+  currentStep: number
+  totalSteps: number
 }
 
-export default function ProgressBar({ currentStep, totalSteps = 3, labels }: ProgressBarProps) {
+export default function ProgressBar({ currentStep, totalSteps }: ProgressBarProps) {
   const { t } = useTranslation()
+
+  const steps = [
+    { id: 0, label: t('booking.selectService', 'Dienst') },
+    { id: 1, label: t('booking.personalInfo', 'Info') },
+    { id: 2, label: t('booking.serviceDetails', 'Details') },
+    { id: 3, label: t('booking.confirmation', 'Bestätigung') },
+  ]
   
   return (
-    <div className="max-w-4xl mx-auto mb-6 sm:mb-8 relative px-4 sm:px-6">
-      <div className="flex justify-between items-center">
-        {/* Step 1: Service */}
-        <div className="flex flex-col items-center relative z-10">
+    <div className="w-full max-w-md mx-auto px-4 sm:px-0 mb-8">
+      <div className="relative">
+        {/* Progress line */}
+        <div className="absolute top-4 left-0 w-full h-0.5 bg-gray-800">
           <motion.div 
-            initial={false}
-            animate={{
-              backgroundColor: currentStep === 'service' 
-                ? '#C8A97E' 
-                : (currentStep === 'details' || currentStep === 'confirm') 
-                  ? '#2A2A2A' 
-                  : '#2A2A2A',
-              borderColor: (currentStep === 'details' || currentStep === 'confirm')
-                ? '#C8A97E'
-                : currentStep === 'service'
-                  ? 'transparent'
-                  : '#4B5563',
-              scale: currentStep === 'service' ? 1.05 : 1
-            }}
-            transition={{ duration: 0.3 }}
-            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center mb-2 sm:mb-3 border-2"
-          >
-            {currentStep === 'details' || currentStep === 'confirm' ? (
-              <Check className="w-5 h-5 sm:w-6 sm:h-6 text-[#C8A97E]" />
-            ) : (
-              <Music className="w-5 h-5 sm:w-6 sm:h-6 text-center" style={{ color: currentStep === 'service' ? '#000000' : '#FFFFFF' }} />
-            )}
-          </motion.div>
-          <motion.span 
-            initial={false}
-            animate={{
-              color: currentStep === 'service' 
-                ? '#C8A97E' 
-                : (currentStep === 'details' || currentStep === 'confirm')
-                  ? '#D1D5DB'
-                  : '#9CA3AF'
-            }}
-            transition={{ duration: 0.3 }}
-            className="text-sm sm:text-base font-medium whitespace-nowrap text-center"
-          >
-            {t('booking.dienst', 'Dienst')}
-          </motion.span>
-        </div>
-        
-        {/* Connector */}
-        <div className="flex-1 h-1 sm:h-1.5 mx-2 sm:mx-4 bg-gray-800 relative z-0 rounded-full overflow-hidden">
-          <motion.div 
-            className="h-full bg-[#C8A97E]"
+            className="absolute top-0 left-0 h-full bg-[#C8A97E]"
             initial={{ width: '0%' }}
-            animate={{ 
-              width: 
-                currentStep === 'service' ? '0%' : 
-                currentStep === 'details' ? '100%' : 
-                '100%'
-            }}
-            transition={{ duration: 0.5 }}
+            animate={{ width: `${(currentStep / (totalSteps - 1)) * 100}%` }}
+            transition={{ duration: 0.5, ease: 'easeInOut' }}
           />
         </div>
         
-        {/* Step 2: Details */}
-        <div className="flex flex-col items-center relative z-10">
+        {/* Steps */}
+        <div className="relative flex justify-between">
+          {steps.map((step, index) => (
+            <div key={step.id} className="flex flex-col items-center">
           <motion.div 
+                className={`w-8 h-8 rounded-full flex items-center justify-center relative z-10 ${
+                  index <= currentStep
+                    ? 'bg-[#C8A97E] text-black'
+                    : 'bg-[#1A1A1A] border border-gray-800 text-gray-400'
+                }`}
             initial={false}
             animate={{
-              backgroundColor: currentStep === 'details' 
-                ? '#C8A97E' 
-                : currentStep === 'confirm'
-                  ? '#2A2A2A' 
-                  : '#2A2A2A',
-              borderColor: currentStep === 'confirm'
-                ? '#C8A97E'
-                : currentStep === 'details'
-                  ? 'transparent'
-                  : '#4B5563',
-              scale: currentStep === 'details' ? 1.05 : 1
-            }}
-            transition={{ duration: 0.3 }}
-            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center mb-2 sm:mb-3 border-2"
-          >
-            {currentStep === 'confirm' ? (
-              <Check className="w-5 h-5 sm:w-6 sm:h-6 text-[#C8A97E]" />
+                  scale: index === currentStep ? 1.1 : 1,
+                  transition: { duration: 0.2 }
+                }}
+              >
+                {index < currentStep ? (
+                  <Check className="w-4 h-4" />
             ) : (
-              <Calendar className="w-5 h-5 sm:w-6 sm:h-6 text-center" style={{ color: currentStep === 'details' ? '#000000' : '#FFFFFF' }} />
+                  <span className="text-sm font-medium">{step.id + 1}</span>
             )}
           </motion.div>
-          <motion.span 
-            initial={false}
-            animate={{
-              color: currentStep === 'details' 
-                ? '#C8A97E' 
-                : currentStep === 'confirm'
-                  ? '#D1D5DB'
-                  : '#9CA3AF'
-            }}
-            transition={{ duration: 0.3 }}
-            className="text-sm sm:text-base font-medium whitespace-nowrap text-center"
+              <span
+                className={`mt-2 text-xs sm:text-sm font-medium ${
+                  index <= currentStep ? 'text-white' : 'text-gray-400'
+                }`}
           >
-            {t('booking.details', 'Details')}
-          </motion.span>
+                {step.label}
+              </span>
         </div>
-        
-        {/* Connector */}
-        <div className="flex-1 h-1 sm:h-1.5 mx-2 sm:mx-4 bg-gray-800 relative z-0 rounded-full overflow-hidden">
-          <motion.div 
-            className="h-full bg-[#C8A97E]"
-            initial={{ width: '0%' }}
-            animate={{ width: currentStep === 'confirm' ? '100%' : '0%' }}
-            transition={{ duration: 0.5 }}
-          />
-        </div>
-        
-        {/* Step 3: Confirmation */}
-        <div className="flex flex-col items-center relative z-10">
-          <motion.div 
-            initial={false}
-            animate={{
-              backgroundColor: currentStep === 'confirm' 
-                ? '#C8A97E' 
-                : '#2A2A2A',
-              borderColor: currentStep === 'confirm'
-                ? 'transparent'
-                : '#4B5563',
-              scale: currentStep === 'confirm' ? 1.05 : 1
-            }}
-            transition={{ duration: 0.3 }}
-            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center mb-2 sm:mb-3 border-2"
-          >
-            <FileText className="w-5 h-5 sm:w-6 sm:h-6 text-center" style={{ color: currentStep === 'confirm' ? '#000000' : '#FFFFFF' }} />
-          </motion.div>
-          <motion.span 
-            initial={false}
-            animate={{
-              color: currentStep === 'confirm' 
-                ? '#C8A97E' 
-                : '#9CA3AF'
-            }}
-            transition={{ duration: 0.3 }}
-            className="text-sm sm:text-base font-medium whitespace-nowrap text-center"
-          >
-            {t('booking.confirm', 'Bestätigen')}
-          </motion.span>
+          ))}
         </div>
       </div>
     </div>

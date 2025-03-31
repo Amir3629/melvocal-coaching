@@ -55,6 +55,28 @@ export default function LiveSingingForm({ formData, onChange }: LiveSingingFormP
     // ... existing code ...
   })
   
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Format the form data for email
+    const emailSubject = encodeURIComponent(`Booking Request: ${formData.eventType} Performance`);
+    const emailBody = encodeURIComponent(`
+Name: ${formData.name}
+Email: ${formData.email}
+Phone: ${formData.phone}
+Event Type: ${formData.eventType}
+Performance Type: ${formData.performanceType}
+Event Date: ${formData.eventDate}
+Guest Count: ${formData.guestCount}
+Music Preferences: ${formData.musicPreferences?.join(', ')}
+Jazz Standards: ${formData.jazzStandards}
+Additional Message: ${formData.message}
+    `);
+    
+    // Open default email client
+    window.location.href = `mailto:booking@melvocal.com?subject=${emailSubject}&body=${emailBody}`;
+  };
+  
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="space-y-4">

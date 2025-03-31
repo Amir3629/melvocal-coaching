@@ -1,65 +1,74 @@
 import { NextResponse } from 'next/server'
-import { getAvailableSlots, createBooking } from '@/app/lib/google-calendar'
-import { sendBookingConfirmationEmail } from '@/app/lib/email-service'
-import { createPayPalOrder } from '@/app/lib/payment-service'
+import { createBooking, isTimeSlotAvailable } from '@/lib/google-calendar'
+import { sendBookingConfirmation, sendAdminNotification } from '@/lib/email-service'
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url)
-  const dateStr = searchParams.get('date')
-
-  if (!dateStr) {
-    return NextResponse.json(
-      { error: 'Date parameter is required' },
-      { status: 400 }
-    )
-  }
-
-  const date = new Date(dateStr)
-  const slots = await getAvailableSlots(date)
-
-  return NextResponse.json({ slots })
-}
+// Remove dynamic flag for static export
+// export const dynamic = 'force-dynamic'
 
 export async function POST(request: Request) {
   try {
-    const bookingData = await request.json()
-    
+    const body = await request.json()
+    const {
+      startTime,
+      endTime,
+      customerName,
+      customerEmail,
+      serviceType,
+      additionalDetails,
+    } = body
+
     // Validate required fields
-    if (!bookingData.date || !bookingData.time || !bookingData.name || !bookingData.email) {
+    if (!startTime || !endTime || !customerName || !customerEmail || !serviceType) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
       )
     }
 
-    // Convert date string to Date object
-    bookingData.date = new Date(bookingData.date)
+    // Check if the time slot is available
+    const isAvailable = await isTimeSlotAvailable(startTime, endTime)
+    if (!isAvailable) {
+      return NextResponse.json(
+        { error: 'Selected time slot is no longer available' },
+        { status: 409 }
+      )
+    }
 
-    // Create PayPal order for deposit
-    const order = await createPayPalOrder()
-
-    // Create temporary booking in Google Calendar
-    const calendarEvent = await createBooking(bookingData)
-
-    // Send confirmation email with payment link
-    await sendBookingConfirmationEmail(
-      bookingData.email,
-      bookingData.name,
-      new Date(bookingData.date),
-      bookingData.time,
-      `${process.env.NEXT_PUBLIC_APP_URL}/payment/${order.id}`
+    // Create the booking in Google Calendar
+    const booking = await createBooking(
+      startTime,
+      endTime,
+      customerName,
+      customerEmail,
+      serviceType,
+      additionalDetails
     )
 
-    return NextResponse.json({
-      success: true,
-      message: 'Booking created successfully',
-      eventId: calendarEvent.id,
-      orderId: order.id,
-    })
+    // Send confirmation email to customer
+    await sendBookingConfirmation(
+      customerEmail,
+      customerName,
+      serviceType,
+      startTime,
+      endTime,
+      additionalDetails
+    )
+
+    // Send notification email to admin
+    await sendAdminNotification(
+      customerName,
+      customerEmail,
+      serviceType,
+      startTime,
+      endTime,
+      additionalDetails
+    )
+
+    return NextResponse.json({ success: true, booking })
   } catch (error) {
-    console.error('Error creating booking:', error)
+    console.error('Error processing booking:', error)
     return NextResponse.json(
-      { error: 'Failed to create booking' },
+      { error: 'Failed to process booking' },
       { status: 500 }
     )
   }

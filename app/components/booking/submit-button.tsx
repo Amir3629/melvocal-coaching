@@ -2,58 +2,37 @@
 
 import React from 'react'
 import { useTranslation } from 'react-i18next'
-import { ArrowRight, Check, Loader2 } from 'lucide-react'
 import { motion } from 'framer-motion'
+import { Loader2 } from 'lucide-react'
 
 interface SubmitButtonProps {
-  isLastStep?: boolean
-  isSubmitting?: boolean
   onClick: () => void
+  isSubmitting: boolean
   disabled?: boolean
 }
 
-export default function SubmitButton({
-  isLastStep = false,
-  isSubmitting = false,
-  onClick,
-  disabled = false
-}: SubmitButtonProps) {
+export default function SubmitButton({ onClick, isSubmitting, disabled }: SubmitButtonProps) {
   const { t } = useTranslation()
-  
+
   return (
     <motion.button
-      type="button"
       onClick={onClick}
-      disabled={disabled || isSubmitting}
-      className={`
-        py-2.5 px-5 sm:py-3 sm:px-6 font-medium rounded-lg transition-all flex items-center justify-center
-        ${isLastStep 
-          ? 'bg-[#C8A97E] text-black hover:bg-[#D4AF37] active:bg-[#B89665]' 
-          : 'bg-[#1A1A1A] text-white hover:bg-[#222] active:bg-[#282828] border border-gray-700'
-        }
-        ${disabled ? 'opacity-50 cursor-not-allowed' : ''}
-        shadow-sm hover:shadow focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#C8A97E] focus:ring-offset-[#121212]
-      `}
-      whileTap={{ scale: 0.98 }}
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3 }}
+      disabled={isSubmitting || disabled}
+      className={`relative px-6 py-2.5 text-sm sm:text-base text-white rounded-lg transition-all duration-200 ${
+        isSubmitting || disabled
+          ? 'bg-gray-800 cursor-not-allowed'
+          : 'bg-[#C8A97E] hover:bg-[#B69468] hover:shadow-lg hover:shadow-[#C8A97E]/20'
+      }`}
+      whileHover={!isSubmitting && !disabled ? { scale: 1.02 } : {}}
+      whileTap={!isSubmitting && !disabled ? { scale: 0.98 } : {}}
     >
       {isSubmitting ? (
-        <>
+        <div className="flex items-center justify-center">
           <Loader2 className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-spin" />
-          <span>{t('booking.processing', 'Verarbeitung')}</span>
-        </>
-      ) : isLastStep ? (
-        <>
-          <Check className="w-4 h-4 sm:w-5 sm:h-5 mr-2" />
-          <span>{t('booking.submitBooking', 'Buchung absenden')}</span>
-        </>
+          <span>{t('booking.submitting', 'Wird gesendet...')}</span>
+        </div>
       ) : (
-        <>
-          <span>{t('booking.nextStep', 'Weiter')}</span>
-          <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
-        </>
+        <span>{t('booking.submit', 'Anfrage senden')}</span>
       )}
     </motion.button>
   )

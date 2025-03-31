@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 
+// Force GitHub Pages mode for deployment
+process.env.GITHUB_PAGES = 'true';
+
 const isProduction = process.env.NODE_ENV === 'production';
 // Check for GitHub Pages deployment - default to false for Vercel
 const isGitHubPages = process.env.GITHUB_PAGES === 'true';
@@ -7,15 +10,14 @@ const basePath = isProduction && isGitHubPages ? '/melvocal-coaching' : '';
 
 const nextConfig = {
   reactStrictMode: true,
-  // Only apply basePath and assetPrefix for GitHub Pages
-  ...(isGitHubPages ? {
-    basePath: basePath,
-    assetPrefix: basePath,
-  } : {}),
-  // Only set output to 'export' when deploying to GitHub Pages
-  ...(isGitHubPages ? { output: 'export' } : {}),
+  // Configure paths for GitHub Pages
+  basePath: basePath,
+  assetPrefix: basePath,
+  // Configure static export
+  output: 'export',
+  // Disable image optimization for static export
   images: {
-    unoptimized: isGitHubPages, // Only unoptimize for GitHub Pages
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
@@ -30,41 +32,12 @@ const nextConfig = {
     ],
     domains: ['images.unsplash.com'],
   },
-  trailingSlash: isGitHubPages, // Only use trailing slash for GitHub Pages
-  webpack: (config, { dev, isServer }) => {
-    // Add webpack configuration for improved debugging
-    config.module.rules.push({
-      test: /\.(woff|woff2|eot|ttf|otf|svg)$/i,
-      type: 'asset/resource',
-    });
-
-    // Enhanced error handling in development
-    if (dev && !isServer) {
-      config.devtool = 'source-map';
-    }
-
-    return config;
-  },
-  publicRuntimeConfig: {
-    basePath: isProduction && isGitHubPages ? '/melvocal-coaching' : '',
-  },
-  // Exclude backup and temporary directories
-  experimental: {
-    outputFileTracingExcludes: {
-      '*': [
-        '**/backup-before-restore-*/**',
-        '**/meljazz-temp/**',
-        '**/backups/**',
-        '**/restore-temp/**',
-        '**/current-backup-*/**',
-        '**/clean_restore/**',
-      ],
-    },
-  },
   // Disable TypeScript checking during build
   typescript: {
     ignoreBuildErrors: true,
   },
+  // Configure trailing slash for better compatibility
+  trailingSlash: true,
   // Add better error handling
   onDemandEntries: {
     // period (in ms) where the server will keep pages in the buffer

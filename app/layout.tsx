@@ -50,19 +50,19 @@ export const metadata: Metadata = {
   description: "Professional vocal coaching and performance in Berlin",
   icons: {
     icon: [
-      { url: process.env.NODE_ENV === 'production' ? '/vocal-coaching/favicon.ico' : '/favicon.ico' },
-      { url: process.env.NODE_ENV === 'production' ? '/vocal-coaching/images/logo/ml-logo.PNG' : '/images/logo/ml-logo.PNG', type: 'image/png', sizes: '64x64' }
+      { url: process.env.NODE_ENV === 'production' ? '/melvocal-coaching/favicon.ico' : '/favicon.ico' },
+      { url: process.env.NODE_ENV === 'production' ? '/melvocal-coaching/images/logo/ml-logo.PNG' : '/images/logo/ml-logo.PNG', type: 'image/png', sizes: '64x64' }
     ],
-    shortcut: { url: process.env.NODE_ENV === 'production' ? '/vocal-coaching/images/logo/ml-logo.PNG' : '/images/logo/ml-logo.PNG', sizes: '196x196' },
-    apple: { url: process.env.NODE_ENV === 'production' ? '/vocal-coaching/images/logo/ml-logo.PNG' : '/images/logo/ml-logo.PNG', sizes: '180x180' },
+    shortcut: { url: process.env.NODE_ENV === 'production' ? '/melvocal-coaching/images/logo/ml-logo.PNG' : '/images/logo/ml-logo.PNG', sizes: '196x196' },
+    apple: { url: process.env.NODE_ENV === 'production' ? '/melvocal-coaching/images/logo/ml-logo.PNG' : '/images/logo/ml-logo.PNG', sizes: '180x180' },
     other: [
       {
-        url: process.env.NODE_ENV === 'production' ? '/vocal-coaching/favicon/site.webmanifest' : '/favicon/site.webmanifest',
+        url: process.env.NODE_ENV === 'production' ? '/melvocal-coaching/site.webmanifest' : '/site.webmanifest',
         rel: 'manifest'
       }
     ]
   },
-  manifest: process.env.NODE_ENV === 'production' ? '/vocal-coaching/favicon/site.webmanifest' : '/favicon/site.webmanifest',
+  manifest: process.env.NODE_ENV === 'production' ? '/melvocal-coaching/site.webmanifest' : '/site.webmanifest',
 }
 
 export default function RootLayout({
@@ -75,15 +75,16 @@ export default function RootLayout({
       <head>
         <link 
           rel="icon" 
-          href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/images/logo/ml-logo.PNG' : '/images/logo/ml-logo.PNG'} 
+          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/images/logo/ml-logo.PNG' : '/images/logo/ml-logo.PNG'} 
           sizes="64x64" 
           type="image/png" 
         />
         <link 
           rel="apple-touch-icon" 
-          href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/images/logo/ml-logo.PNG' : '/images/logo/ml-logo.PNG'} 
+          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/images/logo/ml-logo.PNG' : '/images/logo/ml-logo.PNG'} 
           sizes="180x180" 
         />
+        <link rel="manifest" href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/site.webmanifest' : '/site.webmanifest'} />
         <link 
           rel="stylesheet" 
           href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/css/blackbar-fix.css' : '/css/blackbar-fix.css'} 
@@ -116,8 +117,12 @@ export default function RootLayout({
           rel="stylesheet" 
           href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/css/negative-margin-fix.css' : '/css/negative-margin-fix.css'} 
         />
+        <link 
+          rel="stylesheet" 
+          href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/css/mobile-booking-fixes.css' : '/css/mobile-booking-fixes.css'} 
+        />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, viewport-fit=cover" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="theme-color" content="#000000" />
         <style>
@@ -168,10 +173,24 @@ export default function RootLayout({
         <script src={process.env.NODE_ENV === 'production' ? '/vocal-coaching/js/ios-viewport-fix.js' : '/js/ios-viewport-fix.js'}></script>
         <script src={process.env.NODE_ENV === 'production' ? '/vocal-coaching/js/dom-observer-fix.js' : '/js/dom-observer-fix.js'} defer></script>
         <script src={process.env.NODE_ENV === 'production' ? '/vocal-coaching/js/fix-ios-viewport.js' : '/js/fix-ios-viewport.js'}></script>
+        <script src={process.env.NODE_ENV === 'production' ? '/vocal-coaching/js/emoji-fix.js' : '/js/emoji-fix.js'}></script>
         <script src={process.env.NODE_ENV === 'production' ? '/vocal-coaching/js/ios-fix.js' : '/js/ios-fix.js'}></script>
         <script src={process.env.NODE_ENV === 'production' ? '/vocal-coaching/js/direct-fix.js' : '/js/direct-fix.js'}></script>
         <script dangerouslySetInnerHTML={{
           __html: `
+            // Suppress host validation errors
+            window.addEventListener('error', function(e) {
+              if (e.message && (
+                e.message.includes('Host validation failed') ||
+                e.message.includes('Host is not supported') ||
+                e.message.includes('Host is not valid')
+              )) {
+                e.preventDefault();
+                e.stopPropagation();
+                return true;
+              }
+            }, true);
+
             // Define AIChat if it's not already defined
             if (typeof window !== 'undefined' && !window.AIChat) {
               window.AIChat = {

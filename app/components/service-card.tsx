@@ -41,7 +41,7 @@ export default function ServiceCard({
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768)
-    }
+  }
     checkMobile()
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
@@ -102,7 +102,7 @@ export default function ServiceCard({
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className="object-cover opacity-40"
-              style={{ 
+              style={{
                 objectFit: 'cover', 
                 objectPosition: 'center',
                 transform: isExpanded ? 'scale(1.05)' : 'scale(1)',
@@ -223,9 +223,9 @@ export default function ServiceCard({
 
               {link && (
                 <div className="mt-2.5 text-center">
-                  <a
-                    href={link}
-                    target="_blank"
+                  <a 
+                    href={link} 
+                    target="_blank" 
                     rel="noopener noreferrer"
                     className="inline-block px-3.5 py-1 bg-[#C8A97E] text-black rounded-full
                       text-xs font-medium transition-transform hover:scale-105 active:scale-95"
