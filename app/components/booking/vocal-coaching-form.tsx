@@ -11,7 +11,7 @@ interface FormData {
   phone: string;
   message: string;
   sessionType?: '1:1' | 'group' | 'online';
-  skillLevel?: 'beginner' | 'intermediate' | 'advanced';
+  skillLevel?: 'einsteigerin' | 'aufstrebende' | 'virtuosin';
   focusArea?: string[];
   preferredDate?: string;
   preferredTime?: string;
@@ -173,38 +173,38 @@ export default function VocalCoachingForm({ formData, onChange }: VocalCoachingF
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <button
               type="button"
-              onClick={() => onChange({ skillLevel: 'beginner' })}
+              onClick={() => onChange({ skillLevel: 'einsteigerin' })}
               className={`px-4 py-2 rounded-lg border ${
-                formData.skillLevel === 'beginner'
+                formData.skillLevel === 'einsteigerin'
                   ? 'bg-[#C8A97E]/20 border-[#C8A97E] text-white'
                   : 'border-gray-700 text-gray-400 hover:border-gray-600'
               } transition-colors text-sm`}
             >
-              {t('booking.beginner', 'Anfänger')}
+              {t('booking.beginner', 'Einsteigerin')}
             </button>
             
             <button
               type="button"
-              onClick={() => onChange({ skillLevel: 'intermediate' })}
+              onClick={() => onChange({ skillLevel: 'aufstrebende' })}
               className={`px-4 py-2 rounded-lg border ${
-                formData.skillLevel === 'intermediate'
+                formData.skillLevel === 'aufstrebende'
                   ? 'bg-[#C8A97E]/20 border-[#C8A97E] text-white'
                   : 'border-gray-700 text-gray-400 hover:border-gray-600'
               } transition-colors text-sm`}
             >
-              {t('booking.intermediate', 'Fortgeschritten')}
+              {t('booking.intermediate', 'Aufstrebende')}
             </button>
             
             <button
               type="button"
-              onClick={() => onChange({ skillLevel: 'advanced' })}
+              onClick={() => onChange({ skillLevel: 'virtuosin' })}
               className={`px-4 py-2 rounded-lg border ${
-                formData.skillLevel === 'advanced'
+                formData.skillLevel === 'virtuosin'
                   ? 'bg-[#C8A97E]/20 border-[#C8A97E] text-white'
                   : 'border-gray-700 text-gray-400 hover:border-gray-600'
               } transition-colors text-sm`}
             >
-              {t('booking.advanced', 'Profi')}
+              {t('booking.advanced', 'Virtuosin')}
             </button>
           </div>
         </div>

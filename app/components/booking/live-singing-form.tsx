@@ -11,7 +11,7 @@ interface FormData {
   email: string;
   phone: string;
   message: string;
-  eventType?: 'wedding' | 'corporate' | 'private' | 'other';
+  eventType?: 'vernissage' | 'jazz-festival' | 'private';
   eventDate?: string;
   guestCount?: string;
   musicPreferences?: string[];
@@ -122,29 +122,29 @@ export default function LiveSingingForm({ formData, onChange }: LiveSingingFormP
           <label className="block text-sm font-medium text-gray-300 mb-2">
             {t('booking.eventType', 'Art der Veranstaltung')} *
           </label>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <button
               type="button"
-              onClick={() => onChange({ eventType: 'wedding' })}
+              onClick={() => onChange({ eventType: 'vernissage' })}
               className={`px-4 py-2 rounded-lg border ${
-                formData.eventType === 'wedding'
+                formData.eventType === 'vernissage'
                   ? 'bg-[#C8A97E]/20 border-[#C8A97E] text-white'
                   : 'border-gray-700 text-gray-400 hover:border-gray-600'
               } transition-colors text-sm`}
             >
-              {t('booking.wedding', 'Hochzeit')}
+              {t('booking.vernissage', 'Vernissage')}
             </button>
             
             <button
               type="button"
-              onClick={() => onChange({ eventType: 'corporate' })}
+              onClick={() => onChange({ eventType: 'jazz-festival' })}
               className={`px-4 py-2 rounded-lg border ${
-                formData.eventType === 'corporate'
+                formData.eventType === 'jazz-festival'
                   ? 'bg-[#C8A97E]/20 border-[#C8A97E] text-white'
                   : 'border-gray-700 text-gray-400 hover:border-gray-600'
               } transition-colors text-sm`}
             >
-              {t('booking.corporate', 'Firmenevent')}
+              {t('booking.jazzFestival', 'Jazz Festival')}
             </button>
             
             <button
@@ -157,18 +157,6 @@ export default function LiveSingingForm({ formData, onChange }: LiveSingingFormP
               } transition-colors text-sm`}
             >
               {t('booking.private', 'Private Feier')}
-            </button>
-            
-            <button
-              type="button"
-              onClick={() => onChange({ eventType: 'other' })}
-              className={`px-4 py-2 rounded-lg border ${
-                formData.eventType === 'other'
-                  ? 'bg-[#C8A97E]/20 border-[#C8A97E] text-white'
-                  : 'border-gray-700 text-gray-400 hover:border-gray-600'
-              } transition-colors text-sm`}
-            >
-              {t('booking.other', 'Sonstiges')}
             </button>
           </div>
         </div>
