@@ -11,6 +11,8 @@ import VocalCoachingForm from './booking/vocal-coaching-form'
 import WorkshopForm from './booking/workshop-form-new'
 import ConfirmationStep from './booking/confirmation-step'
 import { X, ArrowLeft, ArrowRight, Check, Mic, Music, Calendar } from 'lucide-react'
+import ErrorBoundary from './error-boundary'
+import { ensureString } from '@/lib/formatters'
 
 // Service types
 type ServiceType = 'gesangsunterricht' | 'vocal-coaching' | 'professioneller-gesang' | null
@@ -187,24 +189,30 @@ export default function BookingForm({ isOpen: externalIsOpen, onClose }: Booking
     switch(serviceType) {
       case 'professioneller-gesang':
         return (
-          <LiveSingingForm 
-            formData={formData} 
-            onChange={handleFormChange} 
-          />
+          <ErrorBoundary componentName="LiveSingingForm">
+            <LiveSingingForm 
+              formData={formData} 
+              onChange={handleFormChange} 
+            />
+          </ErrorBoundary>
         )
       case 'vocal-coaching':
         return (
-          <VocalCoachingForm 
-            formData={formData} 
-            onChange={handleFormChange} 
-          />
+          <ErrorBoundary componentName="VocalCoachingForm">
+            <VocalCoachingForm 
+              formData={formData} 
+              onChange={handleFormChange} 
+            />
+          </ErrorBoundary>
         )
       case 'gesangsunterricht':
         return (
-          <WorkshopForm 
-            formData={formData} 
-            onChange={handleFormChange} 
-          />
+          <ErrorBoundary componentName="WorkshopForm">
+            <WorkshopForm 
+              formData={formData} 
+              onChange={handleFormChange} 
+            />
+          </ErrorBoundary>
         )
       default:
         return null
@@ -212,6 +220,36 @@ export default function BookingForm({ isOpen: externalIsOpen, onClose }: Booking
   }
   
   return (
+    <ErrorBoundary componentName="BookingForm">
+      <AnimatePresence>
+        {isOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              className="fixed inset-0 bg-black/60 backdrop-blur-[2px] z-[100]"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeBookingForm}
+            />
+
+            {/* Modal Container */}
+            <div className="fixed inset-0 overflow-y-auto z-[101]">
+              <div className="flex min-h-full items-center justify-center p-2 sm:p-4">
+                <motion.div
+                  className="relative w-full max-w-lg bg-[#0A0A0A] rounded-xl border border-[#C8A97E]/20 shadow-2xl overflow-hidden"
+                  initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                    scale: 1
+                  }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                >
+                  <div className="p-3 sm:p-5 relative overflow-auto" style={{ maxHeight: 'calc(100vh - 40px)' }}>
+                    {/* Close button */}
+                    <button 
+                      onClick={closeBookingForm}
     <AnimatePresence>
       {isOpen && (
         <>
