@@ -10,6 +10,14 @@ import RouterDebug from './router-debug'
 import VersionMarker from './version-marker'
 import DeploymentChecks from './deployment-checks'
 import DiagnosticController from './diagnostic-controller'
+import RouterFallback from './router-fallback'
+import dynamic from 'next/dynamic'
+
+// Import GitHub Pages Entry with dynamic loading to prevent SSR issues
+const GitHubPagesEntry = dynamic(
+  () => import('../github-pages-entry'),
+  { ssr: false }
+);
 
 export default function RootClient({
   children,
@@ -20,21 +28,24 @@ export default function RootClient({
 }) {
   return (
     <ErrorBoundary componentName="RootClient">
-      <html className={className}>
-        <head />
-        <body className={className}>
-          <ClientProvider>
-            {children}
-            <Footer />
-            <CookieConsent />
-            <DebugUI />
-            <RouterDebug />
-            <VersionMarker />
-            <DeploymentChecks />
-            <DiagnosticController />
-          </ClientProvider>
-        </body>
-      </html>
+      <div className={className}>
+        {/* Load GitHub Pages entry before everything else */}
+        <GitHubPagesEntry />
+        
+        {/* Router fallback for error recovery */}
+        <RouterFallback />
+        
+        <ClientProvider>
+          {children}
+          <Footer />
+          <CookieConsent />
+          <DebugUI />
+          <RouterDebug />
+          <VersionMarker />
+          <DeploymentChecks />
+          <DiagnosticController />
+        </ClientProvider>
+      </div>
     </ErrorBoundary>
   )
 } 

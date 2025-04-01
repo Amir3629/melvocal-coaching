@@ -4,67 +4,91 @@ import React, { Component, ErrorInfo, ReactNode } from 'react';
 
 interface ErrorBoundaryProps {
   children: ReactNode;
+  componentName?: string;
   fallback?: ReactNode | ((error: Error, reset: () => void) => ReactNode);
-  context?: string;
 }
 
 interface ErrorBoundaryState {
   hasError: boolean;
-  error?: Error;
+  error: Error | null;
 }
 
 /**
- * Error boundary component to catch and handle React errors
- * Prevents the entire application from crashing due to errors in child components
+ * Error boundary component that catches errors in its child component tree
  */
-export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
-    this.state = { hasError: false };
+    this.state = {
+      hasError: false,
+      error: null
+    };
   }
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
-    return { hasError: true, error };
+    return {
+      hasError: true,
+      error
+    };
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    console.error(`Error in ${this.props.context || 'component'}:`, error);
+    const { componentName } = this.props;
+    
+    // Log the error to console
+    console.error(`Error in ${componentName || 'component'}:`, error);
     console.error('Component stack:', errorInfo.componentStack);
     
-    // You can also log to an error reporting service like Sentry here
-    // if (typeof window !== 'undefined' && window.Sentry) {
-    //   window.Sentry.captureException(error);
-    // }
+    // Save to localStorage for debugging
+    try {
+      if (typeof localStorage !== 'undefined') {
+        const errors = JSON.parse(localStorage.getItem('melvocal-errors') || '[]');
+        errors.push({
+          timestamp: new Date().toISOString(),
+          component: componentName || 'unknown',
+          message: error.message,
+          stack: error.stack,
+          componentStack: errorInfo.componentStack
+        });
+        localStorage.setItem('melvocal-errors', JSON.stringify(errors));
+      }
+    } catch (e) {
+      // Silently fail
+    }
   }
 
   handleReset = (): void => {
-    this.setState({ hasError: false, error: undefined });
+    this.setState({ hasError: false, error: null });
   };
 
   render(): ReactNode {
     if (this.state.hasError) {
-      if (typeof this.props.fallback === 'function') {
-        return this.props.fallback(this.state.error!, this.handleReset);
+      // Use custom fallback if provided
+      if (typeof this.props.fallback === 'function' && this.state.error) {
+        return this.props.fallback(this.state.error, this.handleReset);
       }
       
       if (this.props.fallback) {
         return this.props.fallback;
       }
 
+      // Default fallback UI
       return (
-        <div className="error-boundary-fallback p-4 rounded-md bg-red-50 border border-red-100">
-          <h2 className="text-lg font-semibold text-red-800">Something went wrong</h2>
+        <div className="error-boundary p-4 bg-black bg-opacity-90 text-white rounded-md shadow-md">
+          <h2 className="text-xl font-semibold mb-2">Something went wrong</h2>
+          <p className="mb-4">
+            {this.props.componentName 
+              ? `Error in ${this.props.componentName} component`
+              : 'There was an error in this component'}
+          </p>
           {this.state.error && (
-            <details className="mt-2">
-              <summary className="cursor-pointer text-red-600">Error details</summary>
-              <p className="mt-1 text-sm text-red-500 whitespace-pre-wrap font-mono">
-                {this.state.error.toString()}
-              </p>
-            </details>
+            <p className="text-red-400 text-sm font-mono">
+              {this.state.error.message}
+            </p>
           )}
           <button 
             onClick={this.handleReset}
-            className="mt-3 px-3 py-1 bg-red-100 hover:bg-red-200 text-red-800 text-sm rounded transition-colors"
+            className="mt-3 px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded transition-colors"
           >
             Try again
           </button>
@@ -74,6 +98,4 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 
     return this.props.children;
   }
-}
-
-export default ErrorBoundary; 
+} 

@@ -91,44 +91,48 @@ export default function RootLayout({
         <link rel="manifest" href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/site.webmanifest' : '/site.webmanifest'} />
         <link 
           rel="stylesheet" 
-          href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/css/blackbar-fix.css' : '/css/blackbar-fix.css'} 
+          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/css/blackbar-fix.css' : '/css/blackbar-fix.css'} 
         />
         <link 
           rel="stylesheet" 
-          href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/css/mobile-fixes.css' : '/css/mobile-fixes.css'} 
+          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/css/mobile-fixes.css' : '/css/mobile-fixes.css'} 
         />
         <link 
           rel="stylesheet" 
-          href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/css/ios-fix.css' : '/css/ios-fix.css'} 
+          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/css/ios-fix.css' : '/css/ios-fix.css'} 
         />
         <link 
           rel="stylesheet" 
-          href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/css/critical-fix.css' : '/css/critical-fix.css'} 
+          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/css/critical-fix.css' : '/css/critical-fix.css'} 
         />
         <link 
           rel="stylesheet" 
-          href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/css/last-resort.css' : '/css/last-resort.css'} 
+          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/css/last-resort.css' : '/css/last-resort.css'} 
         />
         <link 
           rel="stylesheet" 
-          href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/css/fix-container.css' : '/css/fix-container.css'} 
+          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/css/fix-container.css' : '/css/fix-container.css'} 
         />
         <link 
           rel="stylesheet" 
-          href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/css/extend-beyond.css' : '/css/extend-beyond.css'} 
+          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/css/extend-beyond.css' : '/css/extend-beyond.css'} 
         />
         <link 
           rel="stylesheet" 
-          href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/css/negative-margin-fix.css' : '/css/negative-margin-fix.css'} 
+          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/css/negative-margin-fix.css' : '/css/negative-margin-fix.css'} 
         />
         <link 
           rel="stylesheet" 
-          href={process.env.NODE_ENV === 'production' ? '/vocal-coaching/css/mobile-booking-fixes.css' : '/css/mobile-booking-fixes.css'} 
+          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/css/mobile-booking-fixes.css' : '/css/mobile-booking-fixes.css'} 
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, viewport-fit=cover" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <meta name="theme-color" content="#000000" />
+        
+        {/* Emergency fallback script to handle critical failures */}
+        <script src={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/js/emergency-fallback.js' : '/js/emergency-fallback.js'} async></script>
+        
         <style>
           {`
             html, body {
@@ -174,14 +178,25 @@ export default function RootLayout({
             })();
           `
         }} />
-        <script src={process.env.NODE_ENV === 'production' ? '/vocal-coaching/js/ios-viewport-fix.js' : '/js/ios-viewport-fix.js'}></script>
-        <script src={process.env.NODE_ENV === 'production' ? '/vocal-coaching/js/dom-observer-fix.js' : '/js/dom-observer-fix.js'} defer></script>
-        <script src={process.env.NODE_ENV === 'production' ? '/vocal-coaching/js/fix-ios-viewport.js' : '/js/fix-ios-viewport.js'}></script>
-        <script src={process.env.NODE_ENV === 'production' ? '/vocal-coaching/js/emoji-fix.js' : '/js/emoji-fix.js'}></script>
-        <script src={process.env.NODE_ENV === 'production' ? '/vocal-coaching/js/ios-fix.js' : '/js/ios-fix.js'}></script>
-        <script src={process.env.NODE_ENV === 'production' ? '/vocal-coaching/js/direct-fix.js' : '/js/direct-fix.js'}></script>
+        <script src={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/js/ios-viewport-fix.js' : '/js/ios-viewport-fix.js'}></script>
+        <script src={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/js/dom-observer-fix.js' : '/js/dom-observer-fix.js'} defer></script>
+        <script src={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/js/fix-ios-viewport.js' : '/js/fix-ios-viewport.js'}></script>
+        <script src={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/js/emoji-fix.js' : '/js/emoji-fix.js'}></script>
+        <script src={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/js/ios-fix.js' : '/js/ios-fix.js'}></script>
+        <script src={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/js/direct-fix.js' : '/js/direct-fix.js'}></script>
         <script dangerouslySetInnerHTML={{
           __html: `
+            // Mark application as initialized when React has hydrated
+            window.addEventListener('DOMContentLoaded', function() {
+              // We'll update this flag once React's hydration is complete
+              if (typeof window.markAppAsInitialized === 'function') {
+                // Wait for hydration to complete
+                setTimeout(function() {
+                  window.markAppAsInitialized();
+                }, 1000);
+              }
+            });
+
             // Suppress host validation errors
             window.addEventListener('error', function(e) {
               if (e.message && (
