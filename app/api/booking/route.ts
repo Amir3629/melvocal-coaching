@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { ensureString } from '@/lib/formatters'
 // Only import these conditionally as they use Node.js specific modules
 // that are not available in Edge runtime
 let createBooking: any, isTimeSlotAvailable: any, sendBookingConfirmation: any, sendAdminNotification: any
@@ -28,8 +29,17 @@ export async function POST(request: Request) {
     }
 
     // Ensure startTime and endTime are properly formatted as strings
-    const startTimeStr = typeof startTime === 'string' ? startTime : new Date(startTime).toISOString();
-    const endTimeStr = typeof endTime === 'string' ? endTime : new Date(endTime).toISOString();
+    const startTimeStr = ensureString(typeof startTime === 'string' 
+      ? startTime 
+      : startTime instanceof Date 
+        ? startTime.toISOString() 
+        : new Date(startTime).toISOString());
+    
+    const endTimeStr = ensureString(typeof endTime === 'string' 
+      ? endTime 
+      : endTime instanceof Date 
+        ? endTime.toISOString() 
+        : new Date(endTime).toISOString());
 
     // For static export (GitHub Pages), return a mock successful response
     // Edge runtime or production environment - always return mock data
@@ -39,9 +49,9 @@ export async function POST(request: Request) {
         id: 'mock-booking-id',
         startTime: startTimeStr,
         endTime: endTimeStr,
-        customerName,
-        customerEmail,
-        serviceType,
+        customerName: ensureString(customerName),
+        customerEmail: ensureString(customerEmail),
+        serviceType: ensureString(serviceType),
         status: 'confirmed'
       },
       message: 'This is a mock response for static deployment. In production, this would create a real booking.'

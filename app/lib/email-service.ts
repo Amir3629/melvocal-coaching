@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { ensureString } from './formatters';
 
 interface EmailData {
   to: string;
@@ -24,20 +25,29 @@ export async function sendBookingConfirmationEmail(
   time: string,
   paymentLink: string
 ) {
+  // Safely format the date string
+  const safeDate = ensureString(date instanceof Date 
+    ? date.toLocaleDateString('de-DE') 
+    : typeof date === 'string' ? date : 'Date not available');
+  
+  const safeName = ensureString(name);
+  const safeTime = ensureString(time);
+  const safePaymentLink = ensureString(paymentLink);
+  
   const emailData: EmailData = {
-    to: email,
+    to: ensureString(email),
     subject: 'Buchungsbestätigung - Melanie Wainwright Vocal Coaching',
     text: `
-      Hallo ${name},
+      Hallo ${safeName},
 
       vielen Dank für deine Buchung bei Melanie Wainwright Vocal Coaching!
 
       Dein Termin:
-      Datum: ${date.toLocaleDateString('de-DE')}
-      Uhrzeit: ${time}
+      Datum: ${safeDate}
+      Uhrzeit: ${safeTime}
 
       Um deinen Termin zu bestätigen, bitte zahle die Anzahlung von 30€ über folgenden Link:
-      ${paymentLink}
+      ${safePaymentLink}
 
       Die restliche Zahlung erfolgt bar oder per Überweisung vor Ort.
 
@@ -54,17 +64,17 @@ export async function sendBookingConfirmationEmail(
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #C8A97E;">Buchungsbestätigung</h2>
-        <p>Hallo ${name},</p>
+        <p>Hallo ${safeName},</p>
         <p>vielen Dank für deine Buchung bei Melanie Wainwright Vocal Coaching!</p>
         
         <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
           <h3 style="color: #333;">Dein Termin:</h3>
-          <p>Datum: ${date.toLocaleDateString('de-DE')}<br>
-          Uhrzeit: ${time}</p>
+          <p>Datum: ${safeDate}<br>
+          Uhrzeit: ${safeTime}</p>
         </div>
 
         <p>Um deinen Termin zu bestätigen, bitte zahle die Anzahlung von 30€ über folgenden Link:</p>
-        <a href="${paymentLink}" style="display: inline-block; background: #C8A97E; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; margin: 20px 0;">
+        <a href="${safePaymentLink}" style="display: inline-block; background: #C8A97E; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; margin: 20px 0;">
           Jetzt Anzahlung leisten
         </a>
 
@@ -98,17 +108,25 @@ export async function sendPaymentConfirmationEmail(
   date: Date,
   time: string
 ) {
+  // Safely format the date string
+  const safeDate = ensureString(date instanceof Date 
+    ? date.toLocaleDateString('de-DE') 
+    : typeof date === 'string' ? date : 'Date not available');
+  
+  const safeName = ensureString(name);
+  const safeTime = ensureString(time);
+  
   const emailData: EmailData = {
-    to: email,
+    to: ensureString(email),
     subject: 'Zahlungsbestätigung - Melanie Wainwright Vocal Coaching',
     text: `
-      Hallo ${name},
+      Hallo ${safeName},
 
       vielen Dank für deine Anzahlung! Dein Termin ist nun verbindlich bestätigt.
 
       Dein Termin:
-      Datum: ${date.toLocaleDateString('de-DE')}
-      Uhrzeit: ${time}
+      Datum: ${safeDate}
+      Uhrzeit: ${safeTime}
 
       Die restliche Zahlung erfolgt bar oder per Überweisung vor Ort.
 
@@ -120,13 +138,13 @@ export async function sendPaymentConfirmationEmail(
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
         <h2 style="color: #C8A97E;">Zahlungsbestätigung</h2>
-        <p>Hallo ${name},</p>
+        <p>Hallo ${safeName},</p>
         <p>vielen Dank für deine Anzahlung! Dein Termin ist nun verbindlich bestätigt.</p>
         
         <div style="background: #f5f5f5; padding: 20px; border-radius: 8px; margin: 20px 0;">
           <h3 style="color: #333;">Dein Termin:</h3>
-          <p>Datum: ${date.toLocaleDateString('de-DE')}<br>
-          Uhrzeit: ${time}</p>
+          <p>Datum: ${safeDate}<br>
+          Uhrzeit: ${safeTime}</p>
         </div>
 
         <p>Die restliche Zahlung erfolgt bar oder per Überweisung vor Ort.</p>
