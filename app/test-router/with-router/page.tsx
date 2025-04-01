@@ -3,10 +3,10 @@
 import React from 'react';
 import { useRouter, usePathname, useParams, useSearchParams } from 'next/navigation';
 import ErrorBoundary from '../../components/error-boundary';
-import { useDebug } from '@/hooks/use-debug';
-import { useRouterDebug } from '@/hooks/use-router-debug';
-import { ensureString } from '@/lib/formatters';
-import { createSafeParams, createSafeSearchParams } from '@/lib/router-safety';
+import { useDebug } from '../../../hooks/use-debug';
+import { useRouterDebug } from '../../../hooks/use-router-debug';
+import { ensureString } from '../../../lib/formatters';
+import { createSafeParams, createSafeSearchParams } from '../../../lib/router-safety';
 
 /**
  * Test page that explicitly uses router objects

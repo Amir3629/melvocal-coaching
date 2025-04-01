@@ -15,13 +15,13 @@ export default function VersionMarker() {
       data-version="v1.4.0-error130-fix"
       data-build-time={new Date().toISOString()}
     >
-      <!-- 
+      {/* 
         React Error #130 Fix Deployment Verification
         - Added ensureString for type safety
         - ErrorBoundary components
         - SafeText and DateDisplay components
         - Router debugging tools
-      -->
+      */}
     </div>
   );
 } 
