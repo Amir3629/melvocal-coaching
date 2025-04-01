@@ -1,8 +1,10 @@
 import PaymentForm from "./payment-form"
 
-// This generates the static paths at build time
+// This function tells Next.js which specific dynamic routes to generate at build time
 export function generateStaticParams() {
-  return [{ orderId: "DEMO" }]
+  return [
+    { orderId: 'DEMO' }
+  ]
 }
 
 export default function PaymentPage({ params }: { params: { orderId: string } }) {
