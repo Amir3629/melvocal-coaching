@@ -1,73 +1,70 @@
 "use client";
 
-import React, { useEffect } from 'react';
-import { usePathname, useRouter, useParams, useSearchParams } from 'next/navigation';
-import { ensureString } from '@/lib/formatters';
+import React, { useEffect, useState } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useDebug } from '@/hooks/use-debug';
+import { isRouterObject, warnIfRouterObject } from '@/lib/router-safety';
 
 /**
- * Router debug component that monitors router-related errors
- * Designed to catch instances where router objects might be directly rendered
+ * Router debug component
+ * Monitors router usage and logs potential issues
  */
 export default function RouterDebug() {
-  const router = useRouter();
-  const pathname = usePathname();
-  const params = useParams();
-  const searchParams = useSearchParams();
   const { isDebugMode } = useDebug();
-
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [hasRouterIssue, setHasRouterIssue] = useState(false);
+  
+  // Monitor router changes for debugging
   useEffect(() => {
     if (!isDebugMode) return;
-
-    // Log router information for debugging
-    console.log('[RouterDebug] Router state:', {
-      pathname: ensureString(pathname),
-      params: params ? JSON.stringify(params) : null,
-      searchParams: searchParams ? Object.fromEntries(searchParams.entries()) : null
+    
+    console.log('[RouterDebug] Route changed:', {
+      pathname,
+      searchParams: Object.fromEntries(searchParams?.entries() || [])
     });
-
-    // Add a global error handler to catch router errors
-    const originalErrorFn = console.error;
-    console.error = (...args) => {
-      const errorMsg = args[0]?.toString() || '';
-      
-      // Check specifically for Error #130 and log detailed debugging info
-      if (errorMsg.includes('Minified React error #130') || 
-          errorMsg.includes('Objects are not valid as a React child')) {
-        console.warn('[RouterDebug] DETECTED REACT ERROR #130');
-        console.warn('This error often occurs when an object is used where only a primitive value is allowed');
-        console.warn('Current path:', ensureString(pathname));
-        console.warn('Params:', params ? JSON.stringify(params) : null);
-        console.warn('Current component stack:', new Error().stack);
+    
+    // Check for router-related issues in window.__NEXT_DATA__
+    const checkForRouterIssues = () => {
+      try {
+        // Look for Next.js router data in the global object
+        const nextData = (window as any).__NEXT_DATA__;
+        if (!nextData) return;
+        
+        // Check for any props that might contain router objects directly
+        const props = nextData.props?.pageProps;
+        if (props) {
+          Object.entries(props).forEach(([key, value]) => {
+            if (isRouterObject(value)) {
+              console.warn(
+                `[RouterDebug] WARNING: Found router object in pageProps.${key}. ` +
+                `This may cause React Error #130 if rendered directly.`
+              );
+              setHasRouterIssue(true);
+            }
+          });
+        }
+      } catch (err) {
+        console.error('[RouterDebug] Error checking for router issues:', err);
       }
-      
-      // Check specifically for router errors
-      if (errorMsg.includes('isNextRouterError') || 
-          errorMsg.includes('next/router')) {
-        console.warn('[RouterDebug] DETECTED NEXT.JS ROUTER ERROR');
-        console.warn('Router state:', {
-          pathname: ensureString(pathname),
-          params: params ? JSON.stringify(params) : null,
-        });
-      }
-      
-      // Call the original console.error function
-      originalErrorFn.apply(console, args);
     };
     
-    return () => {
-      // Restore original console.error when component unmounts
-      console.error = originalErrorFn;
-    };
-  }, [pathname, params, searchParams, isDebugMode]);
+    // Run check after page loads
+    const timer = setTimeout(checkForRouterIssues, 500);
+    return () => clearTimeout(timer);
+  }, [isDebugMode, pathname, searchParams]);
   
-  // Hidden dev-mode tag to verify deployment version
-  return isDebugMode ? (
+  // Only render in debug mode and only if there's an issue
+  if (!isDebugMode || !hasRouterIssue) return null;
+  
+  return (
     <div 
-      data-testid="router-debug" 
-      hidden 
-      suppressHydrationWarning
-      data-version="v1.4.0-error130-fix"
-    />
-  ) : null;
+      className="fixed top-20 right-0 m-4 p-3 bg-red-900/90 text-white rounded shadow-lg z-[9999] text-xs font-mono"
+      data-testid="router-debug"
+    >
+      <h3 className="font-bold mb-1">Router Issue Detected</h3>
+      <p>Potential React Error #130 source!</p>
+      <p className="text-red-300 mt-1">Check console for details.</p>
+    </div>
+  );
 } 

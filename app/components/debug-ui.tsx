@@ -2,16 +2,40 @@
 
 import React from 'react';
 import { useDebug } from '@/hooks/use-debug';
+import { X } from 'lucide-react';
 
+/**
+ * Debug UI overlay that displays when debug mode is active
+ */
 export default function DebugUI() {
-  const { isDebugMode } = useDebug();
+  const { isDebugMode, toggleDebugMode } = useDebug();
   
   if (!isDebugMode) return null;
   
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-black text-white text-xs p-1 z-[9999] flex items-center justify-between">
-      <span>Debug Mode Active (press 'd' 3 times to toggle)</span>
-      <span className="text-yellow-300">React Error #130 Debug</span>
+    <div className="fixed bottom-0 right-0 z-[9999] p-4 font-mono text-xs">
+      <div className="bg-black border border-yellow-500 text-yellow-500 p-3 rounded shadow-lg max-w-xs">
+        <div className="flex justify-between items-center mb-2">
+          <h3 className="font-bold">Debug Mode</h3>
+          <button 
+            onClick={toggleDebugMode}
+            className="text-yellow-700 hover:text-yellow-500"
+          >
+            <X size={16} />
+          </button>
+        </div>
+        
+        <div className="space-y-2">
+          <p>React debugging enabled</p>
+          <div className="border-t border-yellow-900 pt-2">
+            <p>🛠️ Developer Tools:</p>
+            <ul className="list-disc list-inside mt-1 space-y-1">
+              <li>Add <code>?debug=true</code> to URL</li>
+              <li>Press <code>d</code> key 3 times</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   );
 } 

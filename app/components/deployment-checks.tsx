@@ -3,95 +3,58 @@
 import React, { useEffect, useState } from 'react';
 import { useDebug } from '@/hooks/use-debug';
 
+interface DeploymentInfo {
+  buildId: string;
+  nodeEnv: string;
+  buildTime: string;
+  gitCommit: string;
+  nextVersion: string;
+  isStaticExport: boolean;
+}
+
 /**
- * Component that runs checks to verify fix deployment
- * Only active when ?debug=true is in URL
+ * Component to verify deployment settings in debug mode
  */
 export default function DeploymentChecks() {
   const { isDebugMode } = useDebug();
-  const [checkResults, setCheckResults] = useState<Record<string, boolean>>({});
+  const [info, setInfo] = useState<DeploymentInfo | null>(null);
 
   useEffect(() => {
     if (!isDebugMode) return;
 
-    // Run verification checks to ensure all fixes are properly deployed
-    const runChecks = async () => {
-      const results: Record<string, boolean> = {};
-      
-      // Check 1: Verify formatters.ts utilities are available
+    // Only load deployment info in debug mode
+    const loadDeploymentInfo = async () => {
       try {
-        const formatter = await import('@/lib/formatters');
-        results.formattersAvailable = typeof formatter.ensureString === 'function';
-      } catch (e) {
-        results.formattersAvailable = false;
-      }
-      
-      // Check 2: Verify ErrorBoundary component is loaded
-      try {
-        const ErrorBoundary = (await import('../error-boundary')).default;
-        results.errorBoundaryAvailable = typeof ErrorBoundary === 'function';
-      } catch (e) {
-        results.errorBoundaryAvailable = false;
-      }
-      
-      // Check 3: Check for version markers in the DOM
-      results.versionMarkerPresent = !!document.querySelector('[data-testid="version-marker"]');
-      
-      // Check 4: Check for debug components
-      results.debugUIPresent = !!document.querySelector('[data-testid="debug-ui"]') || 
-                              !!document.querySelector('.debug-ui');
-      
-      // Check 5: Check for router debug components
-      results.routerDebugPresent = !!document.querySelector('[data-testid="router-debug"]');
-      
-      // Calculate overall deployment status
-      const allChecksOk = Object.values(results).every(result => result === true);
-      results.deploymentComplete = allChecksOk;
-      
-      setCheckResults(results);
-      
-      // Log results to console for easy visibility
-      console.log('[Deployment Verification] Fix deployment check results:', results);
-      
-      if (allChecksOk) {
-        console.log('%c✅ All Error #130 fixes are correctly deployed!', 'color: green; font-weight: bold');
-      } else {
-        console.warn('%c⚠️ Some Error #130 fixes may not be correctly deployed', 'color: orange; font-weight: bold');
-        console.warn('Missing components:', 
-          Object.entries(results)
-            .filter(([_, value]) => value === false)
-            .map(([key]) => key)
-            .join(', ')
-        );
+        // In a real app, this might fetch from an API endpoint
+        // that returns build/deployment information
+        setInfo({
+          buildId: process.env.NEXT_PUBLIC_BUILD_ID || 'unknown',
+          nodeEnv: process.env.NODE_ENV || 'unknown',
+          buildTime: process.env.NEXT_PUBLIC_BUILD_TIME || new Date().toISOString(),
+          gitCommit: process.env.NEXT_PUBLIC_GIT_COMMIT || 'unknown',
+          nextVersion: process.env.NEXT_PUBLIC_NEXT_VERSION || 'unknown',
+          isStaticExport: process.env.NEXT_PUBLIC_STATIC_EXPORT === 'true'
+        });
+      } catch (err) {
+        console.error('Failed to load deployment info:', err);
       }
     };
-    
-    // Run deployment checks
-    runChecks();
-    
+
+    loadDeploymentInfo();
   }, [isDebugMode]);
 
-  // Only render UI in debug mode
-  if (!isDebugMode || Object.keys(checkResults).length === 0) return null;
-  
-  // Visual indicator shows only when there are issues
-  if (checkResults.deploymentComplete) return null;
-  
+  if (!isDebugMode || !info) return null;
+
   return (
-    <div 
-      style={{
-        position: 'fixed',
-        bottom: '30px',  // Position above debug UI bar
-        left: '10px',
-        background: 'rgba(200, 0, 0, 0.8)',
-        color: 'white',
-        padding: '5px 10px',
-        borderRadius: '4px',
-        fontSize: '12px',
-        zIndex: 9999
-      }}
-    >
-      ⚠️ Fix deployment incomplete
+    <div className="fixed top-0 right-0 m-4 p-3 bg-black/80 backdrop-blur border border-yellow-500/50 text-yellow-500 rounded shadow-lg z-[9999] text-xs font-mono">
+      <h3 className="font-bold mb-2">Deployment Info</h3>
+      <ul className="space-y-1">
+        <li>Environment: <span className="text-white">{info.nodeEnv}</span></li>
+        <li>Static Export: <span className="text-white">{info.isStaticExport ? 'Yes' : 'No'}</span></li>
+        <li>Build Time: <span className="text-white">{info.buildTime}</span></li>
+        <li>Git Commit: <span className="text-white">{info.gitCommit.substring(0, 7)}</span></li>
+        <li>Next.js: <span className="text-white">{info.nextVersion}</span></li>
+      </ul>
     </div>
   );
 } 
