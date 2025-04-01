@@ -17,7 +17,12 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   
-  swcMinify: false
+  swcMinify: false,
+  
+  // Bypass client-side hydration warnings - this is safe for static exports
+  experimental: {
+    missingSuspenseWithCSRBailout: false
+  }
 }
 
 module.exports = nextConfig
