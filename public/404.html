@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mel Jazz - Redirecting</title>
+  <script>
+    // GitHub Pages 404 handler that redirects to the SPA
+    // This handles deep links properly for static site hosting
+    (function() {
+      var path = window.location.pathname;
+      var basePath = '/melvocal-coaching';
+      
+      // If the URL doesn't contain our base path, add it
+      // This handles links like: /about -> /melvocal-coaching/about
+      if (path.indexOf(basePath) !== 0) {
+        path = basePath + path;
+      }
+      
+      // Ensure trailing slash for consistency
+      if (!path.endsWith('/')) {
+        path += '/';
+      }
+      
+      // Keep original query parameters if any
+      var queryParams = window.location.search || '';
+      
+      // Add debug mode if this is a 404
+      if (!queryParams.includes('debug=')) {
+        queryParams += (queryParams ? '&' : '?') + 'from404=true';
+      }
+      
+      // Redirect to the homepage with path information
+      window.location.href = path + queryParams;
+    })();
+  </script>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+    .container {
+      max-width: 600px;
+      padding: 20px;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 16px;
+      margin-bottom: 30px;
+      opacity: 0.7;
+    }
+    a {
+      color: #d4af37;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Redirecting to Mel Jazz Vocal Coaching...</h1>
+    <p>If you're not redirected automatically, <a href="/melvocal-coaching/">click here</a>.</p>
+  </div>
+</body>
+</html> 

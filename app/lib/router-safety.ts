@@ -127,6 +127,55 @@ export function safelyGetQueryParam(key: string): string | null {
 }
 
 /**
+ * Hook for safely using searchParams in a static export environment
+ * This prevents the common "useSearchParams should be wrapped in Suspense" error
+ */
+export function useSafeSearchParams() {
+  const [params, setParams] = useState<Record<string, string>>({});
+  const [isReady, setIsReady] = useState(false);
+  const [error, setError] = useState<Error | null>(null);
+
+  useEffect(() => {
+    try {
+      // Only run in browser
+      if (typeof window === 'undefined') return;
+
+      // Parse URL search params directly from window.location
+      const urlSearchParams = new URLSearchParams(window.location.search);
+      const searchParamsObj = createSafeSearchParams(urlSearchParams);
+      
+      setParams(searchParamsObj);
+      setIsReady(true);
+
+      // Listen for URL changes
+      const handleRouteChange = () => {
+        try {
+          const newSearchParams = new URLSearchParams(window.location.search);
+          setParams(createSafeSearchParams(newSearchParams));
+        } catch (e) {
+          console.error('Error updating search params:', e);
+          if (e instanceof Error) setError(e);
+        }
+      };
+
+      // Add event listeners for URL changes
+      window.addEventListener('popstate', handleRouteChange);
+      window.addEventListener('route-change', handleRouteChange);
+
+      return () => {
+        window.removeEventListener('popstate', handleRouteChange);
+        window.removeEventListener('route-change', handleRouteChange);
+      };
+    } catch (e) {
+      console.error('Error in useSafeSearchParams:', e);
+      if (e instanceof Error) setError(e);
+    }
+  }, []);
+
+  return { params, isReady, error };
+}
+
+/**
  * Hook for validating router params with type safety
  */
 export function useValidatedParams<T extends Record<string, string>>(
@@ -151,77 +200,4 @@ export function useValidatedParams<T extends Record<string, string>>(
     // During static generation, useParams might throw
     return { params: null, isLoading: true };
   }
-}
-
-/**
- * Enhanced safe wrapper for useSearchParams that's compatible with static exports
- * This version is designed to handle errors gracefully and recover from them
- */
-export function useSafeSearchParams() {
-  const [searchParamsReady, setSearchParamsReady] = useState(false);
-  const [params, setParams] = useState<Record<string, string>>({});
-  const [error, setError] = useState<Error | null>(null);
-  
-  useEffect(() => {
-    // When running in a static export, we might not have access to searchParams immediately
-    // So we need to try to access them in useEffect, which runs on the client
-    try {
-      // For static exports, when JS hasn't loaded, window.location may be the only reliable source
-      if (typeof window !== 'undefined') {
-        const urlSearchParams = new URLSearchParams(window.location.search);
-        const urlParams: Record<string, string> = {};
-        
-        urlSearchParams.forEach((value, key) => {
-          urlParams[key] = value;
-        });
-        
-        setParams(urlParams);
-        setSearchParamsReady(true);
-      }
-    } catch (e) {
-      console.warn('Error setting up fallback params from URL:', e);
-      // Continue with empty params rather than crashing
-    }
-  }, []);
-  
-  try {
-    // Try to use Next.js useSearchParams if available
-    const searchParams = useSearchParams();
-    
-    useEffect(() => {
-      if (searchParams) {
-        try {
-          const newParams: Record<string, string> = {};
-          searchParams.forEach((value, key) => {
-            newParams[key] = ensureString(value);
-          });
-          
-          setParams(newParams);
-          setSearchParamsReady(true);
-          setError(null);
-        } catch (e) {
-          if (e instanceof Error) {
-            setError(e);
-            console.error('Error processing search params:', e);
-          }
-        }
-      }
-    }, [searchParams]);
-  } catch (e) {
-    // This happens during static generation - just continue with our fallback
-    if (!searchParamsReady && error === null) {
-      if (e instanceof Error) {
-        setError(e);
-      }
-      console.warn('useSearchParams not available:', e);
-    }
-  }
-  
-  return { 
-    params, 
-    isReady: searchParamsReady,
-    error,
-    // Helper to get a param safely
-    getParam: (key: string): string | null => params[key] || null
-  };
 } 

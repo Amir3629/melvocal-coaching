@@ -17,7 +17,7 @@ interface ExtendedPerformance extends Performance {
  * It's only shown when ?debug=true is added to the URL
  */
 export function RuntimeMonitor() {
-  const { params, isReady, error } = useSafeSearchParams();
+  const { params, isReady, error: searchParamsError } = useSafeSearchParams();
   const [isVisible, setIsVisible] = useState(false);
   const [runtimeInfo, setRuntimeInfo] = useState<{
     environment: string;
@@ -248,10 +248,10 @@ export function RuntimeMonitor() {
           </>
         )}
 
-        {error && (
+        {searchParamsError && (
           <>
             <div className="text-red-400">Router Error:</div>
-            <div className="text-red-400">{error.message}</div>
+            <div className="text-red-400">{searchParamsError.message}</div>
           </>
         )}
       </div>

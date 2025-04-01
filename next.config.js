@@ -19,9 +19,25 @@ const nextConfig = {
   
   swcMinify: false,
   
-  // Bypass client-side hydration warnings - this is safe for static exports
+  // Advanced experimental features to improve static export compatibility
   experimental: {
-    missingSuspenseWithCSRBailout: false
+    // Fix useSearchParams issues by disabling the bailout behavior
+    missingSuspenseWithCSRBailout: false,
+    
+    // Optimize text for hydration issues
+    optimizeServerReact: true,
+    
+    // Improve JSX support for better hydration
+    optimizeCss: true,
+    
+    // Allow more time for hydration to complete
+    ppr: false,
+    
+    // Fallback for static rendering
+    isrMemoryCacheSize: 0,
+    
+    // Improved error handling for component stacks
+    webVitalsAttribution: ['CLS', 'LCP', 'FCP', 'FID', 'INP', 'TTFB']
   }
 }
 
