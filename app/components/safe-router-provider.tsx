@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, useEffect, useMemo } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { createSafeParams, createSafeSearchParams } from '@/lib/router-safety';
+import { createSafeParams, createSafeSearchParams } from '../lib/router-safety';
 
 // Create context for safe router values
 interface SafeRouterContextType {

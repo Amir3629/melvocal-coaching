@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { useDebug } from '@/hooks/use-debug';
+import { useDebug } from '../hooks/use-debug';
 import { X } from 'lucide-react';
 
 /**

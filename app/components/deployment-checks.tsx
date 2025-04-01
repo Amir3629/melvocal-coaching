@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import { useDebug } from '@/hooks/use-debug';
+import { useDebug } from '../hooks/use-debug';
 
 interface DeploymentInfo {
   buildId: string;

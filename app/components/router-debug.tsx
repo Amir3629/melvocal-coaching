@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { useDebug } from '@/hooks/use-debug';
-import { isRouterObject, warnIfRouterObject } from '@/lib/router-safety';
+import { useDebug } from '../hooks/use-debug';
+import { isRouterObject, warnIfRouterObject } from '../lib/router-safety';
 
 /**
  * Router debug component
