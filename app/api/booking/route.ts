@@ -2,12 +2,9 @@ import { NextResponse } from 'next/server'
 import { createBooking, isTimeSlotAvailable } from '@/lib/google-calendar'
 import { sendBookingConfirmation, sendAdminNotification } from '@/lib/email-service'
 
-// Adding static export configuration for GitHub Pages compatibility
-export const config = {
-  api: {
-    bodyParser: true,
-  },
-};
+// Using the new route segment config format for Next.js App Router
+export const runtime = 'edge';
+export const dynamic = 'force-static';
 
 export async function POST(request: Request) {
   try {

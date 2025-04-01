@@ -2,12 +2,9 @@ import { NextResponse } from 'next/server';
 import { getAvailableTimeSlots } from '@/lib/google-calendar';
 import { formatDate } from '@/lib/calendar-utils';
 
-// Adding static export configuration for GitHub Pages compatibility
-export const config = {
-  api: {
-    bodyParser: true,
-  },
-};
+// Using the new route segment config format for Next.js App Router
+export const runtime = 'edge';
+export const dynamic = 'force-static';
 
 // For static export, we need to provide mock data
 const STATIC_AVAILABLE_SLOTS = [
