@@ -247,14 +247,17 @@ export default function BookingForm({ isOpen: externalIsOpen, onClose }: Booking
                     <X size={20} />
                   </button>
                   
-                  <h2 className="text-base sm:text-lg font-bold text-white mb-4 text-center mt-1">
-                    {currentStep === 'details' && serviceType === 'professioneller-gesang'
-                      ? t('booking.liveSingingTitle', 'Live Gesang buchen')
-                      : currentStep === 'details' && serviceType === 'vocal-coaching'
-                      ? t('booking.vocalCoachingTitle', 'Vocal Coaching buchen')
-                      : currentStep === 'details' && serviceType === 'gesangsunterricht'
-                      ? t('booking.workshopTitle', 'Jazz Workshop buchen')
-                      : t('booking.title', 'Termin buchen')}
+                  <h2 className="text-lg font-bold text-white mb-5 text-center mt-1">
+                    {currentStep === 'service' 
+                      ? t('booking.title', 'Buchung') 
+                      : currentStep === 'details' && serviceType === 'professioneller-gesang'
+                        ? t('booking.liveSingingTitle', 'Live Gesang buchen')
+                        : currentStep === 'details' && serviceType === 'vocal-coaching'
+                          ? t('booking.vocalCoachingTitle', 'Vocal Coaching buchen')
+                          : currentStep === 'details' && serviceType === 'gesangsunterricht'
+                            ? t('booking.jazzWorkshopTitle', 'Jazz Workshop buchen')
+                            : t('booking.confirmTitle', 'Buchung bestätigen')
+                    }
                   </h2>
                   
                   {/* Progress indicator */}

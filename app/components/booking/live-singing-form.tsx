@@ -11,7 +11,7 @@ interface FormData {
   email: string;
   phone: string;
   message: string;
-  eventType?: 'vernissage' | 'jazz-festival' | 'private';
+  eventType?: 'vernissage' | 'jazz-festivals' | 'private-feier';
   eventDate?: string;
   guestCount?: string;
   musicPreferences?: string[];
@@ -54,28 +54,6 @@ export default function LiveSingingForm({ formData, onChange }: LiveSingingFormP
     }),
     // ... existing code ...
   })
-  
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Format the form data for email
-    const emailSubject = encodeURIComponent(`Booking Request: ${formData.eventType} Performance`);
-    const emailBody = encodeURIComponent(`
-Name: ${formData.name}
-Email: ${formData.email}
-Phone: ${formData.phone}
-Event Type: ${formData.eventType}
-Performance Type: ${formData.performanceType}
-Event Date: ${formData.eventDate}
-Guest Count: ${formData.guestCount}
-Music Preferences: ${formData.musicPreferences?.join(', ')}
-Jazz Standards: ${formData.jazzStandards}
-Additional Message: ${formData.message}
-    `);
-    
-    // Open default email client
-    window.location.href = `mailto:booking@melvocal.com?subject=${emailSubject}&body=${emailBody}`;
-  };
   
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -159,26 +137,26 @@ Additional Message: ${formData.message}
             
             <button
               type="button"
-              onClick={() => onChange({ eventType: 'jazz-festival' })}
+              onClick={() => onChange({ eventType: 'jazz-festivals' })}
               className={`px-4 py-2 rounded-lg border ${
-                formData.eventType === 'jazz-festival'
+                formData.eventType === 'jazz-festivals'
                   ? 'bg-[#C8A97E]/20 border-[#C8A97E] text-white'
                   : 'border-gray-700 text-gray-400 hover:border-gray-600'
               } transition-colors text-sm`}
             >
-              {t('booking.jazzFestival', 'Jazz Festival')}
+              {t('booking.jazzFestivals', 'Jazz Festivals')}
             </button>
             
             <button
               type="button"
-              onClick={() => onChange({ eventType: 'private' })}
+              onClick={() => onChange({ eventType: 'private-feier' })}
               className={`px-4 py-2 rounded-lg border ${
-                formData.eventType === 'private'
+                formData.eventType === 'private-feier'
                   ? 'bg-[#C8A97E]/20 border-[#C8A97E] text-white'
                   : 'border-gray-700 text-gray-400 hover:border-gray-600'
               } transition-colors text-sm`}
             >
-              {t('booking.private', 'Private Feier')}
+              {t('booking.privateFeier', 'Private Feier')}
             </button>
           </div>
         </div>

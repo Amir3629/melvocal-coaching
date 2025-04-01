@@ -11,7 +11,7 @@ interface FormData {
   phone: string;
   message: string;
   sessionType?: '1:1' | 'group' | 'online';
-  skillLevel?: 'einsteigerin' | 'aufstrebende' | 'virtuosin';
+  skillLevel?: 'beginner' | 'intermediate' | 'advanced';
   focusArea?: string[];
   preferredDate?: string;
   preferredTime?: string;
@@ -42,26 +42,6 @@ export default function VocalCoachingForm({ formData, onChange }: VocalCoachingF
       })
     }
   }
-  
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    // Format the form data for email
-    const emailSubject = encodeURIComponent(`Vocal Coaching Request: ${formData.skillLevel}`);
-    const emailBody = encodeURIComponent(`
-Name: ${formData.name}
-Email: ${formData.email}
-Phone: ${formData.phone}
-Skill Level: ${formData.skillLevel}
-Focus Areas: ${formData.focusArea?.join(', ')}
-Preferred Date: ${formData.preferredDate}
-Preferred Time: ${formData.preferredTime}
-Additional Message: ${formData.message}
-    `);
-    
-    // Open default email client
-    window.location.href = `mailto:booking@melvocal.com?subject=${emailSubject}&body=${emailBody}`;
-  };
   
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -193,38 +173,38 @@ Additional Message: ${formData.message}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <button
               type="button"
-              onClick={() => onChange({ skillLevel: 'einsteigerin' })}
+              onClick={() => onChange({ skillLevel: 'beginner' })}
               className={`px-4 py-2 rounded-lg border ${
-                formData.skillLevel === 'einsteigerin'
+                formData.skillLevel === 'beginner'
                   ? 'bg-[#C8A97E]/20 border-[#C8A97E] text-white'
                   : 'border-gray-700 text-gray-400 hover:border-gray-600'
               } transition-colors text-sm`}
             >
-              {t('booking.beginner', 'Einsteigerin')}
+              {t('booking.beginner', 'Einsteigenrerinne')}
             </button>
             
             <button
               type="button"
-              onClick={() => onChange({ skillLevel: 'aufstrebende' })}
+              onClick={() => onChange({ skillLevel: 'intermediate' })}
               className={`px-4 py-2 rounded-lg border ${
-                formData.skillLevel === 'aufstrebende'
+                formData.skillLevel === 'intermediate'
                   ? 'bg-[#C8A97E]/20 border-[#C8A97E] text-white'
                   : 'border-gray-700 text-gray-400 hover:border-gray-600'
               } transition-colors text-sm`}
             >
-              {t('booking.intermediate', 'Aufstrebende')}
+              {t('booking.intermediate', 'Stimmvirtuosen')}
             </button>
             
             <button
               type="button"
-              onClick={() => onChange({ skillLevel: 'virtuosin' })}
+              onClick={() => onChange({ skillLevel: 'advanced' })}
               className={`px-4 py-2 rounded-lg border ${
-                formData.skillLevel === 'virtuosin'
+                formData.skillLevel === 'advanced'
                   ? 'bg-[#C8A97E]/20 border-[#C8A97E] text-white'
                   : 'border-gray-700 text-gray-400 hover:border-gray-600'
               } transition-colors text-sm`}
             >
-              {t('booking.advanced', 'Virtuosin')}
+              {t('booking.advanced', 'Klangkünstler')}
             </button>
           </div>
         </div>

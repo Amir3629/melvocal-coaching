@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server'
 import { createBooking, isTimeSlotAvailable } from '@/lib/google-calendar'
 import { sendBookingConfirmation, sendAdminNotification } from '@/lib/email-service'
 
-// Remove dynamic flag for static export
-// export const dynamic = 'force-dynamic'
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic'
 
 export async function POST(request: Request) {
   try {

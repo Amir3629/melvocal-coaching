@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server';
 import { getAvailableTimeSlots } from '@/lib/google-calendar';
 import { formatDate } from '@/lib/calendar-utils';
 
-// Remove dynamic flag for static export
-// export const dynamic = 'force-dynamic';
+// Force dynamic rendering for this route
+export const dynamic = 'force-dynamic';
 
 export async function GET(request: Request) {
   try {
