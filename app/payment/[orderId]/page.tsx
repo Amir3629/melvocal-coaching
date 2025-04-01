@@ -1,5 +1,5 @@
-import React from 'react';
-import PaymentForm from './payment-form';
+import React from 'react'
+import SafePaymentForm from '@/app/components/payment/safe-payment-form'
 
 // This function tells Next.js which specific dynamic routes to generate at build time
 export function generateStaticParams() {
@@ -10,8 +10,9 @@ export function generateStaticParams() {
 
 export default function PaymentPage({ params }: { params: { orderId: string } }) {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <PaymentForm orderId={params.orderId} />
+    <div className="container mx-auto py-8 px-4">
+      <h1 className="text-2xl font-bold mb-6">Complete Your Payment</h1>
+      <SafePaymentForm orderId={params.orderId} />
     </div>
-  );
+  )
 } 
