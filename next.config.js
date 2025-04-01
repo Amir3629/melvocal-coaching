@@ -4,6 +4,18 @@ const nextConfig = {
   output: 'export',
   images: {
     unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'img.youtube.com',
+        pathname: '/vi/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i3.ytimg.com',
+        pathname: '/vi/**',
+      }
+    ],
   },
   basePath: process.env.NODE_ENV === 'production' ? '/melvocal-coaching' : '',
   assetPrefix: process.env.NODE_ENV === 'production' ? '/melvocal-coaching/' : '',
@@ -17,53 +29,28 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   
-  // Disable minification for easier debugging
+  // Keep minification disabled for easier debugging
   swcMinify: false,
   
-  // Advanced experimental features to improve static export compatibility
+  // Minimum required experimental features
   experimental: {
-    // Fix useSearchParams issues by disabling the bailout behavior
+    // Fix useSearchParams issues
     missingSuspenseWithCSRBailout: false,
-    
-    // Optimize text for hydration issues
-    optimizeServerReact: true,
-    
-    // Improve JSX support for better hydration
-    optimizeCss: true,
-    
-    // Disable PPR for static exports since it can cause hydration issues
-    ppr: false,
-    
-    // Fallback for static rendering
-    isrMemoryCacheSize: 0,
-    
-    // Improved error handling for component stacks
-    webVitalsAttribution: ['CLS', 'LCP', 'FCP', 'FID', 'INP', 'TTFB'],
-    
-    // Disable React server components which can cause issues in static exports
-    appDir: true,
-    serverActions: false,
-    
-    // Allow more time for hydration to complete
-    runtime: 'edge',
-    
-    // Ignore specific errors that commonly happen in static exports
-    scrollRestoration: true,
-    
-    // Force all pages to have the same styling baseline
-    optimizeFonts: false
   },
   
-  // Add custom redirect for the homepage to improve GitHub Pages handling
-  async redirects() {
-    return [
-      {
-        source: '/melvocal-coaching',
-        destination: '/melvocal-coaching/',
-        permanent: true
-      }
-    ];
-  }
+  // Webpack configuration for fonts and SVGs
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.(woff|woff2|eot|ttf|otf|svg)$/i,
+      type: 'asset/resource',
+    })
+    return config
+  },
+  
+  // Runtime configuration
+  publicRuntimeConfig: {
+    basePath: process.env.NODE_ENV === 'production' ? '/melvocal-coaching' : '',
+  },
 }
 
 module.exports = nextConfig

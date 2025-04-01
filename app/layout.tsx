@@ -10,9 +10,6 @@ import type { Metadata, Viewport } from "next"
 import { Inter, Playfair_Display, Cormorant_Garamond, Montserrat, Roboto } from "next/font/google"
 import RootClient from "./components/root-client"
 import { MediaProvider } from "./components/media-context"
-import GlobalErrorBoundary from './components/GlobalErrorBoundary'
-import SuspenseWrapper from './components/suspense-wrapper'
-import RuntimeMonitor from './components/runtime-monitor'
 import StaticSiteHandler from './components/static-site-handler'
 
 const inter = Inter({ subsets: ["latin"] })
@@ -44,9 +41,8 @@ const montserrat = Montserrat({
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 5,
-  userScalable: true,
-  viewportFit: 'cover'
+  maximumScale: 1,
+  userScalable: false,
 }
 
 export const metadata: Metadata = {
@@ -77,58 +73,18 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${cormorant.variable} ${montserrat.variable} ${roboto.variable} scroll-smooth`}>
       <head>
-        <link 
-          rel="icon" 
-          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/images/logo/ml-logo.PNG' : '/images/logo/ml-logo.PNG'} 
-          sizes="64x64" 
-          type="image/png" 
+        <link
+          rel="icon"
+          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/images/logo/ml-logo.PNG' : '/images/logo/ml-logo.PNG'}
+          sizes="64x64"
+          type="image/png"
         />
-        <link 
+        <link
           rel="apple-touch-icon" 
-          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/images/logo/ml-logo.PNG' : '/images/logo/ml-logo.PNG'} 
-          sizes="180x180" 
+          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/images/logo/ml-logo.PNG' : '/images/logo/ml-logo.PNG'}
+          sizes="180x180"
         />
         <link rel="manifest" href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/site.webmanifest' : '/site.webmanifest'} />
-        <link 
-          rel="stylesheet" 
-          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/css/blackbar-fix.css' : '/css/blackbar-fix.css'} 
-        />
-        <link 
-          rel="stylesheet" 
-          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/css/mobile-fixes.css' : '/css/mobile-fixes.css'} 
-        />
-        <link 
-          rel="stylesheet" 
-          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/css/ios-fix.css' : '/css/ios-fix.css'} 
-        />
-        <link 
-          rel="stylesheet" 
-          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/css/critical-fix.css' : '/css/critical-fix.css'} 
-        />
-        <link 
-          rel="stylesheet" 
-          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/css/last-resort.css' : '/css/last-resort.css'} 
-        />
-        <link 
-          rel="stylesheet" 
-          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/css/fix-container.css' : '/css/fix-container.css'} 
-        />
-        <link 
-          rel="stylesheet" 
-          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/css/extend-beyond.css' : '/css/extend-beyond.css'} 
-        />
-        <link 
-          rel="stylesheet" 
-          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/css/negative-margin-fix.css' : '/css/negative-margin-fix.css'} 
-        />
-        <link 
-          rel="stylesheet" 
-          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/css/mobile-booking-fixes.css' : '/css/mobile-booking-fixes.css'} 
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, viewport-fit=cover" />
-        <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <meta name="theme-color" content="#000000" />
         
         {/* Emergency fallback script to handle critical failures */}
         <script src={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/js/emergency-fallback.js' : '/js/emergency-fallback.js'} async></script>
@@ -156,36 +112,51 @@ export default function RootLayout({
         </style>
         <script dangerouslySetInnerHTML={{
           __html: `
+            // Set scrollRestoration to auto - let the browser handle it naturally
+            if ('scrollRestoration' in history) {
+              history.scrollRestoration = 'auto';
+            }
+
+            // ULTRA-SIMPLE EMERGENCY FIX
             (function() {
-              // Fix for mobile viewport issues
-              document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
-              
-              // Get actual viewport width - crucial for iOS
-              var viewportWidth = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-              document.documentElement.style.setProperty('--real-vw', viewportWidth + 'px');
-              
-              window.addEventListener('resize', function() {
-                document.documentElement.style.setProperty('--vh', window.innerHeight * 0.01 + 'px');
-                document.documentElement.style.setProperty('--real-vw', Math.max(document.documentElement.clientWidth, window.innerWidth || 0) + 'px');
-              });
-              
-              // Direct fix for iOS
-              if (/iPad|iPhone|iPod/.test(navigator.userAgent) || ('ontouchstart' in window && /AppleWebKit/.test(navigator.userAgent))) {
-                document.documentElement.classList.add('ios-device');
-                document.documentElement.style.width = viewportWidth + 'px';
-                document.body.style.width = viewportWidth + 'px';
+              let savedScrollY = 0;
+
+              // Check for modals and handle scroll locking
+              function checkForModals() {
+                const hasModal = document.querySelector('[role="dialog"], .modal, .fixed.inset-0');
+
+                const isLocked = document.body.classList.contains('modal-open');
+
+                if (hasModal && !isLocked) {
+                  // Save position and lock
+                  savedScrollY = window.scrollY;
+                  document.body.classList.add('modal-open');
+                  document.body.style.overflow = 'hidden';
+                  document.body.style.height = '100%';
+                  document.body.style.position = 'relative';
+                }
+                else if (!hasModal && isLocked) {
+                  // Unlock
+                  document.body.classList.remove('modal-open');
+                  document.body.style.overflow = '';
+                  document.body.style.height = '';
+                  document.body.style.position = '';
+
+                  // Restore scroll position directly
+                  window.scrollTo(0, savedScrollY);
+                }
               }
+
+              // Run checks on DOM changes
+              new MutationObserver(checkForModals).observe(
+                document.body,
+                { childList: true, subtree: true }
+              );
+
+              // Also check on page load
+              document.addEventListener('DOMContentLoaded', checkForModals);
             })();
-          `
-        }} />
-        <script src={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/js/ios-viewport-fix.js' : '/js/ios-viewport-fix.js'}></script>
-        <script src={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/js/dom-observer-fix.js' : '/js/dom-observer-fix.js'} defer></script>
-        <script src={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/js/fix-ios-viewport.js' : '/js/fix-ios-viewport.js'}></script>
-        <script src={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/js/emoji-fix.js' : '/js/emoji-fix.js'}></script>
-        <script src={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/js/ios-fix.js' : '/js/ios-fix.js'}></script>
-        <script src={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/js/direct-fix.js' : '/js/direct-fix.js'}></script>
-        <script dangerouslySetInnerHTML={{
-          __html: `
+            
             // Mark application as initialized when React has hydrated
             window.addEventListener('DOMContentLoaded', function() {
               // We'll update this flag once React's hydration is complete
@@ -196,44 +167,16 @@ export default function RootLayout({
                 }, 1000);
               }
             });
-
-            // Suppress host validation errors
-            window.addEventListener('error', function(e) {
-              if (e.message && (
-                e.message.includes('Host validation failed') ||
-                e.message.includes('Host is not supported') ||
-                e.message.includes('Host is not valid')
-              )) {
-                e.preventDefault();
-                e.stopPropagation();
-                return true;
-              }
-            }, true);
-
-            // Define AIChat if it's not already defined
-            if (typeof window !== 'undefined' && !window.AIChat) {
-              window.AIChat = {
-                initialize: function() {},
-                render: function() {},
-                open: function() {},
-                close: function() {}
-              };
-            }
           `
         }} />
       </head>
       <body className={`${roboto.className} w-full min-w-full overflow-x-hidden bg-black`}>
-        <GlobalErrorBoundary>
-          <MediaProvider>
-            <RootClient className={`dark-theme-black ${playfair.variable} ${cormorant.variable} ${montserrat.variable} ${roboto.variable} ${inter.className} antialiased`}>
-              <StaticSiteHandler />
-              <SuspenseWrapper>
-                {children}
-              </SuspenseWrapper>
-              <RuntimeMonitor />
-            </RootClient>
-          </MediaProvider>
-        </GlobalErrorBoundary>
+        <MediaProvider>
+          <RootClient className={`dark-theme-black ${playfair.variable} ${cormorant.variable} ${montserrat.variable} ${roboto.variable} ${inter.className} antialiased`}>
+            <StaticSiteHandler />
+            {children}
+          </RootClient>
+        </MediaProvider>
       </body>
     </html>
   )
