@@ -2,112 +2,77 @@
 
 import React, { Component, ErrorInfo, ReactNode } from 'react';
 
-interface Props {
+interface ErrorBoundaryProps {
   children: ReactNode;
-  componentName?: string;
-  fallback?: ReactNode;
+  fallback?: ReactNode | ((error: Error, reset: () => void) => ReactNode);
+  context?: string;
 }
 
-interface State {
+interface ErrorBoundaryState {
   hasError: boolean;
-  error: Error | null;
-  errorInfo: ErrorInfo | null;
+  error?: Error;
 }
 
 /**
  * Error boundary component to catch and handle React errors
  * Prevents the entire application from crashing due to errors in child components
  */
-class ErrorBoundary extends Component<Props, State> {
-  constructor(props: Props) {
+export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
     super(props);
-    this.state = {
-      hasError: false,
-      error: null,
-      errorInfo: null
-    };
+    this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(error: Error): State {
-    // Update state so the next render shows the fallback UI
-    return {
-      hasError: true,
-      error,
-      errorInfo: null
-    };
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return { hasError: true, error };
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
-    // Log the error to an error reporting service
-    console.error('ErrorBoundary caught an error:', error, errorInfo);
+    console.error(`Error in ${this.props.context || 'component'}:`, error);
+    console.error('Component stack:', errorInfo.componentStack);
     
-    this.setState({
-      error,
-      errorInfo
-    });
-    
-    // You could log to an error reporting service here
-    // Example: logErrorToService(error, errorInfo, this.props.componentName);
+    // You can also log to an error reporting service like Sentry here
+    // if (typeof window !== 'undefined' && window.Sentry) {
+    //   window.Sentry.captureException(error);
+    // }
   }
 
-  render(): ReactNode {
-    const { hasError, error, errorInfo } = this.state;
-    const { children, componentName, fallback } = this.props;
+  handleReset = (): void => {
+    this.setState({ hasError: false, error: undefined });
+  };
 
-    if (hasError) {
-      // You can render any custom fallback UI
-      return fallback || (
-        <div 
-          style={{
-            padding: '20px',
-            border: '1px solid #ffcccc',
-            borderRadius: '4px',
-            backgroundColor: 'rgba(255, 0, 0, 0.05)',
-            margin: '10px 0',
-            maxWidth: '800px'
-          }}
-        >
-          <h2 style={{ margin: '0 0 10px', color: '#cc0000', fontSize: '18px' }}>
-            Something went wrong {componentName ? `in ${componentName}` : ''}
-          </h2>
-          <details style={{ whiteSpace: 'pre-wrap', marginTop: '10px' }}>
-            <summary style={{ cursor: 'pointer', color: '#666' }}>
-              View error details
-            </summary>
-            <pre style={{ 
-              margin: '10px 0', 
-              padding: '10px', 
-              backgroundColor: 'rgba(0, 0, 0, 0.1)',
-              borderRadius: '4px',
-              fontSize: '14px',
-              overflow: 'auto'
-            }}>
-              {error?.toString()}
-              {errorInfo?.componentStack}
-            </pre>
-          </details>
-          <div style={{ marginTop: '15px' }}>
-            <button
-              onClick={() => this.setState({ hasError: false, error: null, errorInfo: null })}
-              style={{
-                padding: '8px 12px',
-                backgroundColor: '#333',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '14px'
-              }}
-            >
-              Try Again
-            </button>
-          </div>
+  render(): ReactNode {
+    if (this.state.hasError) {
+      if (typeof this.props.fallback === 'function') {
+        return this.props.fallback(this.state.error!, this.handleReset);
+      }
+      
+      if (this.props.fallback) {
+        return this.props.fallback;
+      }
+
+      return (
+        <div className="error-boundary-fallback p-4 rounded-md bg-red-50 border border-red-100">
+          <h2 className="text-lg font-semibold text-red-800">Something went wrong</h2>
+          {this.state.error && (
+            <details className="mt-2">
+              <summary className="cursor-pointer text-red-600">Error details</summary>
+              <p className="mt-1 text-sm text-red-500 whitespace-pre-wrap font-mono">
+                {this.state.error.toString()}
+              </p>
+            </details>
+          )}
+          <button 
+            onClick={this.handleReset}
+            className="mt-3 px-3 py-1 bg-red-100 hover:bg-red-200 text-red-800 text-sm rounded transition-colors"
+          >
+            Try again
+          </button>
         </div>
       );
     }
 
-    // Return children if there's no error
-    return children;
+    return this.props.children;
   }
 }
 

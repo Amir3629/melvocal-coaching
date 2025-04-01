@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useEffect, useCallback } from 'react';
+import { useEffect, useState } from 'react';
+
+type DebugLevel = 'error' | 'warn' | 'info' | 'debug';
 
 /**
  * Debug mode hook that enables debugging features
@@ -8,9 +10,10 @@ import { useState, useEffect, useCallback } from 'react';
  * 1. URL parameter: ?debug=true 
  * 2. Key sequence: Press 'd' key 3 times
  */
-export function useDebug() {
+export function useDebug(componentName: string, enabled = process.env.NODE_ENV !== 'production') {
   const [isDebugMode, setIsDebugMode] = useState(false);
   const [keySequence, setKeySequence] = useState<string[]>([]);
+  const [logs, setLogs] = useState<{level: DebugLevel, message: string, data?: any}[]>([]);
   
   // Check URL parameters for debug mode
   useEffect(() => {
@@ -57,14 +60,38 @@ export function useDebug() {
   }, []);
   
   // Toggle debug mode function
-  const toggleDebugMode = useCallback(() => {
+  const toggleDebugMode = () => {
     setIsDebugMode(prev => !prev);
+  };
+  
+  const log = (level: DebugLevel, message: string, data?: any) => {
+    if (!enabled) return;
+    
+    console[level](`[${componentName}] ${message}`, data);
+    setLogs(prev => [...prev, {level, message, data}]);
+  };
+
+  // Add global error listener
+  useEffect(() => {
+    if (!enabled) return;
+    
+    const handleError = (event: ErrorEvent) => {
+      log('error', `Unhandled error: ${event.message}`, {
+        filename: event.filename,
+        lineno: event.lineno,
+        colno: event.colno,
+        error: event.error
+      });
+    };
+    
+    window.addEventListener('error', handleError);
+    return () => window.removeEventListener('error', handleError);
   }, []);
   
   /**
    * Log potentially problematic props that could cause React Error #130
    */
-  const logPropIssues = (componentName: string, props: Record<string, any>) => {
+  const logPropIssues = (props: Record<string, any>) => {
     if (!isDebugMode) return;
 
     // Check for problematic props (objects that might be passed directly to JSX)
@@ -98,6 +125,11 @@ export function useDebug() {
   return {
     isDebugMode,
     toggleDebugMode,
-    logPropIssues
+    logPropIssues,
+    error: (message: string, data?: any) => log('error', message, data),
+    warn: (message: string, data?: any) => log('warn', message, data),
+    info: (message: string, data?: any) => log('info', message, data),
+    debug: (message: string, data?: any) => log('debug', message, data),
+    logs
   };
 } 

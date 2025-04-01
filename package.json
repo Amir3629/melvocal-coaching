@@ -20,7 +20,12 @@
     "dev:clean": "npm run setup-dev && npm run dev",
     "fix-images": "node copy-sample-images.js",
     "fix-local": "node fix-dev-environment.js",
-    "setup": "npm run fix-local && npm run dev"
+    "setup": "npm run fix-local && npm run dev",
+    "analyze": "node scripts/analyze-components.js",
+    "analyze:debug": "DEBUG=* node scripts/analyze-components.js",
+    "build:debug": "ANALYZE=true NODE_OPTIONS='--max-old-space-size=4096' next build",
+    "build:trace": "TRACE=true NEXT_TELEMETRY_DEBUG=1 next build",
+    "debug:static": "npm run analyze && npm run build:debug"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

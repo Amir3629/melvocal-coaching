@@ -1,6 +1,8 @@
 "use client";
 
 import { ensureString } from './formatters';
+import { useParams, useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 /**
  * Utility functions for safely using the Next.js Router
@@ -87,4 +89,94 @@ export function warnIfRouterObject(props: Record<string, any>, componentName: st
       );
     }
   });
+}
+
+/**
+ * Safely gets a route parameter, accounting for static generation
+ * where useParams() might not be available yet
+ */
+export function safelyGetParam(key: string): string | null {
+  try {
+    // Using try/catch because useParams might not be available
+    // during static generation
+    const params = useParams();
+    if (!params) return null;
+    
+    const value = params[key];
+    return value ? (Array.isArray(value) ? value[0] : value) : null;
+  } catch (e) {
+    console.warn(`Error getting param ${key}:`, e);
+    return null;
+  }
+}
+
+/**
+ * Safely gets a query parameter, accounting for static generation
+ * where useSearchParams() might not be available yet
+ */
+export function safelyGetQueryParam(key: string): string | null {
+  try {
+    const searchParams = useSearchParams();
+    if (!searchParams) return null;
+    
+    return searchParams.get(key);
+  } catch (e) {
+    console.warn(`Error getting query param ${key}:`, e);
+    return null;
+  }
+}
+
+/**
+ * Hook for validating router params with type safety
+ */
+export function useValidatedParams<T extends Record<string, string>>(
+  validator: (params: Record<string, string | string[]>) => T | null
+): { params: T | null, isLoading: boolean } {
+  const [validatedParams, setValidatedParams] = useState<T | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  try {
+    const params = useParams();
+    
+    useEffect(() => {
+      if (params) {
+        const validated = validator(params);
+        setValidatedParams(validated);
+        setIsLoading(false);
+      }
+    }, [params, validator]);
+    
+    return { params: validatedParams, isLoading };
+  } catch (e) {
+    // During static generation, useParams might throw
+    return { params: null, isLoading: true };
+  }
+}
+
+/**
+ * Safe wrapper for working with useSearchParams in static builds
+ */
+export function useSafeSearchParams() {
+  const [searchParamsReady, setSearchParamsReady] = useState(false);
+  const [params, setParams] = useState<Record<string, string>>({});
+  
+  try {
+    const searchParams = useSearchParams();
+    
+    useEffect(() => {
+      if (searchParams) {
+        const newParams: Record<string, string> = {};
+        searchParams.forEach((value, key) => {
+          newParams[key] = value;
+        });
+        setParams(newParams);
+        setSearchParamsReady(true);
+      }
+    }, [searchParams]);
+    
+    return { params, isReady: searchParamsReady };
+  } catch (e) {
+    console.warn('Error using search params:', e);
+    return { params: {}, isReady: false };
+  }
 } 

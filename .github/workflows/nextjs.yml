@@ -31,85 +31,60 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Detect package manager
-        id: detect-package-manager
-        run: |
-          if [ -f "${{ github.workspace }}/yarn.lock" ]; then
-            echo "manager=yarn" >> $GITHUB_OUTPUT
-            echo "command=install" >> $GITHUB_OUTPUT
-            echo "runner=yarn" >> $GITHUB_OUTPUT
-            exit 0
-          elif [ -f "${{ github.workspace }}/package.json" ]; then
-            echo "manager=npm" >> $GITHUB_OUTPUT
-            echo "command=ci" >> $GITHUB_OUTPUT
-            echo "runner=npx --no-install" >> $GITHUB_OUTPUT
-            exit 0
-          else
-            echo "Unable to determine package manager"
-            exit 1
-          fi
+      
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: ${{ steps.detect-package-manager.outputs.manager }}
+          cache: 'npm'
+      
       - name: Setup Pages
         uses: actions/configure-pages@v5
         with:
-          # Automatically inject basePath in your Next.js configuration file and disable
-          # server side image optimization (https://nextjs.org/docs/api-reference/next/image#unoptimized).
-          #
-          # You may remove this line if you want to manage the configuration yourself.
           static_site_generator: next
+      
       - name: Restore cache
         uses: actions/cache@v4
         with:
           path: |
             .next/cache
-          # Generate a new cache whenever packages or source files change.
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
-          # If source files changed but packages didn't, rebuild from a prior cache.
           restore-keys: |
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
+      
       - name: Install dependencies
-        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+        run: npm ci
       
-      # Set specific environment variables for GitHub Pages
-      - name: Set GitHub Pages environment variables
+      - name: Set GitHub Pages environment
+        run: echo "GITHUB_PAGES=true" >> $GITHUB_ENV
+      
+      - name: Check Next.js version
+        run: npm list next
+      
+      - name: Install glob dependency for component analysis
+        run: npm install --no-save glob
+      
+      - name: Run component analysis
+        run: node scripts/analyze-components.js || echo "Component analysis failed but continuing build"
+      
+      - name: Build with Next.js (with diagnostic output)
         run: |
-          echo "GITHUB_PAGES=true" >> $GITHUB_ENV
-          echo "NEXT_PUBLIC_BASE_PATH=/melvocal-coaching" >> $GITHUB_ENV
-          echo "NODE_ENV=production" >> $GITHUB_ENV
-          echo "Set GitHub Pages environment variables"
-      
-      # Display Next.js version for debugging
-      - name: Display Next.js version
-        run: ${{ steps.detect-package-manager.outputs.manager }} list next
-      
-      # Run the build with specific environment variables
-      - name: Build with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} next build
+          echo "Building Next.js app with enhanced debugging..."
+          export NODE_OPTIONS="--max-old-space-size=4096"
+          npx --no-install next build
         env:
-          GITHUB_PAGES: true
-          NEXT_PUBLIC_BASE_PATH: /melvocal-coaching
+          NEXT_TELEMETRY_DISABLED: 1
           NODE_ENV: production
+          DEBUG: '*'
+          ANALYZE: true
       
-      # Run our custom GitHub Pages build helper
-      - name: Run GitHub Pages build helper
-        run: node github-pages-build.js
+      - name: Add .nojekyll file
+        run: touch out/.nojekyll
       
-      # Artifact saving for debugging
-      - name: Upload build artifact for debugging
-        uses: actions/upload-artifact@v4
-        with:
-          name: next-build
-          path: |
-            .next/
-            out/
-            next.config.js
-          retention-days: 7
+      - name: Add fallback 404 page
+        run: |
+          [ -f out/404.html ] || cp out/index.html out/404.html
       
-      # Standard Pages artifact upload
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
