@@ -7,6 +7,10 @@ import { motion, AnimatePresence } from 'framer-motion'
 import LegalDocumentModal from '../legal-document-modal'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/navigation'
+import ErrorBoundary from '../error-boundary'
+import SafeText from '../ui/safe-text'
+import DateDisplay from '../ui/date-display'
+import { formatDate, ensureString } from '@/lib/formatters'
 
 // Service types
 type ServiceType = 'gesangsunterricht' | 'vocal-coaching' | 'professioneller-gesang' | null
@@ -131,22 +135,6 @@ export default function ConfirmationStep({ formData, serviceType, onChange, onCl
   const [missingFields, setMissingFields] = useState<string[]>([])
   const [isSubmitting, setIsSubmitting] = useState(false)
   
-  // Format date for display
-  const formatDate = (dateString?: string) => {
-    if (!dateString) return '';
-    
-    try {
-      const date = new Date(dateString);
-      return new Intl.DateTimeFormat('de-DE', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric'
-      }).format(date);
-    } catch (e) {
-      return dateString;
-    }
-  }
-  
   // Get service name based on type
   const getServiceName = () => {
     switch(serviceType) {
@@ -249,8 +237,17 @@ export default function ConfirmationStep({ formData, serviceType, onChange, onCl
   
   // Get preferred dates formatted
   const getPreferredDatesFormatted = () => {
-    if (!formData.preferredDates?.length) return '';
-    return formData.preferredDates.map(date => formatDate(date)).join(', ');
+    if (!formData.preferredDates || formData.preferredDates.length === 0) {
+      return '';
+    }
+    
+    // Use join for string array values, otherwise format each date
+    if (typeof formData.preferredDates[0] === 'string' && 
+        !formData.preferredDates[0].match(/^\d{4}-\d{2}-\d{2}/)) {
+      return formData.preferredDates.join(', ');
+    }
+    
+    return formData.preferredDates.map(date => ensureString(formatDate(date))).join(', ');
   }
   
   // Get service-specific details
@@ -262,17 +259,30 @@ export default function ConfirmationStep({ formData, serviceType, onChange, onCl
             <div className="flex items-center text-sm">
               <Calendar className="w-4 h-4 mr-2 text-[#C8A97E]" />
               <span className="text-gray-400">{t('booking.eventDate', 'Datum')}:</span>
-              <span className="ml-2 text-white">{formatDate(formData.eventDate)}</span>
+              <DateDisplay 
+                value={formData.eventDate} 
+                format="date" 
+                className="ml-2 text-white" 
+                fallback="N/A"
+              />
             </div>
             <div className="flex items-center text-sm">
               <Users className="w-4 h-4 mr-2 text-[#C8A97E]" />
               <span className="text-gray-400">{t('booking.guestCount', 'Gäste')}:</span>
-              <span className="ml-2 text-white">{formData.guestCount}</span>
+              <SafeText 
+                value={formData.guestCount}
+                className="ml-2 text-white"
+                fallback="N/A"
+              />
             </div>
             <div className="flex items-center text-sm">
               <Music className="w-4 h-4 mr-2 text-[#C8A97E]" />
               <span className="text-gray-400">{t('booking.performanceType', 'Performance')}:</span>
-              <span className="ml-2 text-white">{getPerformanceTypeName()}</span>
+              <SafeText 
+                value={getPerformanceTypeName()}
+                className="ml-2 text-white"
+                fallback="N/A"
+              />
             </div>
           </div>
         );
@@ -282,17 +292,30 @@ export default function ConfirmationStep({ formData, serviceType, onChange, onCl
             <div className="flex items-center text-sm">
               <BookOpen className="w-4 h-4 mr-2 text-[#C8A97E]" />
               <span className="text-gray-400">{t('booking.sessionType', 'Session')}:</span>
-              <span className="ml-2 text-white">{getSessionTypeName()}</span>
+              <SafeText 
+                value={getSessionTypeName()}
+                className="ml-2 text-white"
+                fallback="N/A"
+              />
             </div>
             <div className="flex items-center text-sm">
               <Target className="w-4 h-4 mr-2 text-[#C8A97E]" />
               <span className="text-gray-400">{t('booking.skillLevel', 'Level')}:</span>
-              <span className="ml-2 text-white">{getSkillLevelName()}</span>
+              <SafeText 
+                value={getSkillLevelName()}
+                className="ml-2 text-white"
+                fallback="N/A"
+              />
             </div>
             <div className="flex items-center text-sm">
               <Calendar className="w-4 h-4 mr-2 text-[#C8A97E]" />
               <span className="text-gray-400">{t('booking.preferredDate', 'Datum')}:</span>
-              <span className="ml-2 text-white">{formatDate(formData.preferredDate)}</span>
+              <DateDisplay 
+                value={formData.preferredDate}
+                format="date"
+                className="ml-2 text-white"
+                fallback="N/A"
+              />
             </div>
           </div>
         );
@@ -302,23 +325,39 @@ export default function ConfirmationStep({ formData, serviceType, onChange, onCl
             <div className="flex items-center text-sm">
               <BookOpen className="w-4 h-4 mr-2 text-[#C8A97E]" />
               <span className="text-gray-400">{t('booking.workshopTheme', 'Thema')}:</span>
-              <span className="ml-2 text-white">{getWorkshopThemeName()}</span>
+              <SafeText 
+                value={getWorkshopThemeName()}
+                className="ml-2 text-white"
+                fallback="N/A"
+              />
             </div>
             <div className="flex items-center text-sm">
               <Users className="w-4 h-4 mr-2 text-[#C8A97E]" />
               <span className="text-gray-400">{t('booking.groupSize', 'Gruppengröße')}:</span>
-              <span className="ml-2 text-white">{formData.groupSize}</span>
+              <SafeText 
+                value={formData.groupSize}
+                className="ml-2 text-white"
+                fallback="N/A"
+              />
             </div>
             <div className="flex items-center text-sm">
               <Clock className="w-4 h-4 mr-2 text-[#C8A97E]" />
               <span className="text-gray-400">{t('booking.duration', 'Dauer')}:</span>
-              <span className="ml-2 text-white">{getWorkshopDuration()}</span>
+              <SafeText 
+                value={getWorkshopDuration()}
+                className="ml-2 text-white"
+                fallback="N/A"
+              />
             </div>
             {formData.preferredDates?.length > 0 && (
               <div className="flex items-center text-sm">
                 <Calendar className="w-4 h-4 mr-2 text-[#C8A97E]" />
                 <span className="text-gray-400">{t('booking.preferredDates', 'Termine')}:</span>
-                <span className="ml-2 text-white">{getPreferredDatesFormatted()}</span>
+                <SafeText 
+                  value={getPreferredDatesFormatted()}
+                  className="ml-2 text-white"
+                  fallback="N/A"
+                />
               </div>
             )}
           </div>
@@ -379,140 +418,144 @@ export default function ConfirmationStep({ formData, serviceType, onChange, onCl
   }
   
   return (
-    <div className="space-y-4 sm:space-y-5">
-      <div className="space-y-3 sm:space-y-4">
-        <div className="bg-[#1A1A1A] rounded-lg p-3 sm:p-4 border border-gray-800 shadow-lg">
-          {/* Service Type */}
-          <div className="mb-3 sm:mb-4 pb-2 sm:pb-3 border-b border-gray-800">
-            <h4 className="text-sm sm:text-base font-medium text-white mb-1">
-              {t('booking.selectedService', 'Ausgewählter Dienst')}
-            </h4>
-            <p className="text-[#C8A97E] font-medium text-sm sm:text-base">{getServiceName()}</p>
-          </div>
-          
-          {/* Personal Information */}
-          <div className="mb-3 sm:mb-4 pb-2 sm:pb-3 border-b border-gray-800">
-            <h4 className="text-sm sm:text-base font-medium text-white mb-1">
-              {t('booking.personalInfo', 'Persönliche Informationen')}
-            </h4>
-            <div className="space-y-1">
-              <div>
-                <p className="text-gray-400 text-xs sm:text-sm">{t('booking.name', 'Name')}:</p>
-                <p className="text-white text-sm sm:text-base">{formData.name || 'N/A'}</p>
-              </div>
-              <div>
-                <p className="text-gray-400 text-xs sm:text-sm">{t('booking.email', 'E-Mail')}:</p>
-                <p className="text-white text-sm sm:text-base">{formData.email || 'N/A'}</p>
-              </div>
-              <div>
-                <p className="text-gray-400 text-xs sm:text-sm">{t('booking.phone', 'Telefon')}:</p>
-                <p className="text-white text-sm sm:text-base">{formData.phone || 'N/A'}</p>
-              </div>
-              {formData.message && (
+    <ErrorBoundary>
+      <div className="space-y-4 sm:space-y-5">
+        <div className="space-y-3 sm:space-y-4">
+          <div className="bg-[#1A1A1A] rounded-lg p-3 sm:p-4 border border-gray-800 shadow-lg">
+            {/* Service Type */}
+            <div className="mb-3 sm:mb-4 pb-2 sm:pb-3 border-b border-gray-800">
+              <h4 className="text-sm sm:text-base font-medium text-white mb-1">
+                {t('booking.selectedService', 'Ausgewählter Dienst')}
+              </h4>
+              <p className="text-[#C8A97E] font-medium text-sm sm:text-base">{getServiceName()}</p>
+            </div>
+            
+            {/* Personal Information */}
+            <div className="mb-3 sm:mb-4 pb-2 sm:pb-3 border-b border-gray-800">
+              <h4 className="text-sm sm:text-base font-medium text-white mb-1">
+                {t('booking.personalInfo', 'Persönliche Informationen')}
+              </h4>
+              <div className="space-y-1">
+                <div>
+                  <p className="text-gray-400 text-xs sm:text-sm">{t('booking.name', 'Name')}:</p>
+                  <SafeText value={formData.name} className="text-white text-sm sm:text-base" fallback="N/A" />
+                </div>
+                <div>
+                  <p className="text-gray-400 text-xs sm:text-sm">{t('booking.email', 'E-Mail')}:</p>
+                  <SafeText value={formData.email} className="text-white text-sm sm:text-base" fallback="N/A" />
+                </div>
+                <div>
+                  <p className="text-gray-400 text-xs sm:text-sm">{t('booking.phone', 'Telefon')}:</p>
+                  <SafeText value={formData.phone} className="text-white text-sm sm:text-base" fallback="N/A" />
+                </div>
+                {formData.message && (
                   <div>
-                  <p className="text-gray-400 text-xs sm:text-sm">{t('booking.message', 'Nachricht')}:</p>
-                  <p className="text-white text-sm sm:text-base">{formData.message}</p>
+                    <p className="text-gray-400 text-xs sm:text-sm">{t('booking.message', 'Nachricht')}:</p>
+                    <SafeText value={formData.message} className="text-white text-sm sm:text-base" fallback="N/A" />
                   </div>
                 )}
               </div>
             </div>
-          
-          {/* Service Specific Details */}
-          <div className="mb-3 sm:mb-4 pb-2 sm:pb-3 border-b border-gray-800">
-            <h4 className="text-sm sm:text-base font-medium text-white mb-1">
-              {t('booking.serviceDetails', 'Details zum Dienst')}
-              </h4>
-            {getServiceSpecificDetails()}
+            
+            {/* Service Specific Details */}
+            <div className="mb-3 sm:mb-4 pb-2 sm:pb-3 border-b border-gray-800">
+              <h4 className="text-sm sm:text-base font-medium text-white mb-1">
+                {t('booking.serviceDetails', 'Details zum Dienst')}
+                </h4>
+              {getServiceSpecificDetails()}
+              </div>
+            
+            {/* Terms and Privacy */}
+            <div className="space-y-3">
+            <div className="flex items-start">
+                <input
+                  type="checkbox"
+                  id="terms"
+                  checked={formData.termsAccepted}
+                  onChange={(e) => onChange({ termsAccepted: e.target.checked })}
+                  className="mt-1 w-4 h-4 rounded border-gray-700 text-[#C8A97E] focus:ring-[#C8A97E] bg-[#1A1A1A]"
+                />
+                <label htmlFor="terms" className="ml-2 text-xs sm:text-sm text-gray-300">
+                  {t('booking.termsAccept', 'Ich akzeptiere die')}{' '}
+                <button 
+                  type="button"
+                  onClick={() => setShowAGB(true)}
+                    className="text-[#C8A97E] hover:underline"
+                >
+                  {t('booking.termsAndConditions', 'AGB')}
+                </button>
+              </label>
             </div>
-          
-          {/* Terms and Privacy */}
-          <div className="space-y-3">
-          <div className="flex items-start">
-              <input
-                type="checkbox"
-                id="terms"
-                checked={formData.termsAccepted}
-                onChange={(e) => onChange({ termsAccepted: e.target.checked })}
-                className="mt-1 w-4 h-4 rounded border-gray-700 text-[#C8A97E] focus:ring-[#C8A97E] bg-[#1A1A1A]"
-              />
-              <label htmlFor="terms" className="ml-2 text-xs sm:text-sm text-gray-300">
-                {t('booking.termsAccept', 'Ich akzeptiere die')}{' '}
-              <button 
-                type="button"
-                onClick={() => setShowAGB(true)}
-                  className="text-[#C8A97E] hover:underline"
-              >
-                {t('booking.termsAndConditions', 'AGB')}
-              </button>
-            </label>
-          </div>
-          
-          <div className="flex items-start">
-              <input
-                type="checkbox"
-                id="privacy"
-                checked={formData.privacyAccepted}
-                onChange={(e) => onChange({ privacyAccepted: e.target.checked })}
-                className="mt-1 w-4 h-4 rounded border-gray-700 text-[#C8A97E] focus:ring-[#C8A97E] bg-[#1A1A1A]"
-              />
-              <label htmlFor="privacy" className="ml-2 text-xs sm:text-sm text-gray-300">
-                {t('booking.privacyAccept', 'Ich akzeptiere die')}{' '}
-              <button 
-                type="button"
-                onClick={() => setShowDatenschutz(true)}
-                  className="text-[#C8A97E] hover:underline"
-              >
-                {t('booking.privacyPolicy', 'Datenschutzerklärung')}
-              </button>
-            </label>
+            
+            <div className="flex items-start">
+                <input
+                  type="checkbox"
+                  id="privacy"
+                  checked={formData.privacyAccepted}
+                  onChange={(e) => onChange({ privacyAccepted: e.target.checked })}
+                  className="mt-1 w-4 h-4 rounded border-gray-700 text-[#C8A97E] focus:ring-[#C8A97E] bg-[#1A1A1A]"
+                />
+                <label htmlFor="privacy" className="ml-2 text-xs sm:text-sm text-gray-300">
+                  {t('booking.privacyAccept', 'Ich akzeptiere die')}{' '}
+                <button 
+                  type="button"
+                  onClick={() => setShowDatenschutz(true)}
+                    className="text-[#C8A97E] hover:underline"
+                >
+                  {t('booking.privacyPolicy', 'Datenschutzerklärung')}
+                </button>
+              </label>
+              </div>
+            </div>
             </div>
           </div>
-          </div>
+          
+          {/* Submit Button */}
+        <div className="flex justify-end">
+            <button
+              onClick={handleSubmit}
+            disabled={isSubmitting || !formData.termsAccepted || !formData.privacyAccepted}
+            className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg text-sm sm:text-base font-medium transition-colors ${
+              isSubmitting || !formData.termsAccepted || !formData.privacyAccepted
+                ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
+                : 'bg-[#C8A97E] text-black hover:bg-[#B69468]'
+            }`}
+          >
+            {isSubmitting ? t('booking.submitting', 'Wird gesendet...') : t('booking.submit', 'Jetzt buchen')}
+            </button>
         </div>
         
-        {/* Submit Button */}
-      <div className="flex justify-end">
-          <button
-            onClick={handleSubmit}
-          disabled={isSubmitting || !formData.termsAccepted || !formData.privacyAccepted}
-          className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg text-sm sm:text-base font-medium transition-colors ${
-            isSubmitting || !formData.termsAccepted || !formData.privacyAccepted
-              ? 'bg-gray-700 text-gray-400 cursor-not-allowed'
-              : 'bg-[#C8A97E] text-black hover:bg-[#B69468]'
-          }`}
+        {/* Success Notification */}
+        <AnimatePresence>
+          {showSuccessNotification && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
+              className="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50"
+            >
+              <AnimatedText text={t('booking.successMessage', 'Ihre Anfrage wurde erfolgreich gesendet!')} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+        
+        {/* Legal Document Modals */}
+        <LegalDocumentModal 
+          isOpen={showAGB} 
+          onClose={() => setShowAGB(false)} 
+          title={t('booking.termsAndConditions', 'Allgemeine Geschäftsbedingungen')}
         >
-          {isSubmitting ? t('booking.submitting', 'Wird gesendet...') : t('booking.submit', 'Jetzt buchen')}
-          </button>
+          <AGBContent />
+        </LegalDocumentModal>
+        
+        <LegalDocumentModal 
+          isOpen={showDatenschutz} 
+          onClose={() => setShowDatenschutz(false)} 
+          title={t('booking.privacyPolicy', 'Datenschutzerklärung')}
+        >
+          <DatenschutzContent />
+        </LegalDocumentModal>
       </div>
-      
-      {/* Success Notification */}
-      <AnimatePresence>
-        {showSuccessNotification && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg z-50"
-          >
-            <AnimatedText text={t('booking.successMessage', 'Ihre Anfrage wurde erfolgreich gesendet!')} />
-          </motion.div>
-        )}
-      </AnimatePresence>
-      
-      {/* Legal Document Modals */}
-      <LegalDocumentModal 
-        isOpen={showAGB} 
-        onClose={() => setShowAGB(false)}
-        title={t('booking.termsAndConditions', 'AGB')}
-        content={<AGBContent />}
-      />
-      
-      <LegalDocumentModal 
-        isOpen={showDatenschutz} 
-        onClose={() => setShowDatenschutz(false)}
-        title={t('booking.privacyPolicy', 'Datenschutzerklärung')}
-        content={<DatenschutzContent />}
-      />
-    </div>
+    </ErrorBoundary>
   )
 } 
