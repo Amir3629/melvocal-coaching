@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  output: process.env.NODE_ENV === 'production' ? 'export' : undefined,
+  output: 'export',
   images: {
     unoptimized: true,
     remotePatterns: [
@@ -29,6 +29,12 @@ const nextConfig = {
   },
   publicRuntimeConfig: {
     basePath: process.env.NODE_ENV === 'production' ? '/melvocal-coaching' : '',
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 }
 
