@@ -1,19 +1,22 @@
-export default function TestRouterNotFound() {
+export default function TestRouter() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-6">
-      <div className="text-center max-w-md">
-        <h1 className="text-3xl font-bold mb-4">Router Test Disabled</h1>
-        <p className="mb-6">
-          The router test page has been disabled in production.
-          This feature is only available in development mode.
-        </p>
-        <a 
-          href="/"
-          className="inline-block px-4 py-2 rounded bg-[#C8A97E] text-black hover:bg-[#D4AF37] transition-colors"
-        >
-          Return to Home
-        </a>
-      </div>
+    <div style={{ padding: '2rem', maxWidth: '500px', margin: '0 auto', textAlign: 'center' }}>
+      <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>Test Router Page</h1>
+      <p style={{ marginBottom: '2rem' }}>
+        The test router components are only available in development mode.
+      </p>
+      <a 
+        href="/" 
+        style={{ 
+          background: '#C8A97E', 
+          color: 'black', 
+          padding: '0.5rem 1rem', 
+          borderRadius: '0.25rem',
+          textDecoration: 'none'
+        }}
+      >
+        Return to Home
+      </a>
     </div>
   );
 } 
