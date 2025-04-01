@@ -12,6 +12,8 @@ import RootClient from "./components/root-client"
 import { MediaProvider } from "./components/media-context"
 import GlobalErrorBoundary from './components/GlobalErrorBoundary'
 import SuspenseWrapper from './components/suspense-wrapper'
+import RuntimeMonitor from './components/runtime-monitor'
+import StaticSiteHandler from './components/static-site-handler'
 
 const inter = Inter({ subsets: ["latin"] })
 const playfair = Playfair_Display({
@@ -209,9 +211,11 @@ export default function RootLayout({
         <GlobalErrorBoundary>
           <MediaProvider>
             <RootClient className={`dark-theme-black ${playfair.variable} ${cormorant.variable} ${montserrat.variable} ${roboto.variable} ${inter.className} antialiased`}>
+              <StaticSiteHandler />
               <SuspenseWrapper>
                 {children}
               </SuspenseWrapper>
+              <RuntimeMonitor />
             </RootClient>
           </MediaProvider>
         </GlobalErrorBoundary>
