@@ -22,10 +22,11 @@
     "fix-local": "node fix-dev-environment.js",
     "setup": "npm run fix-local && npm run dev",
     "analyze": "node scripts/analyze-components.js",
-    "analyze:debug": "DEBUG=* node scripts/analyze-components.js",
-    "build:debug": "ANALYZE=true NODE_OPTIONS='--max-old-space-size=4096' next build",
-    "build:trace": "TRACE=true NEXT_TELEMETRY_DEBUG=1 next build",
-    "debug:static": "npm run analyze && npm run build:debug"
+    "analyze:debug": "set DEBUG=* && node scripts/analyze-components.js",
+    "build:debug": "set ANALYZE=true && set NODE_OPTIONS=--max-old-space-size=4096 && next build",
+    "build:trace": "set TRACE=true && set NEXT_TELEMETRY_DEBUG=1 && next build",
+    "debug:static": "npm run analyze && npm run build:debug",
+    "debug:browser": "node scripts/analyze-browser-logs.js"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
