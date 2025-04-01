@@ -10,6 +10,7 @@ import type { Metadata, Viewport } from "next"
 import { Inter, Playfair_Display, Cormorant_Garamond, Montserrat, Roboto } from "next/font/google"
 import RootClient from "./components/root-client"
 import { MediaProvider } from "./components/media-context"
+import GlobalErrorBoundary from './components/GlobalErrorBoundary'
 
 const inter = Inter({ subsets: ["latin"] })
 const playfair = Playfair_Display({
@@ -204,11 +205,13 @@ export default function RootLayout({
         }} />
       </head>
       <body className={`${roboto.className} w-full min-w-full overflow-x-hidden bg-black`}>
-        <MediaProvider>
-          <RootClient className={`dark-theme-black ${playfair.variable} ${cormorant.variable} ${montserrat.variable} ${roboto.variable} ${inter.className} antialiased`}>
-            {children}
-          </RootClient>
-        </MediaProvider>
+        <GlobalErrorBoundary>
+          <MediaProvider>
+            <RootClient className={`dark-theme-black ${playfair.variable} ${cormorant.variable} ${montserrat.variable} ${roboto.variable} ${inter.className} antialiased`}>
+              {children}
+            </RootClient>
+          </MediaProvider>
+        </GlobalErrorBoundary>
       </body>
     </html>
   )
