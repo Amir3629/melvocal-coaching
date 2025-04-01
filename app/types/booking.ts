@@ -8,7 +8,7 @@ export interface BookingFormData {
   serviceType?: ServiceType;
   
   // Live Singing fields
-  eventType?: 'wedding' | 'corporate' | 'private' | 'other';
+  eventType?: 'vernissage' | 'jazz-festivals' | 'private-feier';
   eventDate?: string;
   guestCount?: string;
   musicPreferences?: string[];

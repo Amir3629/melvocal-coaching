@@ -7,15 +7,11 @@ const basePath = isProduction && isGitHubPages ? '/melvocal-coaching' : '';
 
 const nextConfig = {
   reactStrictMode: true,
-  // Only apply basePath and assetPrefix for GitHub Pages
-  ...(isGitHubPages ? {
-    basePath: basePath,
-    assetPrefix: basePath,
-  } : {}),
-  // Only set output to 'export' when deploying to GitHub Pages
-  ...(isGitHubPages ? { output: 'export' } : {}),
+  basePath: basePath,
+  assetPrefix: basePath,
+  output: 'export', // Always use export for GitHub Pages compatibility
   images: {
-    unoptimized: isGitHubPages, // Only unoptimize for GitHub Pages
+    unoptimized: true, // Unoptimize for static exports
     remotePatterns: [
       {
         protocol: 'https',
@@ -30,7 +26,7 @@ const nextConfig = {
     ],
     domains: ['images.unsplash.com'],
   },
-  trailingSlash: isGitHubPages, // Only use trailing slash for GitHub Pages
+  trailingSlash: true, // Use trailing slash for better compatibility
   webpack: (config, { dev, isServer }) => {
     // Add webpack configuration for improved debugging
     config.module.rules.push({
