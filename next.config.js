@@ -36,6 +36,14 @@ const nextConfig = {
       type: 'asset/resource',
     });
 
+    // Exclude test router files from being processed by webpack
+    config.module.rules.push({
+      test: /[\\/]app[\\/]test-router[\\/].+\.(js|jsx|ts|tsx)$/,
+      use: [{
+        loader: 'null-loader'
+      }]
+    });
+
     // Enhanced error handling in development
     if (dev && !isServer) {
       config.devtool = 'source-map';
@@ -86,6 +94,8 @@ const nextConfig = {
         '**/current-backup-*/**',
         '**/clean_restore/**',
         '**/test-router/**', // Exclude test router directory
+        '**/hooks/use-debug.ts',      // Exclude problematic files
+        '**/hooks/use-router-debug.ts',
       ],
     },
   },
