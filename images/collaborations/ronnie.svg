@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g transform="translate(20, 10)">
+    <text x="80" y="25" font-family="Palatino" font-weight="bold" font-size="22" fill="currentColor" text-anchor="middle">RONNIE SCOTT'S</text>
+    <text x="80" y="40" font-family="Arial" font-weight="normal" font-size="12" fill="currentColor" text-anchor="middle">JAZZ CLUB</text>
+    <path d="M20,30 h120" stroke="currentColor" stroke-width="0.5"/>
+  </g>
+</svg> 

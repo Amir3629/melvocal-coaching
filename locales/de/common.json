@@ -1,0 +1,100 @@
+{
+  "nav": {
+    "home": "Start",
+    "services": "Leistungen",
+    "about": "Über mich",
+    "references": "Referenzen",
+    "testimonials": "Stimmen",
+    "contact": "Kontakt",
+    "menu": "Menü öffnen",
+    "close": "Menü schließen"
+  },
+  "logo": {
+    "alt": "Mel Jazz Logo"
+  },
+  "language": {
+    "switchTo": "Switch to English"
+  },
+  "hero": {
+    "title": "Entdecke deine Stimme",
+    "subtitle": "Professionelles Vocal Coaching in Berlin",
+    "cta": "Jetzt buchen"
+  },
+  "music": {
+    "title": "Meine Musik",
+    "play": "Abspielen",
+    "pause": "Pause",
+    "loading": "Lädt..."
+  },
+  "video": {
+    "title": "Einblicke"
+  },
+  "services": {
+    "title": "Leistungen",
+    "singing": {
+      "title": "Gesangsunterricht",
+      "description": "Individueller Unterricht für alle Level",
+      "features": [
+        "Stimmtraining",
+        "Atemtechnik",
+        "Interpretation",
+        "Bühnenpräsenz"
+      ],
+      "details": {
+        "includes": [
+          "Stimmanalyse",
+          "Individueller Trainingsplan",
+          "Aufnahmen",
+          "Übungsmaterial"
+        ],
+        "suitable": [
+          "Anfänger",
+          "Fortgeschrittene",
+          "Profis",
+          "Alle Genres"
+        ],
+        "duration": "60-90 min",
+        "location": "Online & Studio Berlin"
+      }
+    }
+  },
+  "about": {
+    "title": "Über mich",
+    "subtitle": "Professionelle Sängerin & Vocal Coach",
+    "description": "Mit über 15 Jahren Erfahrung im Jazz und Vocal Coaching"
+  },
+  "references": {
+    "title": "Referenzen & Kooperationen"
+  },
+  "testimonials": {
+    "title": "Das sagen andere",
+    "subtitle": "Stimmen von Schülern und Kollaborateuren"
+  },
+  "contact": {
+    "title": "Kontakt aufnehmen",
+    "subtitle": "Buche deine Session oder stelle Fragen",
+    "form": {
+      "name": "Dein Name",
+      "email": "Deine E-Mail",
+      "message": "Deine Nachricht",
+      "submit": "Nachricht senden"
+    }
+  },
+  "footer": {
+    "rights": "Alle Rechte vorbehalten"
+  },
+  "booking": {
+    "title": "Termin buchen",
+    "service": "Leistung auswählen",
+    "date": "Datum auswählen",
+    "time": "Uhrzeit auswählen",
+    "contact": "Ihre Kontaktdaten",
+    "name": "Vollständiger Name",
+    "email": "E-Mail-Adresse",
+    "phone": "Telefonnummer",
+    "message": "Zusätzliche Nachricht",
+    "submit": "Buchung absenden",
+    "success": "Buchung erfolgreich übermittelt!",
+    "error": "Bei der Übermittlung Ihrer Buchung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+  }
+} 

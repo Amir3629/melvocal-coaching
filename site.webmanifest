@@ -1,0 +1,20 @@
+{
+  "name": "Mel Jazz - Vocal Coaching in Berlin",
+  "short_name": "Mel Jazz",
+  "icons": [
+    {
+      "src": "/melvocal-coaching/favicon.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/melvocal-coaching/images/logo/ml-logo.PNG",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "display": "standalone",
+  "start_url": "/melvocal-coaching/"
+}

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <title>iOS Fix Test</title>
+  <style>
+    /* Reset and base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    /* Force black background on everything */
+    html, body {
+      background-color: black;
+      color: white;
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+    }
+    
+    /* Main container */
+    .app {
+      position: relative;
+      background-color: black;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+    }
+    
+    /* Hero container */
+    .hero {
+      position: absolute; 
+      top: 0;
+      left: -50px; /* Extend beyond left side */
+      right: -50px; /* Extend beyond right side */
+      width: calc(100% + 100px);
+      height: 100vh;
+      overflow: hidden;
+    }
+    
+    /* Background video */
+    .video-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+    
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    /* Content */
+    .content {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 20px;
+    }
+    
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+    
+    p {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    button {
+      background-color: #d4af37;
+      color: black;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 9999px;
+      font-size: 1.25rem;
+      cursor: pointer;
+    }
+    
+    /* Background overlay */
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.3);
+      z-index: 5;
+    }
+    
+    /* iOS specific */
+    @supports (-webkit-touch-callout: none) {
+      .hero {
+        left: -100px;
+        right: -100px;
+        width: calc(100% + 200px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="hero">
+      <!-- Background Black Color -->
+      <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: black; z-index: 0;"></div>
+      
+      <!-- Background Video -->
+      <div class="video-container">
+        <video autoplay loop muted playsinline poster="/images/hero-poster.jpg">
+          <source src="/videos/hero-bg.mp4" type="video/mp4">
+        </video>
+      </div>
+      
+      <!-- Overlay -->
+      <div class="overlay"></div>
+      
+      <!-- Content -->
+      <div class="content">
+        <h1>Mel jazz</h1>
+        <p>Vocal Coaching in Berlin</p>
+        <button>Jetzt Buchen</button>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Force background to be black
+    document.addEventListener('DOMContentLoaded', function() {
+      document.documentElement.style.backgroundColor = 'black';
+      document.body.style.backgroundColor = 'black';
+      
+      // Add extra padding beyond screen edges
+      const hero = document.querySelector('.hero');
+      hero.style.left = '-100px';
+      hero.style.right = '-100px';
+      hero.style.width = 'calc(100% + 200px)';
+    });
+  </script>
+</body>
+</html> 
