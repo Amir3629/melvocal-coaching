@@ -42,7 +42,13 @@ export async function GET(request: Request) {
     // Filter mock data based on the requested date
     const filteredSlots = STATIC_AVAILABLE_SLOTS.filter(slot => 
       slot.date === date
-    );
+    ).map(slot => ({
+      ...slot,
+      // Ensure all date fields are properly formatted as strings
+      date: typeof slot.date === 'string' ? slot.date : String(slot.date),
+      startTime: typeof slot.startTime === 'string' ? slot.startTime : new Date(slot.startTime).toISOString(),
+      endTime: typeof slot.endTime === 'string' ? slot.endTime : new Date(slot.endTime).toISOString()
+    }));
     
     return NextResponse.json({ availableSlots: filteredSlots });
 

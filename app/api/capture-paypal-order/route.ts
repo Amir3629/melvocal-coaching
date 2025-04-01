@@ -9,50 +9,75 @@ export async function POST(request: Request) {
     const { orderId } = await request.json();
 
     // For static export (GitHub Pages), return a mock successful response
-    if (process.env.GITHUB_PAGES === 'true' || process.env.NODE_ENV === 'production') {
-      return NextResponse.json({
-        id: orderId || 'MOCK-ORDER-ID-12345',
-        status: 'COMPLETED',
-        amount: '99.99',
-        currency: 'EUR',
-        createTime: new Date().toISOString(),
-        payerEmail: 'mock-customer@example.com',
-      });
-    }
+    // Edge runtime or production environment - always return mock data
+    return NextResponse.json({
+      id: orderId || 'MOCK-ORDER-ID-12345',
+      status: 'COMPLETED',
+      payment_source: {
+        paypal: {
+          email_address: 'sb-mock@business.example.com',
+          account_id: 'MOCK-ACCOUNT-ID-12345',
+          name: {
+            given_name: 'John',
+            surname: 'Doe'
+          }
+        }
+      },
+      purchase_units: [
+        {
+          reference_id: 'default',
+          shipping: {
+            name: {
+              full_name: 'John Doe'
+            },
+            address: {
+              address_line_1: 'Mock Street 123',
+              admin_area_2: 'Mock City',
+              admin_area_1: 'MO',
+              postal_code: '12345',
+              country_code: 'DE'
+            }
+          },
+          payments: {
+            captures: [
+              {
+                id: 'MOCK-CAPTURE-ID-12345',
+                status: 'COMPLETED',
+                amount: {
+                  currency_code: 'EUR',
+                  value: '50.00'
+                }
+              }
+            ]
+          }
+        }
+      ]
+    });
 
-    const response = await fetch(
-      `${process.env.PAYPAL_API_URL}/v2/checkout/orders/${orderId}/capture`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Basic ${Buffer.from(
-            `${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_CLIENT_SECRET}`
-          ).toString('base64')}`,
-        },
-      }
-    );
+    // The code below will never execute in Edge runtime or static export
+    /* 
+    const response = await fetch(`${process.env.PAYPAL_API_URL}/v2/checkout/orders/${orderId}/capture`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Basic ${Buffer.from(
+          `${process.env.PAYPAL_CLIENT_ID}:${process.env.PAYPAL_CLIENT_SECRET}`
+        ).toString('base64')}`,
+      },
+    });
 
     const data = await response.json();
 
     if (response.ok) {
-      const payment = {
-        id: data.id,
-        status: data.status,
-        amount: data.purchase_units[0].payments.captures[0].amount.value,
-        currency: data.purchase_units[0].payments.captures[0].amount.currency_code,
-        createTime: data.create_time,
-        payerEmail: data.payer.email_address,
-      };
-
-      return NextResponse.json(payment);
+      return NextResponse.json(data);
     } else {
-      throw new Error('Failed to capture PayPal payment');
+      throw new Error('Failed to capture PayPal order');
     }
+    */
   } catch (error) {
-    console.error('Error capturing PayPal payment:', error);
+    console.error('Error capturing PayPal order:', error);
     return NextResponse.json(
-      { error: 'Failed to capture PayPal payment' },
+      { error: 'Failed to capture PayPal order' },
       { status: 500 }
     );
   }

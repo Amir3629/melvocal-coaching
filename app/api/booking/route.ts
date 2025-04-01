@@ -27,14 +27,18 @@ export async function POST(request: Request) {
       )
     }
 
+    // Ensure startTime and endTime are properly formatted as strings
+    const startTimeStr = typeof startTime === 'string' ? startTime : new Date(startTime).toISOString();
+    const endTimeStr = typeof endTime === 'string' ? endTime : new Date(endTime).toISOString();
+
     // For static export (GitHub Pages), return a mock successful response
     // Edge runtime or production environment - always return mock data
     return NextResponse.json({ 
       success: true, 
       booking: {
         id: 'mock-booking-id',
-        startTime,
-        endTime,
+        startTime: startTimeStr,
+        endTime: endTimeStr,
         customerName,
         customerEmail,
         serviceType,

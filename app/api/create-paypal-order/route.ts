@@ -9,20 +9,21 @@ export async function POST(request: Request) {
     const { amount, currency } = await request.json();
 
     // For static export (GitHub Pages), return a mock successful response
-    if (process.env.GITHUB_PAGES === 'true' || process.env.NODE_ENV === 'production') {
-      return NextResponse.json({
-        id: 'MOCK-ORDER-ID-12345',
-        status: 'CREATED',
-        links: [
-          {
-            href: 'https://www.sandbox.paypal.com/checkoutnow?token=MOCK-ORDER-ID-12345',
-            rel: 'approve',
-            method: 'GET'
-          }
-        ]
-      });
-    }
+    // Edge runtime or production environment - always return mock data
+    return NextResponse.json({
+      id: 'MOCK-ORDER-ID-12345',
+      status: 'CREATED',
+      links: [
+        {
+          href: 'https://www.sandbox.paypal.com/checkoutnow?token=MOCK-ORDER-ID-12345',
+          rel: 'approve',
+          method: 'GET'
+        }
+      ]
+    });
 
+    // The code below will never execute in Edge runtime or static export
+    /* 
     const response = await fetch(`${process.env.PAYPAL_API_URL}/v2/checkout/orders`, {
       method: 'POST',
       headers: {
@@ -52,6 +53,7 @@ export async function POST(request: Request) {
     } else {
       throw new Error('Failed to create PayPal order');
     }
+    */
   } catch (error) {
     console.error('Error creating PayPal order:', error);
     return NextResponse.json(
