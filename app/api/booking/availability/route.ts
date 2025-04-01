@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
-import { getAvailableTimeSlots } from '@/lib/google-calendar';
-import { formatDate } from '@/lib/calendar-utils';
+// Only conditionally import these as they use Node.js specific modules
+// not available in Edge runtime
+let getAvailableTimeSlots: any, formatDate: any;
 
 // Using the new route segment config format for Next.js App Router
 export const runtime = 'edge';
@@ -37,16 +38,17 @@ export async function GET(request: Request) {
       );
     }
 
-    // When building for static export, use mock data
-    if (process.env.GITHUB_PAGES === 'true' || process.env.NODE_ENV === 'production') {
-      // Filter mock data based on the requested date
-      const filteredSlots = STATIC_AVAILABLE_SLOTS.filter(slot => 
-        slot.date === date
-      );
-      
-      return NextResponse.json({ availableSlots: filteredSlots });
-    }
+    // In edge runtime or production environment, always use mock data
+    // Filter mock data based on the requested date
+    const filteredSlots = STATIC_AVAILABLE_SLOTS.filter(slot => 
+      slot.date === date
+    );
+    
+    return NextResponse.json({ availableSlots: filteredSlots });
 
+    // The code below will never execute in Edge runtime or static export
+    // but we keep it for documentation/reference
+    /*
     // Regular dynamic behavior for development
     const availableSlots = await getAvailableTimeSlots(date);
 
@@ -58,6 +60,7 @@ export async function GET(request: Request) {
     }));
 
     return NextResponse.json({ availableSlots: formattedSlots });
+    */
   } catch (error) {
     console.error('Error fetching available time slots:', error);
     return NextResponse.json(
