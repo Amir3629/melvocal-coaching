@@ -5,12 +5,11 @@ import "./styles/typography.css"
 import "./styles/theme.css"
 import "./styles/navigation-fix.css"
 import "./styles/scrollbar.css"
-import "./lib/globals"
 import type { Metadata, Viewport } from "next"
 import { Inter, Playfair_Display, Cormorant_Garamond, Montserrat, Roboto } from "next/font/google"
 import RootClient from "./components/root-client"
 import { MediaProvider } from "./components/media-context"
-import StaticSiteHandler from './components/static-site-handler'
+import StaticSiteHandler from "./components/static-site-handler"
 
 const inter = Inter({ subsets: ["latin"] })
 const playfair = Playfair_Display({
@@ -57,12 +56,12 @@ export const metadata: Metadata = {
     apple: { url: process.env.NODE_ENV === 'production' ? '/melvocal-coaching/images/logo/ml-logo.PNG' : '/images/logo/ml-logo.PNG', sizes: '180x180' },
     other: [
       {
-        url: process.env.NODE_ENV === 'production' ? '/melvocal-coaching/site.webmanifest' : '/site.webmanifest',
+        url: process.env.NODE_ENV === 'production' ? '/melvocal-coaching/favicon/site.webmanifest' : '/favicon/site.webmanifest',
         rel: 'manifest'
       }
     ]
   },
-  manifest: process.env.NODE_ENV === 'production' ? '/melvocal-coaching/site.webmanifest' : '/site.webmanifest',
+  manifest: process.env.NODE_ENV === 'production' ? '/melvocal-coaching/favicon/site.webmanifest' : '/favicon/site.webmanifest',
 }
 
 export default function RootLayout({
@@ -73,60 +72,33 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${cormorant.variable} ${montserrat.variable} ${roboto.variable} scroll-smooth`}>
       <head>
-        <link
-          rel="icon"
-          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/images/logo/ml-logo.PNG' : '/images/logo/ml-logo.PNG'}
-          sizes="64x64"
-          type="image/png"
+        <link 
+          rel="icon" 
+          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/images/logo/ml-logo.PNG' : '/images/logo/ml-logo.PNG'} 
+          sizes="64x64" 
+          type="image/png" 
         />
-        <link
+        <link 
           rel="apple-touch-icon" 
-          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/images/logo/ml-logo.PNG' : '/images/logo/ml-logo.PNG'}
-          sizes="180x180"
+          href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/images/logo/ml-logo.PNG' : '/images/logo/ml-logo.PNG'} 
+          sizes="180x180" 
         />
-        <link rel="manifest" href={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/site.webmanifest' : '/site.webmanifest'} />
-        
-        {/* Emergency fallback script to handle critical failures */}
-        <script src={process.env.NODE_ENV === 'production' ? '/melvocal-coaching/js/emergency-fallback.js' : '/js/emergency-fallback.js'} async></script>
-        
-        <style>
-          {`
-            html, body {
-              width: 100vw !important;
-              max-width: 100vw !important;
-              margin: 0 !important;
-              padding: 0 !important;
-              background-color: black !important;
-              overflow-x: hidden !important;
-              position: relative !important;
-            }
-            
-            @media screen and (max-width: 926px) {
-              body {
-                width: 100% !important;
-                min-width: 100% !important;
-                max-width: 100% !important;
-              }
-            }
-          `}
-        </style>
         <script dangerouslySetInnerHTML={{
           __html: `
             // Set scrollRestoration to auto - let the browser handle it naturally
             if ('scrollRestoration' in history) {
               history.scrollRestoration = 'auto';
             }
-
+            
             // ULTRA-SIMPLE EMERGENCY FIX
             (function() {
               let savedScrollY = 0;
-
+              
               // Check for modals and handle scroll locking
               function checkForModals() {
                 const hasModal = document.querySelector('[role="dialog"], .modal, .fixed.inset-0');
-
                 const isLocked = document.body.classList.contains('modal-open');
-
+                
                 if (hasModal && !isLocked) {
                   // Save position and lock
                   savedScrollY = window.scrollY;
@@ -134,46 +106,35 @@ export default function RootLayout({
                   document.body.style.overflow = 'hidden';
                   document.body.style.height = '100%';
                   document.body.style.position = 'relative';
-                }
+                } 
                 else if (!hasModal && isLocked) {
                   // Unlock
                   document.body.classList.remove('modal-open');
                   document.body.style.overflow = '';
                   document.body.style.height = '';
                   document.body.style.position = '';
-
+                  
                   // Restore scroll position directly
                   window.scrollTo(0, savedScrollY);
                 }
               }
-
+              
               // Run checks on DOM changes
               new MutationObserver(checkForModals).observe(
-                document.body,
+                document.body, 
                 { childList: true, subtree: true }
               );
-
+              
               // Also check on page load
               document.addEventListener('DOMContentLoaded', checkForModals);
             })();
-            
-            // Mark application as initialized when React has hydrated
-            window.addEventListener('DOMContentLoaded', function() {
-              // We'll update this flag once React's hydration is complete
-              if (typeof window.markAppAsInitialized === 'function') {
-                // Wait for hydration to complete
-                setTimeout(function() {
-                  window.markAppAsInitialized();
-                }, 1000);
-              }
-            });
           `
         }} />
       </head>
       <body className={`${roboto.className} w-full min-w-full overflow-x-hidden bg-black`}>
         <MediaProvider>
+          <StaticSiteHandler />
           <RootClient className={`dark-theme-black ${playfair.variable} ${cormorant.variable} ${montserrat.variable} ${roboto.variable} ${inter.className} antialiased`}>
-            <StaticSiteHandler />
             {children}
           </RootClient>
         </MediaProvider>
