@@ -12,21 +12,23 @@ const nextConfig = {
   output: 'export',
   images: {
     unoptimized: true,
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'img.youtube.com',
-        pathname: '/vi/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'i3.ytimg.com',
-        pathname: '/vi/**',
-      }
-    ],
-    domains: ['images.unsplash.com'],
+    domains: ['images.unsplash.com', 'img.youtube.com', 'i3.ytimg.com'],
   },
-  trailingSlash: true,
+  
+  // Only export these specific routes and ignore dynamic routes
+  exportPathMap: async function (
+    defaultPathMap,
+    { dev, dir, outDir, distDir, buildId }
+  ) {
+    return {
+      '/': { page: '/' },
+      '/impressum': { page: '/impressum' },
+      '/datenschutz': { page: '/datenschutz' },
+      '/agb': { page: '/agb' },
+      '/test': { page: '/test' },
+      '/payment/DEMO': { page: '/payment/[orderId]', query: { orderId: 'DEMO' } },
+    }
+  },
   
   // Disable TypeScript and ESLint checks
   typescript: {
