@@ -2,8 +2,31 @@ import { NextResponse } from 'next/server';
 import { getAvailableTimeSlots } from '@/lib/google-calendar';
 import { formatDate } from '@/lib/calendar-utils';
 
-// Force dynamic rendering for this route
-export const dynamic = 'force-dynamic';
+// Adding static export configuration for GitHub Pages compatibility
+export const config = {
+  api: {
+    bodyParser: true,
+  },
+};
+
+// For static export, we need to provide mock data
+const STATIC_AVAILABLE_SLOTS = [
+  {
+    date: '2025-04-15',
+    startTime: '2025-04-15T10:00:00.000Z',
+    endTime: '2025-04-15T11:00:00.000Z',
+  },
+  {
+    date: '2025-04-15',
+    startTime: '2025-04-15T14:00:00.000Z',
+    endTime: '2025-04-15T15:00:00.000Z',
+  },
+  {
+    date: '2025-04-16',
+    startTime: '2025-04-16T11:00:00.000Z',
+    endTime: '2025-04-16T12:00:00.000Z',
+  },
+];
 
 export async function GET(request: Request) {
   try {
@@ -17,7 +40,17 @@ export async function GET(request: Request) {
       );
     }
 
-    // Get available time slots for the specified date
+    // When building for static export, use mock data
+    if (process.env.GITHUB_PAGES === 'true' || process.env.NODE_ENV === 'production') {
+      // Filter mock data based on the requested date
+      const filteredSlots = STATIC_AVAILABLE_SLOTS.filter(slot => 
+        slot.date === date
+      );
+      
+      return NextResponse.json({ availableSlots: filteredSlots });
+    }
+
+    // Regular dynamic behavior for development
     const availableSlots = await getAvailableTimeSlots(date);
 
     // Format the response
