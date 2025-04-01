@@ -4,8 +4,8 @@ import React, { Component, ErrorInfo, ReactNode } from 'react';
 
 interface Props {
   children: ReactNode;
-  fallback?: ReactNode;
   componentName?: string;
+  fallback?: ReactNode;
 }
 
 interface State {
@@ -15,70 +15,99 @@ interface State {
 }
 
 /**
- * Error Boundary component to catch React errors and prevent the entire app from crashing
- * Especially useful for catching React Error #130 (invalid props)
+ * Error boundary component to catch and handle React errors
+ * Prevents the entire application from crashing due to errors in child components
  */
 class ErrorBoundary extends Component<Props, State> {
-  public state: State = {
-    hasError: false,
-    error: null,
-    errorInfo: null
-  };
-
-  public static getDerivedStateFromError(error: Error): State {
-    // Update state so the next render will show the fallback UI
-    return { hasError: true, error, errorInfo: null };
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      hasError: false,
+      error: null,
+      errorInfo: null
+    };
   }
 
-  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('React Error caught by ErrorBoundary:', error);
-    console.error('Component stack:', errorInfo.componentStack);
-    
-    // Additional debugging for Error #130
-    if (error.message && error.message.includes('Objects are not valid as a React child')) {
-      console.error('--------- DEBUG INFO FOR ERROR #130 ---------');
-      console.error('This error is likely caused by an object being passed directly to JSX');
-      console.error('Check the component props and ensure all values are properly converted to strings');
-      console.error('Common culprits include dates, API responses, and nested objects');
-    }
-    
-    this.setState({ errorInfo });
+  static getDerivedStateFromError(error: Error): State {
+    // Update state so the next render shows the fallback UI
+    return {
+      hasError: true,
+      error,
+      errorInfo: null
+    };
   }
 
-  public render() {
-    const { componentName } = this.props;
+  componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+    // Log the error to an error reporting service
+    console.error('ErrorBoundary caught an error:', error, errorInfo);
     
-    if (this.state.hasError) {
+    this.setState({
+      error,
+      errorInfo
+    });
+    
+    // You could log to an error reporting service here
+    // Example: logErrorToService(error, errorInfo, this.props.componentName);
+  }
+
+  render(): ReactNode {
+    const { hasError, error, errorInfo } = this.state;
+    const { children, componentName, fallback } = this.props;
+
+    if (hasError) {
       // You can render any custom fallback UI
-      return this.props.fallback || (
-        <div className="p-4 border border-red-300 bg-red-50 rounded-md text-red-800">
-          <h2 className="text-lg font-semibold mb-2">Something went wrong{componentName ? ` in ${componentName}` : ''}</h2>
-          <p className="mb-2">The application encountered an error. Please try again later.</p>
-          <details className="text-sm">
-            <summary className="cursor-pointer font-medium">Error details (click to expand)</summary>
-            <p className="mt-2 font-mono text-xs bg-white/50 p-2 rounded">
-              {this.state.error?.message || 'Unknown error'}
-            </p>
-            {this.state.errorInfo && (
-              <div className="mt-2">
-                <p className="font-medium">Component Stack:</p>
-                <pre className="mt-1 text-xs bg-white/50 p-2 rounded overflow-auto max-h-[200px]">
-                  {this.state.errorInfo.componentStack}
-                </pre>
-              </div>
-            )}
+      return fallback || (
+        <div 
+          style={{
+            padding: '20px',
+            border: '1px solid #ffcccc',
+            borderRadius: '4px',
+            backgroundColor: 'rgba(255, 0, 0, 0.05)',
+            margin: '10px 0',
+            maxWidth: '800px'
+          }}
+        >
+          <h2 style={{ margin: '0 0 10px', color: '#cc0000', fontSize: '18px' }}>
+            Something went wrong {componentName ? `in ${componentName}` : ''}
+          </h2>
+          <details style={{ whiteSpace: 'pre-wrap', marginTop: '10px' }}>
+            <summary style={{ cursor: 'pointer', color: '#666' }}>
+              View error details
+            </summary>
+            <pre style={{ 
+              margin: '10px 0', 
+              padding: '10px', 
+              backgroundColor: 'rgba(0, 0, 0, 0.1)',
+              borderRadius: '4px',
+              fontSize: '14px',
+              overflow: 'auto'
+            }}>
+              {error?.toString()}
+              {errorInfo?.componentStack}
+            </pre>
           </details>
-          <button
-            className="mt-3 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-            onClick={() => this.setState({ hasError: false, error: null, errorInfo: null })}
-          >
-            Try again
-          </button>
+          <div style={{ marginTop: '15px' }}>
+            <button
+              onClick={() => this.setState({ hasError: false, error: null, errorInfo: null })}
+              style={{
+                padding: '8px 12px',
+                backgroundColor: '#333',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontSize: '14px'
+              }}
+            >
+              Try Again
+            </button>
+          </div>
         </div>
       );
     }
 
-    return this.props.children;
+    // Return children if there's no error
+    return children;
   }
 }
 

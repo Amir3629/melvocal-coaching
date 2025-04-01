@@ -1,54 +1,66 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 /**
- * Hook to enable debugging for React Error #130
- * Can be activated by adding ?debug=true to the URL
+ * Debug mode hook that enables debugging features
+ * Activated by:
+ * 1. URL parameter: ?debug=true 
+ * 2. Key sequence: Press 'd' key 3 times
  */
 export function useDebug() {
   const [isDebugMode, setIsDebugMode] = useState(false);
-
+  const [keySequence, setKeySequence] = useState<string[]>([]);
+  
+  // Check URL parameters for debug mode
   useEffect(() => {
-    // Check URL for debug parameter
-    const url = new URL(window.location.href);
-    const debugParam = url.searchParams.get('debug');
-    setIsDebugMode(debugParam === 'true');
-
-    // Also enable with key sequence (press 'd' 3 times quickly)
-    let keySequence: string[] = [];
-    const keyHandler = (e: KeyboardEvent) => {
+    if (typeof window === 'undefined') return;
+    
+    // Get URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const debugParam = urlParams.get('debug');
+    
+    // Check if debug mode should be enabled
+    if (debugParam === 'true') {
+      setIsDebugMode(true);
+      console.log('[Debug] Debug mode enabled by URL parameter');
+    }
+  }, []);
+  
+  // Set up key sequence detection
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // Only track 'd' key presses
       if (e.key === 'd') {
-        keySequence.push('d');
-        setTimeout(() => {
-          keySequence = [];
-        }, 1000);
-        
-        if (keySequence.length === 3) {
-          setIsDebugMode(prev => {
-            const newValue = !prev;
-            console.log(newValue ? 'Debug mode enabled' : 'Debug mode disabled');
-            
-            // Update URL to reflect debug state
-            const url = new URL(window.location.href);
-            if (newValue) {
-              url.searchParams.set('debug', 'true');
-            } else {
-              url.searchParams.delete('debug');
-            }
-            window.history.replaceState({}, '', url.toString());
-            
-            return newValue;
-          });
-          keySequence = [];
-        }
+        setKeySequence(prev => {
+          const newSequence = [...prev, e.key].slice(-3);
+          
+          // Check if sequence is 3 'd' keys in a row
+          if (newSequence.length === 3 && newSequence.every(key => key === 'd')) {
+            setIsDebugMode(prevDebug => {
+              const newState = !prevDebug;
+              console.log(`[Debug] Debug mode ${newState ? 'enabled' : 'disabled'} by key sequence`);
+              return newState;
+            });
+            return [];
+          }
+          
+          return newSequence;
+        });
       }
     };
-
-    window.addEventListener('keydown', keyHandler);
-    return () => window.removeEventListener('keydown', keyHandler);
+    
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
-
+  
+  // Toggle debug mode function
+  const toggleDebugMode = useCallback(() => {
+    setIsDebugMode(prev => !prev);
+  }, []);
+  
   /**
    * Log potentially problematic props that could cause React Error #130
    */
@@ -85,6 +97,7 @@ export function useDebug() {
 
   return {
     isDebugMode,
+    toggleDebugMode,
     logPropIssues
   };
 } 

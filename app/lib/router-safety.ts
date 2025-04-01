@@ -37,9 +37,12 @@ export function createSafeSearchParams(
   if (!searchParams) return {};
   
   const safeSearchParams: Record<string, string> = {};
+  
   // Convert URLSearchParams to safe object
-  for (const [key, value] of searchParams.entries()) {
-    safeSearchParams[key] = ensureString(value);
+  if (searchParams instanceof URLSearchParams) {
+    searchParams.forEach((value, key) => {
+      safeSearchParams[key] = ensureString(value);
+    });
   }
   
   return safeSearchParams;
