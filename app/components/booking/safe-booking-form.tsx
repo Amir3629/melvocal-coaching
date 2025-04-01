@@ -2,7 +2,7 @@
 
 import React, { Suspense } from 'react'
 import dynamic from 'next/dynamic'
-import { ErrorBoundary } from '../error-boundary'
+import { ErrorBoundary } from '../simple-error-boundary'
 
 // Dynamically import the BookingForm component with client-side rendering only
 const BookingForm = dynamic(() => import('./booking-form'), {

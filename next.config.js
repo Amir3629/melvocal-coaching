@@ -36,6 +36,9 @@ const nextConfig = {
   eslint: {
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    missingSuspenseWithCSRBailout: true
+  }
 }
 
 module.exports = nextConfig
