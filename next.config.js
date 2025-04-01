@@ -39,8 +39,15 @@ const nextConfig = {
       config.devtool = 'source-map';
     }
 
+    // Enhanced error handling in production
+    if (isProduction && !isServer) {
+      config.devtool = 'source-map';
+    }
+
     return config;
   },
+  // Enable production browser source maps for better error tracking
+  productionBrowserSourceMaps: true,
   publicRuntimeConfig: {
     basePath: isProduction && isGitHubPages ? '/melvocal-coaching' : '',
   },
