@@ -73,11 +73,43 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      
+      # Set specific environment variables for GitHub Pages
+      - name: Set GitHub Pages environment variables
+        run: |
+          echo "GITHUB_PAGES=true" >> $GITHUB_ENV
+          echo "NEXT_PUBLIC_BASE_PATH=/melvocal-coaching" >> $GITHUB_ENV
+          echo "NODE_ENV=production" >> $GITHUB_ENV
+          echo "Set GitHub Pages environment variables"
+      
+      # Display Next.js version for debugging
+      - name: Display Next.js version
+        run: ${{ steps.detect-package-manager.outputs.manager }} list next
+      
+      # Run the build with specific environment variables
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
         env:
           GITHUB_PAGES: true
           NEXT_PUBLIC_BASE_PATH: /melvocal-coaching
+          NODE_ENV: production
+      
+      # Run our custom GitHub Pages build helper
+      - name: Run GitHub Pages build helper
+        run: node github-pages-build.js
+      
+      # Artifact saving for debugging
+      - name: Upload build artifact for debugging
+        uses: actions/upload-artifact@v4
+        with:
+          name: next-build
+          path: |
+            .next/
+            out/
+            next.config.js
+          retention-days: 7
+      
+      # Standard Pages artifact upload
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
